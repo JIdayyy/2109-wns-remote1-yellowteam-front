@@ -1,0 +1,8 @@
+query GetAllWebSites {
+  websites {
+    id
+    name
+    url
+    logo
+  }
+}

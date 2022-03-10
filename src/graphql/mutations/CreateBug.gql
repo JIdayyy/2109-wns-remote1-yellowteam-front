@@ -1,0 +1,5 @@
+mutation createBug($data: BugCreateInput!) {
+  createBug(data: $data) {
+    id
+  }
+}
