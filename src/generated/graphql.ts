@@ -15,6 +15,8 @@ export type Scalars = {
   Float: number;
   /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
   DateTime: any;
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any;
 };
 
 export type AffectedRowsOutput = {
@@ -24,9 +26,11 @@ export type AffectedRowsOutput = {
 
 export type AggregateBug = {
   __typename?: 'AggregateBug';
+  _avg: Maybe<BugAvgAggregate>;
   _count: Maybe<BugCountAggregate>;
   _max: Maybe<BugMaxAggregate>;
   _min: Maybe<BugMinAggregate>;
+  _sum: Maybe<BugSumAggregate>;
 };
 
 export type AggregateCategory = {
@@ -86,6 +90,7 @@ export type Bug = {
   created_at: Scalars['DateTime'];
   description: Scalars['String'];
   id: Scalars['String'];
+  number: Scalars['Int'];
   priority: BugPriority;
   severity: BugSeverity;
   status: BugStatus;
@@ -106,6 +111,15 @@ export type BugFileArgs = {
   where: InputMaybe<FileWhereInput>;
 };
 
+export type BugAvgAggregate = {
+  __typename?: 'BugAvgAggregate';
+  number: Maybe<Scalars['Float']>;
+};
+
+export type BugAvgOrderByAggregateInput = {
+  number?: InputMaybe<SortOrder>;
+};
+
 export type BugCount = {
   __typename?: 'BugCount';
   File: Scalars['Int'];
@@ -118,6 +132,7 @@ export type BugCountAggregate = {
   created_at: Scalars['Int'];
   description: Scalars['Int'];
   id: Scalars['Int'];
+  number: Scalars['Int'];
   priority: Scalars['Int'];
   severity: Scalars['Int'];
   status: Scalars['Int'];
@@ -132,6 +147,7 @@ export type BugCountOrderByAggregateInput = {
   created_at?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  number?: InputMaybe<SortOrder>;
   priority?: InputMaybe<SortOrder>;
   severity?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
@@ -148,6 +164,7 @@ export type BugCreateInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
+  number?: InputMaybe<Scalars['Int']>;
   priority?: InputMaybe<BugPriority>;
   severity: BugSeverity;
   status?: InputMaybe<BugStatus>;
@@ -160,6 +177,7 @@ export type BugCreateManyCategoryInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
+  number?: InputMaybe<Scalars['Int']>;
   priority?: InputMaybe<BugPriority>;
   severity: BugSeverity;
   status?: InputMaybe<BugStatus>;
@@ -179,6 +197,7 @@ export type BugCreateManyInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
+  number?: InputMaybe<Scalars['Int']>;
   priority?: InputMaybe<BugPriority>;
   severity: BugSeverity;
   status?: InputMaybe<BugStatus>;
@@ -193,6 +212,7 @@ export type BugCreateManyUserInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
+  number?: InputMaybe<Scalars['Int']>;
   priority?: InputMaybe<BugPriority>;
   severity: BugSeverity;
   status?: InputMaybe<BugStatus>;
@@ -211,6 +231,7 @@ export type BugCreateManyWebsiteInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
+  number?: InputMaybe<Scalars['Int']>;
   priority?: InputMaybe<BugPriority>;
   severity: BugSeverity;
   status?: InputMaybe<BugStatus>;
@@ -277,6 +298,7 @@ export type BugCreateWithoutCategoryInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
+  number?: InputMaybe<Scalars['Int']>;
   priority?: InputMaybe<BugPriority>;
   severity: BugSeverity;
   status?: InputMaybe<BugStatus>;
@@ -291,6 +313,7 @@ export type BugCreateWithoutFileInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
+  number?: InputMaybe<Scalars['Int']>;
   priority?: InputMaybe<BugPriority>;
   severity: BugSeverity;
   status?: InputMaybe<BugStatus>;
@@ -306,6 +329,7 @@ export type BugCreateWithoutUserInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
+  number?: InputMaybe<Scalars['Int']>;
   priority?: InputMaybe<BugPriority>;
   severity: BugSeverity;
   status?: InputMaybe<BugStatus>;
@@ -319,6 +343,7 @@ export type BugCreateWithoutWebsiteInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
+  number?: InputMaybe<Scalars['Int']>;
   priority?: InputMaybe<BugPriority>;
   severity: BugSeverity;
   status?: InputMaybe<BugStatus>;
@@ -329,13 +354,16 @@ export type BugCreateWithoutWebsiteInput = {
 
 export type BugGroupBy = {
   __typename?: 'BugGroupBy';
+  _avg: Maybe<BugAvgAggregate>;
   _count: Maybe<BugCountAggregate>;
   _max: Maybe<BugMaxAggregate>;
   _min: Maybe<BugMinAggregate>;
+  _sum: Maybe<BugSumAggregate>;
   categoryId: Maybe<Scalars['String']>;
   created_at: Scalars['DateTime'];
   description: Scalars['String'];
   id: Scalars['String'];
+  number: Scalars['Int'];
   priority: BugPriority;
   severity: BugSeverity;
   status: BugStatus;
@@ -357,6 +385,7 @@ export type BugMaxAggregate = {
   created_at: Maybe<Scalars['DateTime']>;
   description: Maybe<Scalars['String']>;
   id: Maybe<Scalars['String']>;
+  number: Maybe<Scalars['Int']>;
   priority: Maybe<BugPriority>;
   severity: Maybe<BugSeverity>;
   status: Maybe<BugStatus>;
@@ -371,6 +400,7 @@ export type BugMaxOrderByAggregateInput = {
   created_at?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  number?: InputMaybe<SortOrder>;
   priority?: InputMaybe<SortOrder>;
   severity?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
@@ -386,6 +416,7 @@ export type BugMinAggregate = {
   created_at: Maybe<Scalars['DateTime']>;
   description: Maybe<Scalars['String']>;
   id: Maybe<Scalars['String']>;
+  number: Maybe<Scalars['Int']>;
   priority: Maybe<BugPriority>;
   severity: Maybe<BugSeverity>;
   status: Maybe<BugStatus>;
@@ -400,6 +431,7 @@ export type BugMinOrderByAggregateInput = {
   created_at?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  number?: InputMaybe<SortOrder>;
   priority?: InputMaybe<SortOrder>;
   severity?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
@@ -414,13 +446,16 @@ export type BugOrderByRelationAggregateInput = {
 };
 
 export type BugOrderByWithAggregationInput = {
+  _avg?: InputMaybe<BugAvgOrderByAggregateInput>;
   _count?: InputMaybe<BugCountOrderByAggregateInput>;
   _max?: InputMaybe<BugMaxOrderByAggregateInput>;
   _min?: InputMaybe<BugMinOrderByAggregateInput>;
+  _sum?: InputMaybe<BugSumOrderByAggregateInput>;
   categoryId?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  number?: InputMaybe<SortOrder>;
   priority?: InputMaybe<SortOrder>;
   severity?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
@@ -438,6 +473,7 @@ export type BugOrderByWithRelationInput = {
   created_at?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  number?: InputMaybe<SortOrder>;
   priority?: InputMaybe<SortOrder>;
   severity?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
@@ -464,6 +500,7 @@ export enum BugScalarFieldEnum {
   CreatedAt = 'created_at',
   Description = 'description',
   Id = 'id',
+  Number = 'number',
   Priority = 'priority',
   Severity = 'severity',
   Status = 'status',
@@ -481,6 +518,7 @@ export type BugScalarWhereInput = {
   created_at?: InputMaybe<DateTimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<StringFilter>;
+  number?: InputMaybe<IntFilter>;
   priority?: InputMaybe<EnumBugPriorityFilter>;
   severity?: InputMaybe<EnumBugSeverityFilter>;
   status?: InputMaybe<EnumBugStatusFilter>;
@@ -498,6 +536,7 @@ export type BugScalarWhereWithAggregatesInput = {
   created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
   description?: InputMaybe<StringWithAggregatesFilter>;
   id?: InputMaybe<StringWithAggregatesFilter>;
+  number?: InputMaybe<IntWithAggregatesFilter>;
   priority?: InputMaybe<EnumBugPriorityWithAggregatesFilter>;
   severity?: InputMaybe<EnumBugSeverityWithAggregatesFilter>;
   status?: InputMaybe<EnumBugStatusWithAggregatesFilter>;
@@ -520,6 +559,15 @@ export enum BugStatus {
   Open = 'OPEN'
 }
 
+export type BugSumAggregate = {
+  __typename?: 'BugSumAggregate';
+  number: Maybe<Scalars['Int']>;
+};
+
+export type BugSumOrderByAggregateInput = {
+  number?: InputMaybe<SortOrder>;
+};
+
 export type BugUpdateInput = {
   Category?: InputMaybe<CategoryUpdateOneWithoutBugInput>;
   File?: InputMaybe<FileUpdateManyWithoutBugInput>;
@@ -527,6 +575,7 @@ export type BugUpdateInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   description?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  number?: InputMaybe<IntFieldUpdateOperationsInput>;
   priority?: InputMaybe<EnumBugPriorityFieldUpdateOperationsInput>;
   severity?: InputMaybe<EnumBugSeverityFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumBugStatusFieldUpdateOperationsInput>;
@@ -539,6 +588,7 @@ export type BugUpdateManyMutationInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   description?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  number?: InputMaybe<IntFieldUpdateOperationsInput>;
   priority?: InputMaybe<EnumBugPriorityFieldUpdateOperationsInput>;
   severity?: InputMaybe<EnumBugSeverityFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumBugStatusFieldUpdateOperationsInput>;
@@ -632,6 +682,7 @@ export type BugUpdateWithoutCategoryInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   description?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  number?: InputMaybe<IntFieldUpdateOperationsInput>;
   priority?: InputMaybe<EnumBugPriorityFieldUpdateOperationsInput>;
   severity?: InputMaybe<EnumBugSeverityFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumBugStatusFieldUpdateOperationsInput>;
@@ -646,6 +697,7 @@ export type BugUpdateWithoutFileInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   description?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  number?: InputMaybe<IntFieldUpdateOperationsInput>;
   priority?: InputMaybe<EnumBugPriorityFieldUpdateOperationsInput>;
   severity?: InputMaybe<EnumBugSeverityFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumBugStatusFieldUpdateOperationsInput>;
@@ -661,6 +713,7 @@ export type BugUpdateWithoutUserInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   description?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  number?: InputMaybe<IntFieldUpdateOperationsInput>;
   priority?: InputMaybe<EnumBugPriorityFieldUpdateOperationsInput>;
   severity?: InputMaybe<EnumBugSeverityFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumBugStatusFieldUpdateOperationsInput>;
@@ -674,6 +727,7 @@ export type BugUpdateWithoutWebsiteInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   description?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  number?: InputMaybe<IntFieldUpdateOperationsInput>;
   priority?: InputMaybe<EnumBugPriorityFieldUpdateOperationsInput>;
   severity?: InputMaybe<EnumBugSeverityFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumBugStatusFieldUpdateOperationsInput>;
@@ -716,6 +770,7 @@ export type BugWhereInput = {
   created_at?: InputMaybe<DateTimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<StringFilter>;
+  number?: InputMaybe<IntFilter>;
   priority?: InputMaybe<EnumBugPriorityFilter>;
   severity?: InputMaybe<EnumBugSeverityFilter>;
   status?: InputMaybe<EnumBugStatusFilter>;
@@ -1611,6 +1666,7 @@ export type Mutation = {
   updateManyWebsite: AffectedRowsOutput;
   updateUser: Maybe<User>;
   updateWebsite: Maybe<Website>;
+  uploadFile: File;
   upsertBug: Bug;
   upsertCategory: Category;
   upsertFile: File;
@@ -1791,6 +1847,11 @@ export type MutationUpdateUserArgs = {
 export type MutationUpdateWebsiteArgs = {
   data: WebsiteUpdateInput;
   where: WebsiteWhereUniqueInput;
+};
+
+
+export type MutationUploadFileArgs = {
+  file: Scalars['Upload'];
 };
 
 
@@ -3062,7 +3123,7 @@ export type GetAllBugsByQueryVariables = Exact<{
 }>;
 
 
-export type GetAllBugsByQuery = { __typename?: 'Query', bugs: Array<{ __typename?: 'Bug', id: string, title: string, description: string, user: { __typename?: 'User', first_name: string, last_name: string, email: string } }> };
+export type GetAllBugsByQuery = { __typename?: 'Query', bugs: Array<{ __typename?: 'Bug', id: string, title: string, description: string, created_at: any, status: BugStatus, number: number, Website: { __typename?: 'Website', id: string, name: string, url: string, logo: string, isPreview: boolean }, user: { __typename?: 'User', first_name: string, last_name: string, email: string } }> };
 
 export type GetAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3073,6 +3134,13 @@ export type GetAllWebSitesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllWebSitesQuery = { __typename?: 'Query', websites: Array<{ __typename?: 'Website', id: string, name: string, url: string, logo: string }> };
+
+export type GetBugDatasQueryVariables = Exact<{
+  where: BugWhereUniqueInput;
+}>;
+
+
+export type GetBugDatasQuery = { __typename?: 'Query', bug: { __typename?: 'Bug', id: string, title: string, status: BugStatus, severity: BugSeverity, priority: BugPriority, description: string, Website: { __typename?: 'Website', id: string, name: string, url: string, logo: string, isPreview: boolean }, File: Array<{ __typename?: 'File', id: string, name: string, path: string }>, user: { __typename?: 'User', first_name: string, last_name: string, email: string } } };
 
 export const UserFragmentDoc = gql`
     fragment User on User {
@@ -3188,6 +3256,16 @@ export const GetAllBugsByDocument = gql`
     id
     title
     description
+    created_at
+    status
+    number
+    Website {
+      id
+      name
+      url
+      logo
+      isPreview
+    }
     user {
       first_name
       last_name
@@ -3295,3 +3373,60 @@ export function useGetAllWebSitesLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetAllWebSitesQueryHookResult = ReturnType<typeof useGetAllWebSitesQuery>;
 export type GetAllWebSitesLazyQueryHookResult = ReturnType<typeof useGetAllWebSitesLazyQuery>;
 export type GetAllWebSitesQueryResult = Apollo.QueryResult<GetAllWebSitesQuery, GetAllWebSitesQueryVariables>;
+export const GetBugDatasDocument = gql`
+    query GetBugDatas($where: BugWhereUniqueInput!) {
+  bug(where: $where) {
+    id
+    title
+    status
+    severity
+    Website {
+      id
+      name
+      url
+      logo
+      isPreview
+    }
+    File {
+      id
+      name
+      path
+    }
+    priority
+    description
+    user {
+      first_name
+      last_name
+      email
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetBugDatasQuery__
+ *
+ * To run a query within a React component, call `useGetBugDatasQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBugDatasQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBugDatasQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetBugDatasQuery(baseOptions: Apollo.QueryHookOptions<GetBugDatasQuery, GetBugDatasQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetBugDatasQuery, GetBugDatasQueryVariables>(GetBugDatasDocument, options);
+      }
+export function useGetBugDatasLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBugDatasQuery, GetBugDatasQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetBugDatasQuery, GetBugDatasQueryVariables>(GetBugDatasDocument, options);
+        }
+export type GetBugDatasQueryHookResult = ReturnType<typeof useGetBugDatasQuery>;
+export type GetBugDatasLazyQueryHookResult = ReturnType<typeof useGetBugDatasLazyQuery>;
+export type GetBugDatasQueryResult = Apollo.QueryResult<GetBugDatasQuery, GetBugDatasQueryVariables>;

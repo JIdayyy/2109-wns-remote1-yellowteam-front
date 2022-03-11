@@ -16,3 +16,10 @@ body > #root {
   min-height: 100vh;
   background: #f4f6f8;
 }
+
+.bugListShagow {
+  -webkit-box-shadow: 0px 10px 13px -7px #000000,
+    inset 1px 10px 16px 15px rgba(0, 0, 0, 0.14);
+  box-shadow: 0px 10px 13px -7px #000000,
+    inset 1px 10px 16px 15px rgba(0, 0, 0, 0.14);
+}

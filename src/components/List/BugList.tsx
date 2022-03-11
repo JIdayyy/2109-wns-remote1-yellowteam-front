@@ -1,9 +1,6 @@
-import { Box, Image, Link, Spinner, Text } from '@chakra-ui/react'
-import React from 'react'
-import {
-  useGetAllBugsByQuery,
-  useGetAllWebSitesQuery,
-} from 'src/generated/graphql'
+import { Box, Spinner } from '@chakra-ui/react'
+import { useGetAllBugsByQuery } from 'src/generated/graphql'
+import SkelettonPlaceholder from '../Assets/SkelettonPLaceholder'
 import BugListItem from './ListItems/BugListItem'
 
 export default function BugList(): JSX.Element {
@@ -11,25 +8,41 @@ export default function BugList(): JSX.Element {
     variables: {
       where: {
         websiteId: {
-          equals: '9f3fe4e5-72eb-482d-8ff6-f88ccd61bbda',
+          contains: '',
         },
       },
     },
   })
 
-  if (loading) <Spinner />
-
   return (
     <Box
-      width="30%"
-      height="100%"
-      backgroundColor="gray"
+      className="bugListShagow"
+      overflowY="scroll"
+      shadow="revert"
+      css={{
+        '&::-webkit-scrollbar': {
+          width: '4px',
+        },
+        '&::-webkit-scrollbar-track': {
+          width: '6px',
+        },
+        '&::-webkit-scrollbar-thumb': {
+          background: 'gray',
+          borderRadius: '24px',
+        },
+      }}
+      width="400px"
+      flexShrink={2}
+      minW="400px"
+      height="80%"
       display="flex"
       flexDirection="column"
     >
-      {data?.bugs.map((bug) => (
-        <BugListItem bug={bug} />
-      ))}
+      {!loading ? (
+        data?.bugs.map((bug) => <BugListItem key={bug.id} bug={bug} />)
+      ) : (
+        <SkelettonPlaceholder number={20} />
+      )}
     </Box>
   )
 }

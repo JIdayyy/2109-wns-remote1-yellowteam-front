@@ -1,21 +1,22 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Button, Flex, FormControl, Input, Text } from '@chakra-ui/react'
+import { useEffect } from 'react'
 import { FieldValues, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import useAppState from 'src/hooks/useAppState'
-import { useCookies } from 'react-cookie'
 import mainTheme from 'src/theme/mainTheme'
-import { useMutateLoginMutation } from '../generated/graphql'
+import {
+  useMutateLoginMutation,
+  useMutateMeMutation,
+} from '../generated/graphql'
 
 export default function Login(): JSX.Element {
   const navigate = useNavigate()
-  const [cookies, setCookies] = useCookies()
 
-  const { dispatchLogin } = useAppState()
+  const { dispatchLogin, dispatchLogout } = useAppState()
   const [login] = useMutateLoginMutation({
     onCompleted: (data) => {
       dispatchLogin(data.login)
-      setCookies('isLoggedIn', true)
       navigate('/')
     },
 
@@ -23,6 +24,19 @@ export default function Login(): JSX.Element {
       console.error(error)
     },
   })
+
+  const [me] = useMutateMeMutation({
+    onCompleted: (data) => {
+      dispatchLogin(data.me)
+    },
+    onError: () => {
+      dispatchLogout()
+    },
+  })
+
+  useEffect(() => {
+    me()
+  }, [])
 
   const { handleSubmit, register } = useForm()
 
@@ -54,12 +68,14 @@ export default function Login(): JSX.Element {
         <Text textStyle="loginText">Login now</Text>
         <FormControl p={10} w={['90%', '80%', '60%', '50%']}>
           <Input
+            id="email"
             placeholder="Email"
             my={1}
             type="text"
             {...register('email')}
           />
           <Input
+            id="password"
             placeholder="Password"
             my={1}
             type="password"

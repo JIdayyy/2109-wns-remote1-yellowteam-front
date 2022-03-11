@@ -1,16 +1,28 @@
 import { Box, Image, Link, Text } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
 import { GetAllWebSitesQuery } from 'src/generated/graphql'
-import useCreateBug from 'src/hooks/useCreateBugState'
 
 type Props = {
   website: GetAllWebSitesQuery['websites'][number]
+  isNew: boolean
 }
 
-export default function WebSitesListItem({ website }: Props): JSX.Element {
-  const { dispatchWebSite } = useCreateBug()
+export default function WebSitesListItem({
+  website,
+  isNew,
+}: Props): JSX.Element {
+  const navigation = useNavigate()
+  const handleClick = () => {
+    if (isNew) {
+      navigation(`/createbug/websites/${website.id}`)
+    } else {
+      navigation(`/websites/${website.id}/createbug`)
+    }
+  }
+
   return (
     <Box
-      onClick={() => dispatchWebSite(website.id)}
+      onClick={handleClick}
       p={4}
       cursor="pointer"
       display="flex"

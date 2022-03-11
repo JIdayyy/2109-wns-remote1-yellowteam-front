@@ -2,6 +2,10 @@ import { extendTheme } from '@chakra-ui/react'
 
 const mainTheme = extendTheme({
   textStyles: {
+    fonts: {
+      heading: 'Open Sans, sans-serif',
+      body: 'Poppins',
+    },
     // you can also use responsive styles
     titleLogin: {
       fontSize: ['42', '56', '72'],
@@ -53,7 +57,7 @@ const mainTheme = extendTheme({
     body: {
       fontSize: ['14', '16'],
       color: '#38383A',
-      fontFamily: 'Avenir',
+      fontFamily: 'Poppins',
       fontWeight: '300',
     },
     bodyGreenBold: {

@@ -13,10 +13,10 @@ import RadioCard from './RadioCard'
 const RadioGroup: FC<{
   control: Control<FieldValues>
   options: string[]
-  label: string
+  label?: string
   name: string
   isRequired: boolean
-}> = ({ control, name, label, isRequired, options }) => {
+}> = ({ control, name, isRequired, options }) => {
   const {
     field,
     formState: { errors },

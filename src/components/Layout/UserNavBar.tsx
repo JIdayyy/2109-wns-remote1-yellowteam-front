@@ -3,10 +3,8 @@ import { Flex, Box } from '@chakra-ui/react'
 import DcBug from 'src/static/svg/DbBug'
 import { useLocation, useNavigate } from 'react-router-dom'
 import useAppState from 'src/hooks/useAppState'
-import TasksIcon from '../static/svg/TasksIcon'
-import mainTheme from '../theme/mainTheme'
-
-import SignOutIcon from '../static/svg/SignOutIcon'
+import SignOutIcon from 'src/static/svg/SignOutIcon'
+import TasksIcon from 'src/static/svg/TasksIcon'
 
 const Tab = ({ children, path }: { children: JSX.Element; path: string }) => {
   const navigate = useNavigate()
@@ -25,9 +23,12 @@ const UserNavBar = (): JSX.Element => {
 
   const location = useLocation()
 
+  const handleLougout = () => dispatchLogout()
+
   return (
     <Flex
       py="40px"
+      px="10px"
       width="66px"
       backgroundColor="#24323F"
       height="100%"
@@ -36,7 +37,7 @@ const UserNavBar = (): JSX.Element => {
       justifyContent="end"
       z-index="10"
     >
-      {/* <Flex
+      <Flex
         height="100%"
         flexDirection="column"
         alignItems="center"
@@ -44,14 +45,14 @@ const UserNavBar = (): JSX.Element => {
       >
         <Tab path="">
           <TasksIcon
-            color={location.pathname.includes('board') ? 'white' : 'gray'}
+            color={location.pathname.includes('/') ? 'gray' : 'white'}
           />
         </Tab>
 
-        <Box as="button" data-testid="sign-out-button" onClick={dispatchLogout}>
-          <SignOutIcon color={mainTheme.colors.deactivatedGrey} />
+        <Box as="button" data-testid="sign-out-button" onClick={handleLougout}>
+          <SignOutIcon color="white" />
         </Box>
-      </Flex> */}
+      </Flex>
 
       <DcBug />
     </Flex>

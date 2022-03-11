@@ -1,11 +1,25 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box, Button, Input, Text, Textarea } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Image,
+  Input,
+  Link,
+  Spinner,
+  Text,
+  Textarea,
+} from '@chakra-ui/react'
 import { FieldValues, useForm } from 'react-hook-form'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 import {
   GetAllBugsByDocument,
   useCreateBugMutation,
 } from 'src/generated/graphql'
-import useCreateBug from 'src/hooks/useCreateBugState'
+import useAppState from 'src/hooks/useAppState'
+import { ChangeEvent, useState } from 'react'
+import { Dropzone, FileItem } from '@dropzone-ui/react'
+import { FileValidated } from '@dropzone-ui/react/build/components/dropzone/components/utils/validation.utils'
 import RadioGroup from '../RadioGroup'
 
 export const severityOptions = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW']
@@ -13,23 +27,62 @@ export const priorityOptions = ['LOW', 'MEDIUM', 'HIGH']
 
 export default function CreateBugForm(): JSX.Element {
   const { control, handleSubmit, register, reset } = useForm()
+  const { id } = useParams()
+  const { user } = useAppState()
+  if (!user) return <>no user</>
+  const [image, setImage] = useState<File | undefined>()
+  const [file, setFile] = useState<FileValidated[]>([])
+  const [fileUrl, setFileUrl] = useState<string>('')
 
-  const [mutate] = useCreateBugMutation({
+  const queryVariables = {
+    where: {
+      websiteId: {
+        contains: '',
+      },
+    },
+  }
+
+  const handleUpload = async (bugId: string) => {
+    const formData = new FormData()
+    formData.append(
+      'operations',
+      JSON.stringify({
+        query:
+          'mutation upload($file: Upload!){\n uploadFile(file: $file){\n  name\n  path\n  id\n}\n}\n',
+      })
+    )
+    formData.append('map', JSON.stringify({ '0': ['variables.file'] }))
+
+    formData.append('0', image as File)
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+        'platform-auth-user-agent': 'web-platform',
+      },
+    }
+
+    const data = () =>
+      axios
+        .post(
+          `http://localhost:5000/graphql?userId=${user.id}&bugId=${bugId}`,
+          formData,
+          config
+        )
+        .then((r) => setFileUrl(r.data.data.uploadFile.path))
+    console.log(await data())
+  }
+
+  const [mutate, { loading }] = useCreateBugMutation({
     refetchQueries: [
       {
         query: GetAllBugsByDocument,
-        variables: {
-          where: {
-            websiteId: {
-              equals: '9f3fe4e5-72eb-482d-8ff6-f88ccd61bbda',
-            },
-          },
-        },
+        variables: queryVariables,
       },
     ],
-    onCompleted: () => reset(),
+    onCompleted: (data) => handleUpload(data.createBug.id).then(() => reset()),
   })
-  const { website } = useCreateBug()
+
+  if (!user) return <div>You must be logged in to create a bug</div>
 
   const onSubmit = async (data: FieldValues) => {
     mutate({
@@ -41,22 +94,74 @@ export default function CreateBugForm(): JSX.Element {
           severity: data.severity,
           Website: {
             connect: {
-              id: website,
+              id,
             },
           },
           user: {
             connect: {
-              id: '47e1fc85-9f69-48db-8b5a-367ffc01810b',
+              id: user.id,
             },
           },
         },
       },
     })
   }
-
+  const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setImage(e.target.files[0])
+    }
+  }
   return (
-    <Box width="100%" height="100%">
+    <Box
+      width="100%"
+      height="100%"
+      overflow="scroll"
+      p={8}
+      css={{
+        '&::-webkit-scrollbar': {
+          width: '6px',
+          position: 'absolute',
+          right: -10,
+        },
+        '&::-webkit-scrollbar-track': {
+          width: '6px',
+          position: 'absolute',
+          right: -10,
+        },
+        '&::-webkit-scrollbar-thumb': {
+          background: 'gray',
+          position: 'absolute',
+          right: -10,
+          borderRadius: '24px',
+        },
+      }}
+    >
+      <Text color="black">Repport a new Bug</Text>
       <Input my={2} color="black" {...register('title')} placeholder="Title" />
+      {fileUrl && (
+        <Link target="_blank" href={fileUrl}>
+          <Text color="black">{fileUrl}</Text>
+        </Link>
+      )}
+      <Image src={fileUrl} />
+
+      <Dropzone onChange={(img) => setFile(img)} value={file}>
+        {file.map((fle) => (
+          <FileItem {...fle} preview />
+        ))}
+      </Dropzone>
+
+      <Input
+        name="file"
+        accept="*"
+        multiple={false}
+        id="file"
+        onChange={handleImage}
+        my={2}
+        color="black"
+        placeholder="File"
+        type="file"
+      />
       <Textarea
         my={2}
         color="black"
@@ -84,7 +189,13 @@ export default function CreateBugForm(): JSX.Element {
         label="priority"
       />
 
-      <Button onClick={handleSubmit(onSubmit)}>SUBMIT</Button>
+      <Button
+        variant="solid"
+        backgroundColor="green"
+        onClick={handleSubmit(onSubmit)}
+      >
+        {loading ? <Spinner /> : 'SUBMIT'}
+      </Button>
     </Box>
   )
 }
