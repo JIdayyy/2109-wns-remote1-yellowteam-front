@@ -9,7 +9,7 @@ import { useMutateLoginMutation } from '../../../generated/graphql'
 export default function LoginForm(): JSX.Element {
   const navigate = useNavigate()
 
-  const { dispatchLogin, dispatchLogout } = useAppState()
+  const { dispatchLogin } = useAppState()
   const [login] = useMutateLoginMutation({
     onCompleted: (data) => {
       dispatchLogin(data.login)
