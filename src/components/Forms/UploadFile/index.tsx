@@ -11,7 +11,7 @@ import MyDropzone from 'src/components/DropZone'
 import CustomFileItem from './FileItem'
 
 const serverUrl =
-  process.env.REACT_APP_SERVER_URL || 'http://localhost:5000/graphqkl'
+  process.env.REACT_APP_SERVER_URL || 'http://localhost:5000/graphql'
 
 export default function UploadFile(): JSX.Element {
   const [file, setFile] = useState<FileValidated[]>([])
