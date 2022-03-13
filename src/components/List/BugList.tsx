@@ -1,4 +1,4 @@
-import { Box, Spinner } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import { useGetAllBugsByQuery } from 'src/generated/graphql'
 import SkelettonPlaceholder from '../Assets/SkelettonPLaceholder'
 import BugListItem from './ListItems/BugListItem'
@@ -31,9 +31,9 @@ export default function BugList(): JSX.Element {
           borderRadius: '24px',
         },
       }}
-      width="400px"
+      width={['200px', '250px', '300px', '400px']}
       flexShrink={2}
-      minW="400px"
+      minW={['200px', '250px', '300px', '400px']}
       height="80%"
       display="flex"
       flexDirection="column"

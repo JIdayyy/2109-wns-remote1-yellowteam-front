@@ -23,12 +23,10 @@ export const client = new ApolloClient({
 })
 
 export default function initializeApollo(): ApolloClient<NormalizedCacheObject> {
-  // For SSG and SSR always create a new Apollo Client
   if (typeof window === 'undefined') {
     return client
   }
 
-  // Create the Apollo Client once in the client
   if (!apolloClient) {
     apolloClient = client
   }

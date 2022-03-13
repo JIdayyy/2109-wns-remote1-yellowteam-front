@@ -6,12 +6,20 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbSeparator,
+  MenuDivider,
+  MenuList,
+  Menu,
+  MenuItem,
+  MenuButton,
+  Spinner,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import useAppState from 'src/hooks/useAppState'
-import { useMutateMeMutation } from '../../generated/graphql'
+import {
+  useGetAllBugsByQuery,
+  useGetAllWebSitesQuery,
+} from '../../generated/graphql'
 import BugList from '../List/BugList'
 import UserNavBar from './UserNavBar'
 
@@ -21,6 +29,16 @@ interface IBreadcrumb {
 }
 
 export const NavBar = (): JSX.Element => {
+  const { data } = useGetAllWebSitesQuery()
+  const { data: allBugs, loading: bugLoading } = useGetAllBugsByQuery({
+    variables: {
+      where: {
+        websiteId: {
+          contains: '',
+        },
+      },
+    },
+  })
   const navigation = useNavigate()
 
   return (
@@ -29,12 +47,39 @@ export const NavBar = (): JSX.Element => {
       shadow="md"
       height="10%"
       display="flex"
-      justifyContent="flex-end"
+      justifyContent="space-between"
       alignContent="center"
       alignItems="center"
       px={10}
       backgroundColor="white"
     >
+      <Menu>
+        <MenuButton
+          px={4}
+          py={2}
+          transition="all 0.2s"
+          borderRadius="md"
+          borderWidth="1px"
+          _hover={{ bg: 'gray.400' }}
+          _expanded={{ bg: 'blue.400' }}
+          _focus={{ boxShadow: 'outline' }}
+        >
+          {bugLoading ? (
+            <Spinner />
+          ) : (
+            ` All(${allBugs ? allBugs.bugs.length : '     '})`
+          )}
+        </MenuButton>
+
+        <MenuList>
+          {data?.websites.map((website) => (
+            <MenuItem>{website.name}</MenuItem>
+          ))}
+
+          <MenuDivider />
+          <MenuItem>New Website</MenuItem>
+        </MenuList>
+      </Menu>
       <Button
         backgroundColor="#24323F"
         color="white"
@@ -84,14 +129,14 @@ export const Header = (): JSX.Element => {
       <Box>
         <Breadcrumb pt="3">
           <BreadcrumbItem>
-            <BreadcrumbLink href="">
-              <Text>Dc bug report</Text>
+            <BreadcrumbLink href="/">
+              <Text fontSize={10}>Dc bug report</Text>
             </BreadcrumbLink>
           </BreadcrumbItem>
 
           {breadcrumbs.map((link, index) => (
             <BreadcrumbItem>
-              <BreadcrumbLink href="">
+              <BreadcrumbLink fontSize={10} href={link.href}>
                 {index === breadcrumbs.length - 1
                   ? `${link.breadcrumb}`
                   : capitalizeFirstLetter(link.breadcrumb)}
@@ -115,21 +160,6 @@ export const Header = (): JSX.Element => {
 }
 
 export default function Layout(): JSX.Element {
-  const { dispatchLogin, dispatchLogout } = useAppState()
-
-  const [me] = useMutateMeMutation({
-    onCompleted: (data) => {
-      dispatchLogin(data.me)
-    },
-    onError: () => {
-      dispatchLogout()
-    },
-  })
-
-  useEffect(() => {
-    me()
-  }, [])
-
   return (
     <Box
       fontFamily="Poppins"
@@ -144,7 +174,7 @@ export default function Layout(): JSX.Element {
         <NavBar />
         <Box display="flex" height="100%">
           <BugList />
-          <Box width="100%" height="100%" p={10}>
+          <Box width="100%" height="100%">
             <Outlet />
           </Box>
         </Box>

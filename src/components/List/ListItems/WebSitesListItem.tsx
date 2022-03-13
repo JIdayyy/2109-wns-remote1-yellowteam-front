@@ -1,4 +1,5 @@
 import { Box, Image, Link, Text } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { GetAllWebSitesQuery } from 'src/generated/graphql'
 
@@ -6,6 +7,8 @@ type Props = {
   website: GetAllWebSitesQuery['websites'][number]
   isNew: boolean
 }
+
+const MotionBox = motion(Box)
 
 export default function WebSitesListItem({
   website,
@@ -21,25 +24,26 @@ export default function WebSitesListItem({
   }
 
   return (
-    <Box
+    <MotionBox
+      rounded={5}
+      whileHover={{ backgroundColor: '#F0F0F0' }}
       onClick={handleClick}
       p={4}
       cursor="pointer"
       display="flex"
+      backgroundColor="white"
       flexDirection="row"
-      border="1px"
-      borderColor="gray"
       key={website.id}
     >
-      <Image src={website.logo} width={10} height={10} />
+      <Image mr={10} src={website.logo} width={10} height={10} />
       <Box>
-        <Text color="black">{website.name}</Text>
-        <Text color="black">
-          <Link href={website.url} target="_blank" color="black">
+        <Text color="#9F9F9F">{website.name}</Text>
+        <Text fontSize={10} color="#9F9F9F">
+          <Link href={website.url} target="_blank" color="#9F9F9F">
             {website.url}
           </Link>
         </Text>
       </Box>
-    </Box>
+    </MotionBox>
   )
 }

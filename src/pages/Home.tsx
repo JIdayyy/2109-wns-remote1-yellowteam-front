@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box, Text } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import CutomDonutChart from 'src/components/Charts/PieChart'
 
 export default function Home(): JSX.Element {

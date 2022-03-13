@@ -1,13 +1,20 @@
-import React from 'react'
-import { useRoutes, BrowserRouter as Router } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import {
+  useRoutes,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom'
 import type { RouteObject } from 'react-router-dom'
 
-import { ChakraProvider, Text } from '@chakra-ui/react'
+import { ChakraProvider, Spinner, Text } from '@chakra-ui/react'
 import { ApolloProvider } from '@apollo/client'
+import { CookiesProvider } from 'react-cookie'
 import Layout from './components/Layout'
 import Login from './pages/Login'
 import mainTheme from './theme/mainTheme'
-import apolloClient from './services/graphql'
+import initializeCustomApolloClient from './services/graphql'
 import useAppState from './hooks/useAppState'
 import Home from './pages/Home'
 import '@fontsource/poppins' // Defaults to weight 400.
@@ -16,8 +23,38 @@ import Bug from './pages/Bug'
 import CreateBug from './components/Forms/CreateBug'
 import HomeLayout from './components/HomeLayout'
 import CreateBugPage from './pages/createBug'
+import UploadFile from './components/Forms/UploadFile'
+import { useMutateMeMutation } from './generated/graphql'
 
-const client = apolloClient()
+const customClient = initializeCustomApolloClient()
+
+function RequireAuth({ children }: { children: JSX.Element }) {
+  const { isAuth } = useAppState()
+  const { dispatchLogin, dispatchLogout } = useAppState()
+
+  const [me, { loading }] = useMutateMeMutation({
+    onCompleted: (data) => {
+      dispatchLogin(data.me)
+    },
+    onError: () => {
+      dispatchLogout()
+    },
+  })
+
+  useEffect(() => {
+    me()
+  }, [])
+  if (!isAuth && loading) return <Spinner />
+  if (!isAuth) {
+    return (
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    )
+  }
+  return children
+}
 
 const routes: RouteObject[] = [
   {
@@ -39,6 +76,10 @@ const routes: RouteObject[] = [
         children: [
           { index: true, element: <CreateBugPage /> },
           { path: '/createbug/websites/:id/', element: <CreateBug /> },
+          {
+            path: '/createbug/websites/:websiteId/bug/:bugId/uploadfiles',
+            element: <UploadFile />,
+          },
         ],
       },
       {
@@ -54,17 +95,21 @@ const routes: RouteObject[] = [
   },
 ]
 
-const Routes = () => useRoutes(routes)
+const MyRoutes = () => useRoutes(routes)
 
 function App(): JSX.Element {
-  const { isAuth } = useAppState()
-
   return (
-    <ApolloProvider client={client}>
-      <ChakraProvider theme={mainTheme}>
-        <Router>{isAuth ? <Routes /> : <Login />}</Router>
-      </ChakraProvider>
-    </ApolloProvider>
+    <CookiesProvider>
+      <ApolloProvider client={customClient}>
+        <ChakraProvider theme={mainTheme}>
+          <Router>
+            <RequireAuth>
+              <MyRoutes />
+            </RequireAuth>
+          </Router>
+        </ChakraProvider>
+      </ApolloProvider>
+    </CookiesProvider>
   )
 }
 

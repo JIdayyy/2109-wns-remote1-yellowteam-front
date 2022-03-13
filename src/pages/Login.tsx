@@ -1,97 +1,147 @@
+/* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
-import { Button, Flex, FormControl, Input, Text } from '@chakra-ui/react'
-import { useEffect } from 'react'
-import { FieldValues, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
-import useAppState from 'src/hooks/useAppState'
-import mainTheme from 'src/theme/mainTheme'
-import {
-  useMutateLoginMutation,
-  useMutateMeMutation,
-} from '../generated/graphql'
+import { Box, Button, Flex, Text } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
+import { useState } from 'react'
+import LoginForm from 'src/components/Forms/Login'
+import RegisterForm from 'src/components/Forms/Register'
+
+const AnimatedPannel = motion(Box)
+const AnimatedButton = motion(Button)
+const AnimatedText = motion(Text)
 
 export default function Login(): JSX.Element {
-  const navigate = useNavigate()
+  const [isLogin, setIsLogin] = useState(true)
 
-  const { dispatchLogin, dispatchLogout } = useAppState()
-  const [login] = useMutateLoginMutation({
-    onCompleted: (data) => {
-      dispatchLogin(data.login)
-      navigate('/')
+  const variants = {
+    login: {
+      left: isLogin ? 0 : undefined,
+      right: !isLogin ? 0 : 100,
     },
-
-    onError: (error) => {
-      console.error(error)
+    register: {
+      right: 0,
     },
-  })
+  }
 
-  const [me] = useMutateMeMutation({
-    onCompleted: (data) => {
-      dispatchLogin(data.me)
+  const variant2 = {
+    login: {
+      x: isLogin ? 100 : 0,
+
+      opacity: isLogin ? 0 : 1,
     },
-    onError: () => {
-      dispatchLogout()
+  }
+  const variant3 = {
+    login: {
+      x: isLogin ? -0 : -100,
     },
-  })
+  }
 
-  useEffect(() => {
-    me()
-  }, [])
+  const textVariant = {
+    login: {
+      opacity: isLogin ? [1, 0, 1] : [1, 0, 1],
+    },
+    register: {
+      opacity: !isLogin ? [1, 0, 1] : [1, 0, 1],
+    },
+  }
 
-  const { handleSubmit, register } = useForm()
-
-  const onSubmit = async ({ email, password }: FieldValues): Promise<void> => {
-    login({
-      variables: { data: { email, password } },
-    })
+  const buttonVariants = {
+    animate: {
+      width: isLogin ? [200, 160, 120, 100] : [200, 160, 120, 100],
+      x: isLogin ? [30, -50, 0] : [30, 100, -0],
+    },
+    initial: {
+      width: !isLogin ? [200, 120, 100] : [100, 100, 100, 100],
+      x: !isLogin ? [30, 50, 0] : [0, 50, 0],
+    },
   }
 
   return (
-    <Flex direction="row" alignItems="center">
-      <Flex background="#24323F" w="100%" h="100vh" alignItems="center">
-        <Text
-          textAlign="center"
-          textStyle="titleLogin"
-          color="#ffffff"
-          padding={121}
+    <>
+      <Flex direction="row" alignItems="center">
+        <AnimatedPannel
+          variants={variants}
+          transition={{ default: { duration: 0.4 } }}
+          initial="register"
+          animate="login"
+          position="absolute"
+          background="#24323F"
+          w="50%"
+          h="100vh"
+          alignItems="center"
+          zIndex={100}
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
         >
-          DC BUG REPORT
-        </Text>
-      </Flex>
-      <Flex
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        w="full"
-        h="100vh"
-      >
-        <Text textStyle="loginText">Login now</Text>
-        <FormControl p={10} w={['90%', '80%', '60%', '50%']}>
-          <Input
-            id="email"
-            placeholder="Email"
-            my={1}
-            type="text"
-            {...register('email')}
-          />
-          <Input
-            id="password"
-            placeholder="Password"
-            my={1}
-            type="password"
-            {...register('password')}
-          />
-        </FormControl>
-        <Button
-          my={3}
-          w={['65%', '55%', '35%', '25%']}
-          backgroundColor={mainTheme.colors.orange}
-          color="#ffffff"
-          onClick={handleSubmit(onSubmit)}
+          {isLogin ? (
+            <AnimatedText
+              variants={textVariant}
+              animate="login"
+              initial="login"
+            >
+              <Text my={10} textAlign="center" fontSize="4xl" color="#ffffff">
+                Welcome Back!
+              </Text>
+              <Text textAlign="center" fontSize="xl" color="#ffffff">
+                to keep connected with us please login with your infos
+              </Text>
+            </AnimatedText>
+          ) : (
+            <AnimatedText
+              variants={textVariant}
+              animate="register"
+              initial="register"
+            >
+              <Text my={10} textAlign="center" fontSize="4xl" color="#ffffff">
+                Hello, Friend!
+              </Text>
+              <Text textAlign="center" fontSize="xl" color="#ffffff">
+                Enter your personnal informations ans start your journey with us
+              </Text>
+            </AnimatedText>
+          )}
+          <AnimatedButton
+            variants={buttonVariants}
+            width="20%"
+            animate={isLogin ? 'animate' : 'initial'}
+            initial={isLogin ? 'initial' : 'animate'}
+            transition={{ default: { duration: 0.4 } }}
+            backgroundColor="transparent"
+            color="white"
+            border="1px solid white"
+            rounded={100}
+            my={10}
+            onClick={() => setIsLogin((c) => !c)}
+          >
+            {isLogin ? 'Register' : 'Sign In'}
+          </AnimatedButton>
+        </AnimatedPannel>
+        <AnimatedPannel
+          width="50%"
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          variants={variant2}
+          transition={{ default: { duration: 0.4 } }}
+          animate="login"
         >
-          SIGN IN
-        </Button>
+          <RegisterForm />
+        </AnimatedPannel>
+        <AnimatedPannel
+          display="flex"
+          width="50%"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          variants={variant3}
+          transition={{ default: { duration: 0.4 } }}
+          animate="login"
+        >
+          <LoginForm />
+        </AnimatedPannel>
       </Flex>
-    </Flex>
+    </>
   )
 }

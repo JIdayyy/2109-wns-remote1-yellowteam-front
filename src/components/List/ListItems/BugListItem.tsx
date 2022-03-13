@@ -34,6 +34,19 @@ export default function BugListItem({ bug }: Props): JSX.Element {
     return '#DFDFDF'
   }
 
+  const chipColor = () => {
+    if (bug.status === 'OPEN') {
+      return '#F69826'
+    }
+    if (bug.status === 'CLOSED') {
+      return '#FF3A3A'
+    }
+    if (bug.status === 'IN_PROGRESS') {
+      return '#9093DF'
+    }
+    return '#F69826'
+  }
+
   return (
     <Box
       backgroundColor={bgColor()}
@@ -52,8 +65,9 @@ export default function BugListItem({ bug }: Props): JSX.Element {
         <Box
           rounded="full"
           width="15px"
+          marginTop={1}
           height="15px"
-          backgroundColor="green"
+          backgroundColor={chipColor()}
         />
       </Box>
 

@@ -8,7 +8,6 @@ import { RootState } from 'src/redux/reducers'
 
 const useAppState = () => {
   const dispatch = useDispatch()
-  // const [cookies, setCookies] = useCookies()
 
   const { isAuth, user } = useSelector((state: RootState) => state.app)
 

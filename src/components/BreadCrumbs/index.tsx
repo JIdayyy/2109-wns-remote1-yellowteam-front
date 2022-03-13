@@ -29,22 +29,9 @@ const Breadcrumbs = ({ disabled }: IProps): JSX.Element => {
 
     setBreadcrumbs(pathArray)
   }, [router])
-  console.log(breadcrumbs, router, 'test')
   return (
-    <nav className="w-full flex justify-center text-tiny sm:text-sm lg:text-base text-gray-600">
-      <ol className="max-w-7xl w-full flex  p-1 sm:p-2">
-        <li className={`${!disabled && `hover:text-gray-400  `}`}>
-          {!disabled ? (
-            <Link href="/">
-              <a href="replace" className="hover:underline">
-                HOME
-              </a>
-            </Link>
-          ) : (
-            <span>HOME</span>
-          )}
-          <span className="font-light mx-2">{' | '}</span>
-        </li>
+    <nav>
+      <ol>
         {breadcrumbs.length >= 1 &&
           breadcrumbs[0].breadcrumb &&
           breadcrumbs.map((breadcrumb, index) => (

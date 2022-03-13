@@ -1,12 +1,5 @@
-import {
-  Box,
-  SkeletonCircle,
-  SkeletonText,
-  Spinner,
-  Text,
-} from '@chakra-ui/react'
+import { Box, SkeletonCircle, SkeletonText, Text } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
-import SkelettonPlaceholder from 'src/components/Assets/SkelettonPLaceholder'
 import { useGetBugDatasQuery } from 'src/generated/graphql'
 
 export default function Bug(): JSX.Element {
@@ -26,8 +19,6 @@ export default function Bug(): JSX.Element {
         <SkeletonText mt="2" noOfLines={10} spacing="3" />
       </Box>
     )
-
-  console.log(data)
 
   return (
     <Box w="100%" backgroundColor="white" p={20} shadow="md" height="80%">
