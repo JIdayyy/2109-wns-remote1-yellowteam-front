@@ -3147,7 +3147,7 @@ export type GetBugDatasQueryVariables = Exact<{
 }>;
 
 
-export type GetBugDatasQuery = { __typename?: 'Query', bug: { __typename?: 'Bug', id: string, title: string, status: BugStatus, severity: BugSeverity, priority: BugPriority, description: string, Website: { __typename?: 'Website', id: string, name: string, url: string, logo: string, isPreview: boolean }, File: Array<{ __typename?: 'File', id: string, name: string, path: string }>, user: { __typename?: 'User', first_name: string, last_name: string, email: string } } };
+export type GetBugDatasQuery = { __typename?: 'Query', bug: { __typename?: 'Bug', id: string, number: number, title: string, status: BugStatus, severity: BugSeverity, priority: BugPriority, description: string, Website: { __typename?: 'Website', id: string, name: string, url: string, logo: string, isPreview: boolean }, File: Array<{ __typename?: 'File', id: string, name: string, path: string }>, user: { __typename?: 'User', first_name: string, last_name: string, email: string } } };
 
 export const UserFragmentDoc = gql`
     fragment User on User {
@@ -3417,6 +3417,7 @@ export const GetBugDatasDocument = gql`
     query GetBugDatas($where: BugWhereUniqueInput!) {
   bug(where: $where) {
     id
+    number
     title
     status
     severity

@@ -88,7 +88,8 @@ const routes: RouteObject[] = [
       },
       {
         path: '/bugs/:id',
-        element: <Bug />,
+        element: <HomeLayout />,
+        children: [{ index: true, element: <Bug /> }],
       },
       { path: '*', element: <Text>No match</Text> },
     ],
