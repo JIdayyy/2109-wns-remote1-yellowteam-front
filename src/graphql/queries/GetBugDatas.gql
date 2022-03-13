@@ -1,6 +1,7 @@
 query GetBugDatas($where: BugWhereUniqueInput!) {
   bug(where: $where) {
     id
+    number
     title
     status
     severity

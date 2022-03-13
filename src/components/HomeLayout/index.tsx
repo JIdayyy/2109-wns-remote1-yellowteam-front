@@ -8,6 +8,7 @@ const HomeLayout = (): JSX.Element => {
       position="relative"
       height="80%"
       display="flex"
+      zIndex={10}
       overflow="scroll"
       p={[2, 4, 8, 10]}
       css={{
@@ -23,7 +24,7 @@ const HomeLayout = (): JSX.Element => {
         },
       }}
       flexDirection="column"
-      justifyContent="center"
+      justifyContent="flex-start"
       alignItems="center"
     >
       <Outlet />

@@ -43,7 +43,6 @@ export default function UploadFile(): JSX.Element {
       },
       withCredentials: true,
     }
-    console.log(uploadSucces)
     const data = () =>
       axios
         .post(`${serverUrl}?userId=${user.id}&bugId=${id}`, formData, {

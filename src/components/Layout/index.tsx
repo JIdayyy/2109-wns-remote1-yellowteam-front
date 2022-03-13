@@ -46,6 +46,7 @@ export const NavBar = (): JSX.Element => {
       width="100%"
       shadow="md"
       height="10%"
+      zIndex={100}
       display="flex"
       justifyContent="space-between"
       alignContent="center"
@@ -167,12 +168,13 @@ export default function Layout(): JSX.Element {
       position="fixed"
       width="100vw"
       display="flex"
+      zIndex={20}
     >
       <UserNavBar />
-      <Box width="100%" height="100%">
+      <Box zIndex={20} width="100%" height="100%">
         <Header />
         <NavBar />
-        <Box display="flex" height="100%">
+        <Box display="flex" zIndex={1} height="100%">
           <BugList />
           <Box width="100%" height="100%">
             <Outlet />
