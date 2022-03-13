@@ -10,6 +10,9 @@ import UploadIcon from 'src/static/svg/UploadIcon'
 import MyDropzone from 'src/components/DropZone'
 import CustomFileItem from './FileItem'
 
+const serverUrl =
+  process.env.REACT_APP_SERVER_URL || 'http://localhost:5000/graphqkl'
+
 export default function UploadFile(): JSX.Element {
   const [file, setFile] = useState<FileValidated[]>([])
   const { bugId } = useParams()
@@ -42,19 +45,15 @@ export default function UploadFile(): JSX.Element {
     console.log(uploadSucces)
     const data = () =>
       axios
-        .post(
-          `http://localhost:5000/graphql?userId=${user.id}&bugId=${id}`,
-          formData,
-          {
-            ...config,
-            onUploadProgress: (progressEvent) => {
-              const { loaded, total } = progressEvent
-              setFileOnUpload(oneFile.id)
+        .post(`${serverUrl}?userId=${user.id}&bugId=${id}`, formData, {
+          ...config,
+          onUploadProgress: (progressEvent) => {
+            const { loaded, total } = progressEvent
+            setFileOnUpload(oneFile.id)
 
-              setProgress((loaded / total) * 100)
-            },
-          }
-        )
+            setProgress((loaded / total) * 100)
+          },
+        })
         .then((r) => {
           if (r.data.data.uploadFile) {
             setUploadSucces((c) => [...c, r.data.data.uploadFile.name])

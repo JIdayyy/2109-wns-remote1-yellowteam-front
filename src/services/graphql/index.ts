@@ -7,8 +7,10 @@ import {
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null
 
+const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:4000'
+
 const link = createHttpLink({
-  uri: 'http://localhost:5000/graphql',
+  uri: serverUrl,
   credentials: 'include',
   headers: {
     'platform-auth-user-agent': 'web-platform',
@@ -17,7 +19,7 @@ const link = createHttpLink({
 
 export const client = new ApolloClient({
   ssrMode: typeof window === 'undefined',
-  uri: 'http://localhost:5000/graphql',
+  uri: serverUrl,
   cache: new InMemoryCache(),
   link,
 })

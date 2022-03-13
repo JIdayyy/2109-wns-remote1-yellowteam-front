@@ -73,7 +73,7 @@ export const NavBar = (): JSX.Element => {
 
         <MenuList>
           {data?.websites.map((website) => (
-            <MenuItem>{website.name}</MenuItem>
+            <MenuItem key={website.id}>{website.name}</MenuItem>
           ))}
 
           <MenuDivider />
@@ -135,7 +135,7 @@ export const Header = (): JSX.Element => {
           </BreadcrumbItem>
 
           {breadcrumbs.map((link, index) => (
-            <BreadcrumbItem>
+            <BreadcrumbItem key={link.href}>
               <BreadcrumbLink fontSize={10} href={link.href}>
                 {index === breadcrumbs.length - 1
                   ? `${link.breadcrumb}`
