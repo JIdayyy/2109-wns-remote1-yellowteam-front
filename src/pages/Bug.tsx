@@ -48,7 +48,7 @@ export default function Bug(): JSX.Element {
 
   if (loading)
     return (
-      <Box padding="20" height="800px" boxShadow="lg" bg="white">
+      <Box padding="20" width="100%" height="800px" boxShadow="lg" bg="white">
         <SkeletonCircle mt="2" noOfLines={1} />
         <SkeletonText mt="2" noOfLines={10} spacing="3" />
       </Box>
@@ -180,7 +180,12 @@ export default function Bug(): JSX.Element {
                   backgroundColor="#B9B9B9"
                   color="white"
                 >
-                  <Link target="_blank" href={file.path}>
+                  <Link
+                    isTruncated
+                    noOfLines={1}
+                    target="_blank"
+                    href={file.path}
+                  >
                     {file.name}
                   </Link>
                 </Button>
