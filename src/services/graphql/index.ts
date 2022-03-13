@@ -12,6 +12,7 @@ const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:4000'
 const link = createHttpLink({
   uri: serverUrl,
   credentials: 'include',
+
   headers: {
     'platform-auth-user-agent': 'web-platform',
   },

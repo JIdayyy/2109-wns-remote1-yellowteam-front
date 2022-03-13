@@ -41,6 +41,7 @@ export default function UploadFile(): JSX.Element {
         'content-type': 'multipart/form-data',
         'platform-auth-user-agent': 'web-platform',
       },
+      credentials: true,
     }
     console.log(uploadSucces)
     const data = () =>
