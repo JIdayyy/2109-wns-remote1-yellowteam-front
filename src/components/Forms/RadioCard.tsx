@@ -6,27 +6,27 @@ interface RadioProps extends UseRadioProps {
   children?: React.ReactNode
 }
 
-const backgroundColor = (): string => {
-  if (children === 'CRITICAL') {
-    return '#161A42'
-  }
-  if (children === 'HIGH') {
-    return '#FF0000'
-  }
-  if (children === 'MEDIUM') {
-    return '#9A8C43'
-  }
-  if (children === 'LOW') {
-    return '#9988FF'
-  }
-  return 'gray'
-}
-
 const RadioCard: FC = (props: RadioProps) => {
   const { getInputProps, getCheckboxProps } = useRadio(props)
   const input = getInputProps()
   const checkbox = getCheckboxProps()
   const { children } = props
+
+  const backgroundColor = (): string => {
+    if (children === 'CRITICAL') {
+      return '#161A42'
+    }
+    if (children === 'HIGH') {
+      return '#FF0000'
+    }
+    if (children === 'MEDIUM') {
+      return '#9A8C43'
+    }
+    if (children === 'LOW') {
+      return '#9988FF'
+    }
+    return 'gray'
+  }
 
   return (
     <Box as="label">
