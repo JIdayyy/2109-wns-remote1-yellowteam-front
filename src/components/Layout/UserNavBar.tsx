@@ -1,61 +1,114 @@
-import React from 'react'
-import { Flex, Box } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { Flex, Text, Link } from '@chakra-ui/react'
 import DcBug from 'src/static/svg/DbBug'
-import { useLocation, useNavigate } from 'react-router-dom'
-import useAppState from 'src/hooks/useAppState'
-import SignOutIcon from 'src/static/svg/SignOutIcon'
-import TasksIcon from 'src/static/svg/TasksIcon'
 
-const Tab = ({ children, path }: { children: JSX.Element; path: string }) => {
-  const navigate = useNavigate()
+import { AnimatePresence, motion } from 'framer-motion'
+import DcTm from 'src/static/svg/DcTm'
 
-  const setTab = (tab: string) => navigate(`/${tab}`)
+const MotionFLex = motion(Flex)
+const MotionText = motion(Text)
 
-  return (
-    <Box as="button" data-testid="tasks-button" onClick={() => setTab(path)}>
-      {children}
-    </Box>
-  )
-}
+const navLinks = [
+  {
+    name: 'Reports',
+    path: '/',
+  },
+]
 
 const UserNavBar = (): JSX.Element => {
-  const { dispatchLogout } = useAppState()
-
-  const location = useLocation()
-
-  const handleLougout = () => dispatchLogout()
+  const [isHover, setIsHover] = useState(false)
 
   return (
-    <Flex
-      py="40px"
+    <MotionFLex
+      fontFamily="Poppins"
+      whileHover={{ width: '12%' }}
+      transition={{ default: { duration: 0.2 } }}
+      position="fixed"
+      left={0}
+      top={0}
+      py="20px"
       px="10px"
-      width="66px"
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+      width="5%"
       backgroundColor="#24323F"
       height="100%"
       flexDirection="column"
-      alignItems="center"
-      justifyContent="end"
-      z-index="10"
+      alignItems="flex-end"
+      justifyContent={isHover ? 'space-between' : 'flex-end'}
+      zIndex={100}
     >
-      <Flex
-        height="100%"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="space-around"
-      >
-        <Tab path="">
-          <TasksIcon
-            color={location.pathname.includes('/') ? 'gray' : 'white'}
-          />
-        </Tab>
-
-        <Box as="button" data-testid="sign-out-button" onClick={handleLougout}>
-          <SignOutIcon color="white" />
-        </Box>
-      </Flex>
-
-      <DcBug />
-    </Flex>
+      <AnimatePresence>
+        {isHover && (
+          <MotionFLex
+            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            width="100%"
+            exit={{ x: -200 }}
+            transition={{ default: { duration: 0.4, delay: 0 } }}
+            key="navlinks"
+            height="100%"
+            flexDirection="column"
+            alignItems="flex-start"
+            color="white"
+            justifyContent="flex-start"
+            px="10px"
+          >
+            <MotionFLex
+              mb="50px"
+              mt="20px"
+              px={2}
+              justifyContent="space-between"
+              width="35%"
+              animate={{ opacity: 1 }}
+              initial={{ opacity: 0 }}
+            >
+              <DcBug />
+              <DcTm />
+            </MotionFLex>
+            {navLinks.map((link) => (
+              <MotionFLex
+                width="100%"
+                px={2}
+                rounded={2}
+                py={1}
+                whileHover={{ backgroundColor: '#3A4D5F' }}
+              >
+                <Text textAlign="right" flexWrap="nowrap" fontWeight="bold">
+                  <Link href={link.path}> {link.name}</Link>
+                </Text>
+              </MotionFLex>
+            ))}
+          </MotionFLex>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        <MotionFLex
+          animate={{ opacity: 1 }}
+          initial={{ opacity: 0 }}
+          transition={{ default: { duration: 0.4, delay: 0 } }}
+          alignItems="center"
+          justifyContent="center"
+          color="white"
+          flexDirection="row"
+          width="100%"
+          exit={{ opacity: 0 }}
+        >
+          {!isHover ? (
+            <DcBug />
+          ) : (
+            <MotionText
+              animate={{ opacity: 1 }}
+              initial={{ opacity: 0 }}
+              transition={{ delay: 0.1 }}
+              fontWeight="bold"
+            >
+              DC BUG REPORT
+            </MotionText>
+          )}
+        </MotionFLex>
+      </AnimatePresence>
+    </MotionFLex>
   )
 }
 

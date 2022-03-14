@@ -25,6 +25,7 @@ export default function BugList(): JSX.Element {
         },
         '&::-webkit-scrollbar-track': {
           width: '6px',
+          background: '#DFDFDF',
         },
         '&::-webkit-scrollbar-thumb': {
           background: 'gray',

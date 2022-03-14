@@ -97,7 +97,7 @@ export default function Login(): JSX.Element {
                 Hello, Friend!
               </Text>
               <Text textAlign="center" fontSize="xl" color="#ffffff">
-                Enter your personnal informations ans start your journey with us
+                Enter your personnal informations and start your journey with us
               </Text>
             </AnimatedText>
           )}

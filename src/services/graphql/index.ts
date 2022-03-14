@@ -7,7 +7,7 @@ import {
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null
 
-const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:4000'
+const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000'
 
 const link = createHttpLink({
   uri: serverUrl,
