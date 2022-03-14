@@ -1,14 +1,16 @@
 import { Box } from '@chakra-ui/react'
 import { useGetAllBugsByQuery } from 'src/generated/graphql'
+import useSearchState from 'src/hooks/useSearchState'
 import SkelettonPlaceholder from '../Assets/SkelettonPLaceholder'
 import BugListItem from './ListItems/BugListItem'
 
 export default function BugList(): JSX.Element {
+  const { website } = useSearchState()
   const { data, loading } = useGetAllBugsByQuery({
     variables: {
       where: {
         websiteId: {
-          contains: '',
+          contains: website,
         },
       },
     },

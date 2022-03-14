@@ -2,9 +2,9 @@
 import { combineReducers } from 'redux'
 
 import app from './slices/app'
-import createBug from './slices/createBug'
+import search from './slices/search'
 
-const rootReducer = combineReducers({ app, createBug })
+const rootReducer = combineReducers({ app, search })
 
 export type RootState = ReturnType<typeof rootReducer>
 

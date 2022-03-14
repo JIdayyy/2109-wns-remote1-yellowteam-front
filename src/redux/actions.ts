@@ -1,2 +1,2 @@
 export { login, logout, updateUser } from './slices/app'
-export { setWebsite, setStatus } from './slices/createBug'
+export { reset, setBugOnSearch } from './slices/search'

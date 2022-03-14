@@ -44,7 +44,7 @@ export default function WebSiteList({
       }}
     >
       <Text fontSize={17} my={5} mx={4}>
-        On wich website did you encounter this bug ?{' '}
+        On wich website did you encounter this bug ?
       </Text>
       <InputGroup>
         <InputLeftElement pointerEvents="none" children={<SearchIcon />} />

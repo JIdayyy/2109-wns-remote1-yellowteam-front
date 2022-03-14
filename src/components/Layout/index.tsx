@@ -12,17 +12,14 @@ import {
   Menu,
   MenuItem,
   MenuButton,
-  Spinner,
   SkeletonCircle,
   SkeletonText,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import useAppState from 'src/hooks/useAppState'
-import {
-  useGetAllBugsByQuery,
-  useGetAllWebSitesQuery,
-} from '../../generated/graphql'
+import useSearchState from 'src/hooks/useSearchState'
+import { useGetAllWebSitesQuery } from '../../generated/graphql'
 import BugList from '../List/BugList'
 import UserNavBar from './UserNavBar'
 
@@ -33,15 +30,9 @@ interface IBreadcrumb {
 
 export const NavBar = (): JSX.Element => {
   const { data } = useGetAllWebSitesQuery()
-  const { data: allBugs, loading: bugLoading } = useGetAllBugsByQuery({
-    variables: {
-      where: {
-        websiteId: {
-          contains: '',
-        },
-      },
-    },
-  })
+
+  const [selectedWebsite, setSelectedWebsite] = useState(`All`)
+  const { dispatchSetBugOnSearch, dispatchResetSearchState } = useSearchState()
   const navigation = useNavigate()
 
   return (
@@ -84,16 +75,26 @@ export const NavBar = (): JSX.Element => {
             _expanded={{ bg: 'blue.400' }}
             _focus={{ boxShadow: 'outline' }}
           >
-            {bugLoading ? (
-              <Spinner />
-            ) : (
-              ` All(${allBugs ? allBugs.bugs.length : '     '})`
-            )}
+            {selectedWebsite}
           </MenuButton>
 
           <MenuList>
+            <MenuItem
+              onClick={() => {
+                setSelectedWebsite('All')
+                dispatchResetSearchState()
+              }}
+            >
+              All
+            </MenuItem>
             {data?.websites.map((website) => (
-              <MenuItem onClick={() => console.log(website)} key={website.id}>
+              <MenuItem
+                onClick={() => {
+                  setSelectedWebsite(website.name)
+                  dispatchSetBugOnSearch(website.id)
+                }}
+                key={website.id}
+              >
                 {website.name}
               </MenuItem>
             ))}
