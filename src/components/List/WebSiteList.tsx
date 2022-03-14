@@ -23,7 +23,7 @@ export default function WebSiteList({
 
   if (loading) <Spinner width={10} height={10} />
   if (!data) return <Box>No data</Box>
-  console.log(search)
+
   return (
     <Box
       display="flex"
