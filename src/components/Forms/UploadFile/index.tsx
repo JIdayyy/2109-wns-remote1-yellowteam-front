@@ -2,10 +2,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Box, Button, Text } from '@chakra-ui/react'
+import { Box, Button, Text, useToast } from '@chakra-ui/react'
 import useAppState from 'src/hooks/useAppState'
 import { FileValidated } from '@dropzone-ui/react/build/components/dropzone/components/utils/validation.utils'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import UploadIcon from 'src/static/svg/UploadIcon'
 import MyDropzone from 'src/components/DropZone'
 import CustomFileItem from './FileItem'
@@ -17,10 +17,12 @@ export default function UploadFile(): JSX.Element {
   const [file, setFile] = useState<FileValidated[]>([])
   const { bugId } = useParams()
   const { user } = useAppState()
+  const toast = useToast()
   const [progress, setProgress] = useState(0)
   const [fileOnUpload, setFileOnUpload] = useState<string | number | undefined>(
     ''
   )
+  const navigate = useNavigate()
   const [uploadSucces, setUploadSucces] = useState<string[]>([])
   if (!user) return <>no user</>
 
@@ -56,12 +58,29 @@ export default function UploadFile(): JSX.Element {
         })
         .then((r) => {
           if (r.data.data.uploadFile) {
+            toast({
+              title: 'Files uploaded successfully.',
+              description: 'We got your files !',
+              status: 'success',
+              duration: 2000,
+              isClosable: true,
+            })
             setUploadSucces((c) => [...c, r.data.data.uploadFile.name])
+            navigate(`/bugs/${id}`)
           }
           setProgress(0)
           return r.data
         })
-        .catch((r) => console.log(r))
+        .catch((r) => {
+          console.log(r)
+          toast({
+            title: 'Error during upload.',
+            description: 'Error !',
+            status: 'error',
+            duration: 2000,
+            isClosable: true,
+          })
+        })
     const res = await data()
     return res
   }
