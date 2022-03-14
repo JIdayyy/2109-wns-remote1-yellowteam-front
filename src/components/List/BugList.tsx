@@ -32,9 +32,9 @@ export default function BugList(): JSX.Element {
           borderRadius: '24px',
         },
       }}
-      width={['200px', '250px', '300px', '400px']}
+      width="20%"
+      minW="20%"
       flexShrink={2}
-      minW={['200px', '250px', '300px', '400px']}
       height="80%"
       display="flex"
       flexDirection="column"

@@ -26,6 +26,12 @@ export default function WebSitesListItem({
   return (
     <MotionBox
       rounded={5}
+      width="300px"
+      height="100px"
+      shadow="md"
+      justifyContent="flex-start"
+      alignItems="center"
+      m={2}
       whileHover={{ backgroundColor: '#F0F0F0' }}
       onClick={handleClick}
       p={4}
@@ -36,9 +42,9 @@ export default function WebSitesListItem({
       key={website.id}
     >
       <Image mr={10} src={website.logo} width={10} height={10} />
-      <Box>
+      <Box w="100%">
         <Text color="#9F9F9F">{website.name}</Text>
-        <Text fontSize={10} color="#9F9F9F">
+        <Text isTruncated noOfLines={1} w="100%" fontSize={10} color="#9F9F9F">
           <Link href={website.url} target="_blank" color="#9F9F9F">
             {website.url}
           </Link>

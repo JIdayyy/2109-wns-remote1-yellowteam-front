@@ -1,5 +1,15 @@
-import { Box, Spinner, Text } from '@chakra-ui/react'
+/* eslint-disable react/no-children-prop */
+import {
+  Box,
+  Flex,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Spinner,
+  Text,
+} from '@chakra-ui/react'
 import { useGetAllWebSitesQuery } from 'src/generated/graphql'
+import SearchIcon from 'src/static/svg/Search'
 import WebSitesListItem from './ListItems/WebSitesListItem'
 
 export default function WebSiteList({
@@ -14,13 +24,10 @@ export default function WebSiteList({
 
   return (
     <Box
-      shadow="md"
-      backgroundColor="white"
       display="flex"
       rounded={4}
-      height="500px"
-      width="100%"
-      p={4}
+      width="auto"
+      height="100%"
       overflow="scroll"
       flexDirection="column"
       css={{
@@ -39,9 +46,24 @@ export default function WebSiteList({
       <Text fontSize={17} my={5} mx={4}>
         On wich website did you encounter this bug ?{' '}
       </Text>
-      {data?.websites.map((website) => (
-        <WebSitesListItem key={website.id} isNew={isNew} website={website} />
-      ))}
+      <InputGroup>
+        <InputLeftElement pointerEvents="none" children={<SearchIcon />} />
+        <Input type="tel" placeholder="Search" />
+      </InputGroup>
+      <Flex width="100%" flexWrap="wrap" flexDirection="row">
+        {data?.websites.map((website) => (
+          <WebSitesListItem key={website.id} isNew={isNew} website={website} />
+        ))}
+        {data?.websites.map((website) => (
+          <WebSitesListItem key={website.id} isNew={isNew} website={website} />
+        ))}
+        {data?.websites.map((website) => (
+          <WebSitesListItem key={website.id} isNew={isNew} website={website} />
+        ))}
+        {data?.websites.map((website) => (
+          <WebSitesListItem key={website.id} isNew={isNew} website={website} />
+        ))}
+      </Flex>
     </Box>
   )
 }
