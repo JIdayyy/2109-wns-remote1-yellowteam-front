@@ -4,6 +4,7 @@ import DcBug from 'src/static/svg/DbBug'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import DcTm from 'src/static/svg/DcTm'
+import useAppState from 'src/hooks/useAppState'
 
 const MotionFLex = motion(Flex)
 const MotionText = motion(Text)
@@ -17,6 +18,7 @@ const navLinks = [
 
 const UserNavBar = (): JSX.Element => {
   const [isHover, setIsHover] = useState(false)
+  const { dispatchLogout } = useAppState()
 
   return (
     <MotionFLex
@@ -59,6 +61,7 @@ const UserNavBar = (): JSX.Element => {
               mt="20px"
               px={2}
               justifyContent="space-between"
+              alignItems="center"
               width="35%"
               animate={{ opacity: 1 }}
               initial={{ opacity: 0 }}
@@ -79,6 +82,23 @@ const UserNavBar = (): JSX.Element => {
                 </Text>
               </MotionFLex>
             ))}
+            <MotionFLex
+              width="100%"
+              px={2}
+              rounded={2}
+              py={1}
+              whileHover={{ backgroundColor: '#3A4D5F' }}
+            >
+              <Text
+                cursor="pointer"
+                onClick={() => dispatchLogout()}
+                textAlign="right"
+                flexWrap="nowrap"
+                fontWeight="bold"
+              >
+                Logout
+              </Text>
+            </MotionFLex>
           </MotionFLex>
         )}
       </AnimatePresence>
