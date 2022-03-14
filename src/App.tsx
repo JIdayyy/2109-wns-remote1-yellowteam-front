@@ -7,7 +7,6 @@ import {
   Navigate,
 } from 'react-router-dom'
 import type { RouteObject } from 'react-router-dom'
-
 import { ChakraProvider, Spinner, Text } from '@chakra-ui/react'
 import { ApolloProvider } from '@apollo/client'
 import { CookiesProvider } from 'react-cookie'
@@ -44,6 +43,7 @@ function RequireAuth({ children }: { children: JSX.Element }) {
   useEffect(() => {
     me()
   }, [])
+
   if (!isAuth && loading) return <Spinner />
   if (!isAuth) {
     return (

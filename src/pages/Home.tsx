@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Box } from '@chakra-ui/react'
-import LineChart from 'src/components/Charts/LineChart'
 import CutomDonutChart from 'src/components/Charts/PieChart'
 
 export default function Home(): JSX.Element {
@@ -30,7 +29,7 @@ export default function Home(): JSX.Element {
       <Box rounded={2} m={10} shadow="md" p={10} bgColor="white">
         <CutomDonutChart />
       </Box>
-      <LineChart />
+      {/* <LineChart /> */}
     </Box>
   )
 }

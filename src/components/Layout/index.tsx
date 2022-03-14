@@ -59,8 +59,8 @@ export const NavBar = (): JSX.Element => {
       backgroundColor="white"
     >
       <Box
-        minW={['200px', '250px', '300px', '400px']}
-        width={['200px', '250px', '300px', '400px']}
+        width="20%"
+        minW="20%"
         backgroundColor="white"
         borderRight="2px solid #DDDDDD"
         position="absolute"
@@ -215,11 +215,10 @@ export default function Layout(): JSX.Element {
       <Box position="fixed" left="5%" zIndex={20} width="95%" height="100%">
         <Header />
         <NavBar />
-        <Box display="flex" zIndex={1} height="100%">
+        <Box display="flex" width="100%" zIndex={1} height="100%">
           <BugList />
-          <Box width="100%" height="100%">
-            <Outlet />
-          </Box>
+
+          <Outlet />
         </Box>
       </Box>
     </Box>
