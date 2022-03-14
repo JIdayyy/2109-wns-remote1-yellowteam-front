@@ -8,6 +8,7 @@ import {
   Spinner,
   Text,
   Textarea,
+  useToast,
 } from '@chakra-ui/react'
 import { FieldValues, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -23,6 +24,8 @@ export const priorityOptions = ['LOW', 'MEDIUM', 'HIGH']
 
 export default function CreateBugForm(): JSX.Element {
   const { control, handleSubmit, register } = useForm()
+  const toast = useToast()
+
   const { id } = useParams()
   const navigate = useNavigate()
   const { user } = useAppState()
@@ -45,6 +48,13 @@ export default function CreateBugForm(): JSX.Element {
     ],
     onCompleted: (data) => {
       console.log(data)
+      toast({
+        title: 'Bug sent.',
+        description: 'Thanks for this report.',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      })
       navigate(`/createbug/websites/${id}/bug/${data.createBug.id}/uploadfiles`)
     },
   })
