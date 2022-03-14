@@ -13,6 +13,12 @@ const navLinks = [
   {
     name: 'Reports',
     path: '/',
+    newTab: false,
+  },
+  {
+    name: 'Documentation',
+    path: 'https://my-website-two-chi.vercel.app/docs/intro',
+    newTab: true,
   },
 ]
 
@@ -78,7 +84,12 @@ const UserNavBar = (): JSX.Element => {
                 whileHover={{ backgroundColor: '#3A4D5F' }}
               >
                 <Text textAlign="right" flexWrap="nowrap" fontWeight="bold">
-                  <Link href={link.path}> {link.name}</Link>
+                  <Link
+                    href={link.path}
+                    target={`${link.newTab ? '_blank' : ''}`}
+                  >
+                    {link.name}
+                  </Link>
                 </Text>
               </MotionFLex>
             ))}
