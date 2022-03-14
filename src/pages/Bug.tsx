@@ -48,7 +48,7 @@ export default function Bug(): JSX.Element {
 
   if (loading)
     return (
-      <Box padding="20" width="100%" height="800px" boxShadow="lg" bg="white">
+      <Box padding="20" width="100%" height="2000px%" boxShadow="lg" bg="white">
         <SkeletonCircle mt="2" noOfLines={1} />
         <SkeletonText mt="2" noOfLines={10} spacing="3" />
       </Box>
@@ -170,6 +170,7 @@ export default function Bug(): JSX.Element {
           {data?.bug.File.length
             ? data?.bug.File.map((file) => (
                 <Button
+                  my={1}
                   fontWeight="normal"
                   fontSize={17}
                   px={4}

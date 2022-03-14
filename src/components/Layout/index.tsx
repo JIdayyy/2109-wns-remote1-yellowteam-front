@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   Box,
   Button,
@@ -12,6 +13,8 @@ import {
   MenuItem,
   MenuButton,
   Spinner,
+  SkeletonCircle,
+  SkeletonText,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
@@ -48,39 +51,60 @@ export const NavBar = (): JSX.Element => {
       height="10%"
       zIndex={100}
       display="flex"
-      justifyContent="space-between"
+      justifyContent="flex-end"
       alignContent="center"
+      position="relative"
       alignItems="center"
       px={10}
       backgroundColor="white"
     >
-      <Menu>
-        <MenuButton
-          px={4}
-          py={2}
-          transition="all 0.2s"
-          borderRadius="md"
-          borderWidth="1px"
-          _hover={{ bg: 'gray.400' }}
-          _expanded={{ bg: 'blue.400' }}
-          _focus={{ boxShadow: 'outline' }}
-        >
-          {bugLoading ? (
-            <Spinner />
-          ) : (
-            ` All(${allBugs ? allBugs.bugs.length : '     '})`
-          )}
-        </MenuButton>
+      <Box
+        minW={['200px', '250px', '300px', '400px']}
+        width={['200px', '250px', '300px', '400px']}
+        backgroundColor="white"
+        borderRight="2px solid #DDDDDD"
+        position="absolute"
+        left={0}
+        height="100%"
+        display="flex"
+        justifyContent="space-between"
+        px={7}
+        alignItems="center"
+      >
+        <Text mx={4}>Filter:</Text>
+        <Menu onClose={() => console.log('test')}>
+          <MenuButton
+            onChange={(e) => console.log(e)}
+            px={4}
+            py={2}
+            transition="all 0.2s"
+            borderRadius="md"
+            borderWidth="1px"
+            _hover={{ bg: 'gray.400' }}
+            _expanded={{ bg: 'blue.400' }}
+            _focus={{ boxShadow: 'outline' }}
+          >
+            {bugLoading ? (
+              <Spinner />
+            ) : (
+              ` All(${allBugs ? allBugs.bugs.length : '     '})`
+            )}
+          </MenuButton>
 
-        <MenuList>
-          {data?.websites.map((website) => (
-            <MenuItem key={website.id}>{website.name}</MenuItem>
-          ))}
+          <MenuList>
+            {data?.websites.map((website) => (
+              <MenuItem onClick={() => console.log(website)} key={website.id}>
+                {website.name}
+              </MenuItem>
+            ))}
 
-          <MenuDivider />
-          <MenuItem>New Website</MenuItem>
-        </MenuList>
-      </Menu>
+            <MenuDivider />
+            <MenuItem onClick={() => navigation('/newwebsite')}>
+              New Website
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Box>
       <Button
         backgroundColor="#24323F"
         color="white"
@@ -96,8 +120,8 @@ export const NavBar = (): JSX.Element => {
 export const Header = (): JSX.Element => {
   const [breadcrumbs, setBreadcrumbs] = useState<IBreadcrumb[]>([])
   const { user } = useAppState()
-  if (!user) return <>no user</>
   const router = useLocation()
+
   useEffect(() => {
     const querySplited = router.pathname.split('?')
     const linkPath = querySplited[0].split('/')
@@ -115,6 +139,23 @@ export const Header = (): JSX.Element => {
   function capitalizeFirstLetter(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
+  if (!user)
+    return (
+      <Box
+        width="100%"
+        display="flex"
+        flexDirection="row"
+        justifyContent="space-between"
+        alignContent="center"
+        alignItems="center"
+        p={10}
+        height="10%"
+      >
+        <SkeletonCircle mt="2" noOfLines={1} />
+        <SkeletonText mt="2" noOfLines={3} spacing="4" />
+        <SkeletonText mt="2" noOfLines={3} spacing="4" />
+      </Box>
+    )
 
   return (
     <Box
@@ -171,7 +212,7 @@ export default function Layout(): JSX.Element {
       zIndex={20}
     >
       <UserNavBar />
-      <Box zIndex={20} width="100%" height="100%">
+      <Box position="fixed" left="5%" zIndex={20} width="95%" height="100%">
         <Header />
         <NavBar />
         <Box display="flex" zIndex={1} height="100%">

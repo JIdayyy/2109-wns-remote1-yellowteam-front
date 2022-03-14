@@ -8,7 +8,6 @@ import { useRegisterMutation } from '../../../generated/graphql'
 
 export default function RegisterForm(): JSX.Element {
   const navigate = useNavigate()
-
   const { dispatchLogin } = useAppState()
   const [registerNewUser] = useRegisterMutation({
     onCompleted: (data) => {
@@ -28,9 +27,12 @@ export default function RegisterForm(): JSX.Element {
     password,
     first_name,
     last_name,
+    secret_key,
   }: FieldValues): Promise<void> => {
     registerNewUser({
-      variables: { data: { email, password, first_name, last_name } },
+      variables: {
+        data: { email, password, first_name, last_name, secret_key },
+      },
     })
   }
 
@@ -86,7 +88,7 @@ export default function RegisterForm(): JSX.Element {
           placeholder="Acces key"
           my={1}
           type="password"
-          {...register('accesKey')}
+          {...register('secret_key')}
         />
       </FormControl>
       <Button

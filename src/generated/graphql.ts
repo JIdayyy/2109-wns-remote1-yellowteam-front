@@ -2352,6 +2352,7 @@ export type RegisterInput = {
   first_name: Scalars['String'];
   last_name: Scalars['String'];
   password: Scalars['String'];
+  secret_key: Scalars['String'];
 };
 
 export enum Role {
