@@ -8,6 +8,7 @@ import {
   Spinner,
   Text,
 } from '@chakra-ui/react'
+import { useState } from 'react'
 import { useGetAllWebSitesQuery } from 'src/generated/graphql'
 import SearchIcon from 'src/static/svg/Search'
 import WebSitesListItem from './ListItems/WebSitesListItem'
@@ -18,6 +19,7 @@ export default function WebSiteList({
   isNew: boolean
 }): JSX.Element {
   const { data, loading } = useGetAllWebSitesQuery()
+  const [search, setSearch] = useState('')
 
   if (loading) <Spinner width={10} height={10} />
   if (!data) return <Box>No data</Box>
@@ -48,21 +50,69 @@ export default function WebSiteList({
       </Text>
       <InputGroup>
         <InputLeftElement pointerEvents="none" children={<SearchIcon />} />
-        <Input type="tel" placeholder="Search" />
+        <Input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          type="tel"
+          placeholder="Search"
+        />
       </InputGroup>
       <Flex width="100%" flexWrap="wrap" flexDirection="row">
-        {data?.websites.map((website) => (
-          <WebSitesListItem key={website.id} isNew={isNew} website={website} />
-        ))}
-        {data?.websites.map((website) => (
-          <WebSitesListItem key={website.id} isNew={isNew} website={website} />
-        ))}
-        {data?.websites.map((website) => (
-          <WebSitesListItem key={website.id} isNew={isNew} website={website} />
-        ))}
-        {data?.websites.map((website) => (
-          <WebSitesListItem key={website.id} isNew={isNew} website={website} />
-        ))}
+        {data?.websites
+          .filter((item) =>
+            item.name.toLowerCase().includes(search.toLowerCase())
+          )
+          .map((website) => (
+            <WebSitesListItem
+              key={website.id}
+              isNew={isNew}
+              website={website}
+            />
+          ))}
+        {data?.websites
+          .filter((item) =>
+            item.name.toLowerCase().includes(search.toLowerCase())
+          )
+          .map((website) => (
+            <WebSitesListItem
+              key={website.id}
+              isNew={isNew}
+              website={website}
+            />
+          ))}
+        {data?.websites
+          .filter((item) =>
+            item.name.toLowerCase().includes(search.toLowerCase())
+          )
+          .map((website) => (
+            <WebSitesListItem
+              key={website.id}
+              isNew={isNew}
+              website={website}
+            />
+          ))}
+        {data?.websites
+          .filter((item) =>
+            item.name.toLowerCase().includes(search.toLowerCase())
+          )
+          .map((website) => (
+            <WebSitesListItem
+              key={website.id}
+              isNew={isNew}
+              website={website}
+            />
+          ))}
+        {data?.websites
+          .filter((item) =>
+            item.name.toLowerCase().includes(search.toLowerCase())
+          )
+          .map((website) => (
+            <WebSitesListItem
+              key={website.id}
+              isNew={isNew}
+              website={website}
+            />
+          ))}
       </Flex>
     </Box>
   )
