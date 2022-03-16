@@ -3,7 +3,8 @@
 import { DateTime } from 'luxon'
 import { Box, Text } from '@chakra-ui/react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { GetAllBugsByQuery } from 'src/generated/graphql'
+import { GetAllBugsByQuery, GetBugDatasDocument } from 'src/generated/graphql'
+import { customClient } from 'src/App'
 
 type Props = {
   bug: GetAllBugsByQuery['bugs'][number]
@@ -49,17 +50,28 @@ export default function BugListItem({ bug }: Props): JSX.Element {
 
   return (
     <Box
+      onMouseEnter={async () =>
+        customClient.query({
+          query: GetBugDatasDocument,
+          variables: {
+            where: {
+              id: bug.id,
+            },
+          },
+        })
+      }
       backgroundColor={bgColor()}
       onClick={() => navigation(`/bugs/${bug.id}`)}
       p={4}
       cursor="pointer"
+      justifyContent="space-between"
       display="flex"
+      width="280px"
+      minW="280px"
       flexDirection="row"
       borderBottom="1px"
       borderColor="#CCCCCC"
       key={bug.id}
-      minH={150}
-      width="100%"
     >
       <Box width="10%" height="10%">
         <Box
@@ -73,34 +85,19 @@ export default function BugListItem({ bug }: Props): JSX.Element {
 
       <Box
         display="flex"
-        justifyContent="flex-start"
+        justifyContent="space-between"
         flexDirection="column"
         alignItems="flex-start"
         w="80%"
       >
         <Text fontWeight="bold" color="black">
-          {bug.Website.name} #{bug.number}
-        </Text>
-        <Text fontWeight="bold" color="black">
-          {bug.title}
-        </Text>
-        <Text fontWeight="normal" fontSize={9} color="black">
-          {bug.id}
-        </Text>
-
-        <Text
-          fontWeight="normal"
-          fontSize={12}
-          isTruncated
-          w="100%"
-          noOfLines={2}
-          color="black"
-        >
-          {bug.description}
+          {bug.Website.name} report #{bug.number}
         </Text>
       </Box>
 
-      <Text>{diff.values!.days}d</Text>
+      <Text flexWrap="nowrap" display="flex" w={30}>
+        {diff.values!.days} d
+      </Text>
     </Box>
   )
 }

@@ -10,6 +10,7 @@ export default function LoginForm(): JSX.Element {
   const navigate = useNavigate()
 
   const { dispatchLogin } = useAppState()
+
   const [login] = useMutateLoginMutation({
     onCompleted: (data) => {
       dispatchLogin(data.login)

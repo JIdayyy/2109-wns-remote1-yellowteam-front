@@ -1,0 +1,19 @@
+query GetAllFeatures {
+  features {
+    id
+    name
+    description
+    category {
+      id
+      name
+      backgroundColor
+      description
+      icon
+    }
+    website {
+      name
+      url
+      logo
+    }
+  }
+}

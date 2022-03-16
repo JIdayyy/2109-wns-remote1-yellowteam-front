@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react'
 import {
   useRoutes,
@@ -10,6 +11,7 @@ import type { RouteObject } from 'react-router-dom'
 import { ChakraProvider, Spinner, Text } from '@chakra-ui/react'
 import { ApolloProvider } from '@apollo/client'
 import { CookiesProvider } from 'react-cookie'
+import FingerprintJS from '@fingerprintjs/fingerprintjs-pro'
 import Layout from './components/Layout'
 import Login from './pages/Login'
 import mainTheme from './theme/mainTheme'
@@ -24,8 +26,20 @@ import HomeLayout from './components/HomeLayout'
 import CreateBugPage from './pages/createBug'
 import UploadFile from './components/Forms/UploadFile'
 import { useMutateMeMutation } from './generated/graphql'
+import Features from './pages/Features'
+import FeaturesLayout from './components/Layout/FeaturesLayout'
+import AddFeaturePage from './pages/AddFeaturePage'
+import CreateFeature from './components/Forms/CreateFeature'
 
-const customClient = initializeCustomApolloClient()
+const fpPromise = FingerprintJS.load({
+  apiKey: '8OwjmU0dvpZ9QZxBxVlq',
+  region: 'eu',
+})
+
+// Get the visitor identifier when you need it.
+fpPromise.then((fp) => fp.get()).then((result) => console.log(result.visitorId))
+
+export const customClient = initializeCustomApolloClient()
 
 function RequireAuth({ children }: { children: JSX.Element }) {
   const { isAuth } = useAppState()
@@ -66,6 +80,7 @@ const routes: RouteObject[] = [
         path: '/websites',
         element: <WebSiteList isNew={false} />,
       },
+
       {
         path: '/websites/:id/bugs',
         element: <Text color="black">test 3</Text>,
@@ -91,6 +106,16 @@ const routes: RouteObject[] = [
         element: <HomeLayout />,
         children: [{ index: true, element: <Bug /> }],
       },
+      { path: '*', element: <Text>No match</Text> },
+    ],
+  },
+  {
+    path: '/features',
+    element: <FeaturesLayout />,
+    children: [
+      { element: <Features />, index: true },
+      { element: <AddFeaturePage />, path: '/features/commit' },
+      { element: <CreateFeature />, path: '/features/commit/:id' },
       { path: '*', element: <Text>No match</Text> },
     ],
   },

@@ -40,6 +40,20 @@ export type AggregateCategory = {
   _min: Maybe<CategoryMinAggregate>;
 };
 
+export type AggregateComment = {
+  __typename?: 'AggregateComment';
+  _count: Maybe<CommentCountAggregate>;
+  _max: Maybe<CommentMaxAggregate>;
+  _min: Maybe<CommentMinAggregate>;
+};
+
+export type AggregateFeature = {
+  __typename?: 'AggregateFeature';
+  _count: Maybe<FeatureCountAggregate>;
+  _max: Maybe<FeatureMaxAggregate>;
+  _min: Maybe<FeatureMinAggregate>;
+};
+
 export type AggregateFile = {
   __typename?: 'AggregateFile';
   _avg: Maybe<FileAvgAggregate>;
@@ -47,6 +61,13 @@ export type AggregateFile = {
   _max: Maybe<FileMaxAggregate>;
   _min: Maybe<FileMinAggregate>;
   _sum: Maybe<FileSumAggregate>;
+};
+
+export type AggregateNotification = {
+  __typename?: 'AggregateNotification';
+  _count: Maybe<NotificationCountAggregate>;
+  _max: Maybe<NotificationMaxAggregate>;
+  _min: Maybe<NotificationMinAggregate>;
 };
 
 export type AggregateUser = {
@@ -87,6 +108,7 @@ export type Bug = {
   Website: Website;
   _count: Maybe<BugCount>;
   categoryId: Maybe<Scalars['String']>;
+  comments: Array<Comment>;
   created_at: Scalars['DateTime'];
   description: Scalars['String'];
   id: Scalars['String'];
@@ -98,6 +120,7 @@ export type Bug = {
   updated_at: Scalars['DateTime'];
   user: User;
   userId: Scalars['String'];
+  validation_status: ValidationStatus;
   websiteId: Scalars['String'];
 };
 
@@ -109,6 +132,16 @@ export type BugFileArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<FileWhereInput>;
+};
+
+
+export type BugCommentsArgs = {
+  cursor: InputMaybe<CommentWhereUniqueInput>;
+  distinct: InputMaybe<Array<CommentScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<CommentOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<CommentWhereInput>;
 };
 
 export type BugAvgAggregate = {
@@ -123,6 +156,7 @@ export type BugAvgOrderByAggregateInput = {
 export type BugCount = {
   __typename?: 'BugCount';
   File: Scalars['Int'];
+  comments: Scalars['Int'];
 };
 
 export type BugCountAggregate = {
@@ -139,6 +173,7 @@ export type BugCountAggregate = {
   title: Scalars['Int'];
   updated_at: Scalars['Int'];
   userId: Scalars['Int'];
+  validation_status: Scalars['Int'];
   websiteId: Scalars['Int'];
 };
 
@@ -154,6 +189,7 @@ export type BugCountOrderByAggregateInput = {
   title?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
   userId?: InputMaybe<SortOrder>;
+  validation_status?: InputMaybe<SortOrder>;
   websiteId?: InputMaybe<SortOrder>;
 };
 
@@ -161,6 +197,7 @@ export type BugCreateInput = {
   Category?: InputMaybe<CategoryCreateNestedOneWithoutBugInput>;
   File?: InputMaybe<FileCreateNestedManyWithoutBugInput>;
   Website: WebsiteCreateNestedOneWithoutBugInput;
+  comments?: InputMaybe<CommentCreateNestedManyWithoutBugInput>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
@@ -171,6 +208,7 @@ export type BugCreateInput = {
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
   user: UserCreateNestedOneWithoutBugInput;
+  validation_status?: InputMaybe<ValidationStatus>;
 };
 
 export type BugCreateManyCategoryInput = {
@@ -184,6 +222,7 @@ export type BugCreateManyCategoryInput = {
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
   userId: Scalars['String'];
+  validation_status?: InputMaybe<ValidationStatus>;
   websiteId: Scalars['String'];
 };
 
@@ -204,6 +243,7 @@ export type BugCreateManyInput = {
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
   userId: Scalars['String'];
+  validation_status?: InputMaybe<ValidationStatus>;
   websiteId: Scalars['String'];
 };
 
@@ -218,6 +258,7 @@ export type BugCreateManyUserInput = {
   status?: InputMaybe<BugStatus>;
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
+  validation_status?: InputMaybe<ValidationStatus>;
   websiteId: Scalars['String'];
 };
 
@@ -238,6 +279,7 @@ export type BugCreateManyWebsiteInput = {
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
   userId: Scalars['String'];
+  validation_status?: InputMaybe<ValidationStatus>;
 };
 
 export type BugCreateManyWebsiteInputEnvelope = {
@@ -266,6 +308,12 @@ export type BugCreateNestedManyWithoutWebsiteInput = {
   createMany?: InputMaybe<BugCreateManyWebsiteInputEnvelope>;
 };
 
+export type BugCreateNestedOneWithoutCommentsInput = {
+  connect?: InputMaybe<BugWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<BugCreateOrConnectWithoutCommentsInput>;
+  create?: InputMaybe<BugCreateWithoutCommentsInput>;
+};
+
 export type BugCreateNestedOneWithoutFileInput = {
   connect?: InputMaybe<BugWhereUniqueInput>;
   connectOrCreate?: InputMaybe<BugCreateOrConnectWithoutFileInput>;
@@ -274,6 +322,11 @@ export type BugCreateNestedOneWithoutFileInput = {
 
 export type BugCreateOrConnectWithoutCategoryInput = {
   create: BugCreateWithoutCategoryInput;
+  where: BugWhereUniqueInput;
+};
+
+export type BugCreateOrConnectWithoutCommentsInput = {
+  create: BugCreateWithoutCommentsInput;
   where: BugWhereUniqueInput;
 };
 
@@ -295,6 +348,7 @@ export type BugCreateOrConnectWithoutWebsiteInput = {
 export type BugCreateWithoutCategoryInput = {
   File?: InputMaybe<FileCreateNestedManyWithoutBugInput>;
   Website: WebsiteCreateNestedOneWithoutBugInput;
+  comments?: InputMaybe<CommentCreateNestedManyWithoutBugInput>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
@@ -305,10 +359,12 @@ export type BugCreateWithoutCategoryInput = {
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
   user: UserCreateNestedOneWithoutBugInput;
+  validation_status?: InputMaybe<ValidationStatus>;
 };
 
-export type BugCreateWithoutFileInput = {
+export type BugCreateWithoutCommentsInput = {
   Category?: InputMaybe<CategoryCreateNestedOneWithoutBugInput>;
+  File?: InputMaybe<FileCreateNestedManyWithoutBugInput>;
   Website: WebsiteCreateNestedOneWithoutBugInput;
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
@@ -320,12 +376,31 @@ export type BugCreateWithoutFileInput = {
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
   user: UserCreateNestedOneWithoutBugInput;
+  validation_status?: InputMaybe<ValidationStatus>;
+};
+
+export type BugCreateWithoutFileInput = {
+  Category?: InputMaybe<CategoryCreateNestedOneWithoutBugInput>;
+  Website: WebsiteCreateNestedOneWithoutBugInput;
+  comments?: InputMaybe<CommentCreateNestedManyWithoutBugInput>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  number?: InputMaybe<Scalars['Int']>;
+  priority?: InputMaybe<BugPriority>;
+  severity: BugSeverity;
+  status?: InputMaybe<BugStatus>;
+  title: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  user: UserCreateNestedOneWithoutBugInput;
+  validation_status?: InputMaybe<ValidationStatus>;
 };
 
 export type BugCreateWithoutUserInput = {
   Category?: InputMaybe<CategoryCreateNestedOneWithoutBugInput>;
   File?: InputMaybe<FileCreateNestedManyWithoutBugInput>;
   Website: WebsiteCreateNestedOneWithoutBugInput;
+  comments?: InputMaybe<CommentCreateNestedManyWithoutBugInput>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
@@ -335,11 +410,13 @@ export type BugCreateWithoutUserInput = {
   status?: InputMaybe<BugStatus>;
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
+  validation_status?: InputMaybe<ValidationStatus>;
 };
 
 export type BugCreateWithoutWebsiteInput = {
   Category?: InputMaybe<CategoryCreateNestedOneWithoutBugInput>;
   File?: InputMaybe<FileCreateNestedManyWithoutBugInput>;
+  comments?: InputMaybe<CommentCreateNestedManyWithoutBugInput>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
@@ -350,6 +427,7 @@ export type BugCreateWithoutWebsiteInput = {
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
   user: UserCreateNestedOneWithoutBugInput;
+  validation_status?: InputMaybe<ValidationStatus>;
 };
 
 export type BugGroupBy = {
@@ -370,6 +448,7 @@ export type BugGroupBy = {
   title: Scalars['String'];
   updated_at: Scalars['DateTime'];
   userId: Scalars['String'];
+  validation_status: ValidationStatus;
   websiteId: Scalars['String'];
 };
 
@@ -392,6 +471,7 @@ export type BugMaxAggregate = {
   title: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['DateTime']>;
   userId: Maybe<Scalars['String']>;
+  validation_status: Maybe<ValidationStatus>;
   websiteId: Maybe<Scalars['String']>;
 };
 
@@ -407,6 +487,7 @@ export type BugMaxOrderByAggregateInput = {
   title?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
   userId?: InputMaybe<SortOrder>;
+  validation_status?: InputMaybe<SortOrder>;
   websiteId?: InputMaybe<SortOrder>;
 };
 
@@ -423,6 +504,7 @@ export type BugMinAggregate = {
   title: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['DateTime']>;
   userId: Maybe<Scalars['String']>;
+  validation_status: Maybe<ValidationStatus>;
   websiteId: Maybe<Scalars['String']>;
 };
 
@@ -438,6 +520,7 @@ export type BugMinOrderByAggregateInput = {
   title?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
   userId?: InputMaybe<SortOrder>;
+  validation_status?: InputMaybe<SortOrder>;
   websiteId?: InputMaybe<SortOrder>;
 };
 
@@ -462,6 +545,7 @@ export type BugOrderByWithAggregationInput = {
   title?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
   userId?: InputMaybe<SortOrder>;
+  validation_status?: InputMaybe<SortOrder>;
   websiteId?: InputMaybe<SortOrder>;
 };
 
@@ -470,6 +554,7 @@ export type BugOrderByWithRelationInput = {
   File?: InputMaybe<FileOrderByRelationAggregateInput>;
   Website?: InputMaybe<WebsiteOrderByWithRelationInput>;
   categoryId?: InputMaybe<SortOrder>;
+  comments?: InputMaybe<CommentOrderByRelationAggregateInput>;
   created_at?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
@@ -481,6 +566,7 @@ export type BugOrderByWithRelationInput = {
   updated_at?: InputMaybe<SortOrder>;
   user?: InputMaybe<UserOrderByWithRelationInput>;
   userId?: InputMaybe<SortOrder>;
+  validation_status?: InputMaybe<SortOrder>;
   websiteId?: InputMaybe<SortOrder>;
 };
 
@@ -507,6 +593,7 @@ export enum BugScalarFieldEnum {
   Title = 'title',
   UpdatedAt = 'updated_at',
   UserId = 'userId',
+  ValidationStatus = 'validation_status',
   WebsiteId = 'websiteId'
 }
 
@@ -525,6 +612,7 @@ export type BugScalarWhereInput = {
   title?: InputMaybe<StringFilter>;
   updated_at?: InputMaybe<DateTimeFilter>;
   userId?: InputMaybe<StringFilter>;
+  validation_status?: InputMaybe<EnumValidationStatusFilter>;
   websiteId?: InputMaybe<StringFilter>;
 };
 
@@ -543,6 +631,7 @@ export type BugScalarWhereWithAggregatesInput = {
   title?: InputMaybe<StringWithAggregatesFilter>;
   updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
   userId?: InputMaybe<StringWithAggregatesFilter>;
+  validation_status?: InputMaybe<EnumValidationStatusWithAggregatesFilter>;
   websiteId?: InputMaybe<StringWithAggregatesFilter>;
 };
 
@@ -572,6 +661,7 @@ export type BugUpdateInput = {
   Category?: InputMaybe<CategoryUpdateOneWithoutBugInput>;
   File?: InputMaybe<FileUpdateManyWithoutBugInput>;
   Website?: InputMaybe<WebsiteUpdateOneRequiredWithoutBugInput>;
+  comments?: InputMaybe<CommentUpdateManyWithoutBugInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   description?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -582,6 +672,7 @@ export type BugUpdateInput = {
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   user?: InputMaybe<UserUpdateOneRequiredWithoutBugInput>;
+  validation_status?: InputMaybe<EnumValidationStatusFieldUpdateOperationsInput>;
 };
 
 export type BugUpdateManyMutationInput = {
@@ -594,6 +685,7 @@ export type BugUpdateManyMutationInput = {
   status?: InputMaybe<EnumBugStatusFieldUpdateOperationsInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  validation_status?: InputMaybe<EnumValidationStatusFieldUpdateOperationsInput>;
 };
 
 export type BugUpdateManyWithWhereWithoutCategoryInput = {
@@ -661,6 +753,16 @@ export type BugUpdateOneRequiredWithoutFileInput = {
   upsert?: InputMaybe<BugUpsertWithoutFileInput>;
 };
 
+export type BugUpdateOneWithoutCommentsInput = {
+  connect?: InputMaybe<BugWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<BugCreateOrConnectWithoutCommentsInput>;
+  create?: InputMaybe<BugCreateWithoutCommentsInput>;
+  delete?: InputMaybe<Scalars['Boolean']>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  update?: InputMaybe<BugUpdateWithoutCommentsInput>;
+  upsert?: InputMaybe<BugUpsertWithoutCommentsInput>;
+};
+
 export type BugUpdateWithWhereUniqueWithoutCategoryInput = {
   data: BugUpdateWithoutCategoryInput;
   where: BugWhereUniqueInput;
@@ -679,6 +781,7 @@ export type BugUpdateWithWhereUniqueWithoutWebsiteInput = {
 export type BugUpdateWithoutCategoryInput = {
   File?: InputMaybe<FileUpdateManyWithoutBugInput>;
   Website?: InputMaybe<WebsiteUpdateOneRequiredWithoutBugInput>;
+  comments?: InputMaybe<CommentUpdateManyWithoutBugInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   description?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -689,10 +792,12 @@ export type BugUpdateWithoutCategoryInput = {
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   user?: InputMaybe<UserUpdateOneRequiredWithoutBugInput>;
+  validation_status?: InputMaybe<EnumValidationStatusFieldUpdateOperationsInput>;
 };
 
-export type BugUpdateWithoutFileInput = {
+export type BugUpdateWithoutCommentsInput = {
   Category?: InputMaybe<CategoryUpdateOneWithoutBugInput>;
+  File?: InputMaybe<FileUpdateManyWithoutBugInput>;
   Website?: InputMaybe<WebsiteUpdateOneRequiredWithoutBugInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   description?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -704,12 +809,31 @@ export type BugUpdateWithoutFileInput = {
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   user?: InputMaybe<UserUpdateOneRequiredWithoutBugInput>;
+  validation_status?: InputMaybe<EnumValidationStatusFieldUpdateOperationsInput>;
+};
+
+export type BugUpdateWithoutFileInput = {
+  Category?: InputMaybe<CategoryUpdateOneWithoutBugInput>;
+  Website?: InputMaybe<WebsiteUpdateOneRequiredWithoutBugInput>;
+  comments?: InputMaybe<CommentUpdateManyWithoutBugInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  number?: InputMaybe<IntFieldUpdateOperationsInput>;
+  priority?: InputMaybe<EnumBugPriorityFieldUpdateOperationsInput>;
+  severity?: InputMaybe<EnumBugSeverityFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumBugStatusFieldUpdateOperationsInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutBugInput>;
+  validation_status?: InputMaybe<EnumValidationStatusFieldUpdateOperationsInput>;
 };
 
 export type BugUpdateWithoutUserInput = {
   Category?: InputMaybe<CategoryUpdateOneWithoutBugInput>;
   File?: InputMaybe<FileUpdateManyWithoutBugInput>;
   Website?: InputMaybe<WebsiteUpdateOneRequiredWithoutBugInput>;
+  comments?: InputMaybe<CommentUpdateManyWithoutBugInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   description?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -719,11 +843,13 @@ export type BugUpdateWithoutUserInput = {
   status?: InputMaybe<EnumBugStatusFieldUpdateOperationsInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  validation_status?: InputMaybe<EnumValidationStatusFieldUpdateOperationsInput>;
 };
 
 export type BugUpdateWithoutWebsiteInput = {
   Category?: InputMaybe<CategoryUpdateOneWithoutBugInput>;
   File?: InputMaybe<FileUpdateManyWithoutBugInput>;
+  comments?: InputMaybe<CommentUpdateManyWithoutBugInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   description?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -734,6 +860,7 @@ export type BugUpdateWithoutWebsiteInput = {
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   user?: InputMaybe<UserUpdateOneRequiredWithoutBugInput>;
+  validation_status?: InputMaybe<EnumValidationStatusFieldUpdateOperationsInput>;
 };
 
 export type BugUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -754,6 +881,11 @@ export type BugUpsertWithWhereUniqueWithoutWebsiteInput = {
   where: BugWhereUniqueInput;
 };
 
+export type BugUpsertWithoutCommentsInput = {
+  create: BugCreateWithoutCommentsInput;
+  update: BugUpdateWithoutCommentsInput;
+};
+
 export type BugUpsertWithoutFileInput = {
   create: BugCreateWithoutFileInput;
   update: BugUpdateWithoutFileInput;
@@ -767,6 +899,7 @@ export type BugWhereInput = {
   OR?: InputMaybe<Array<BugWhereInput>>;
   Website?: InputMaybe<WebsiteRelationFilter>;
   categoryId?: InputMaybe<StringNullableFilter>;
+  comments?: InputMaybe<CommentListRelationFilter>;
   created_at?: InputMaybe<DateTimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<StringFilter>;
@@ -778,6 +911,7 @@ export type BugWhereInput = {
   updated_at?: InputMaybe<DateTimeFilter>;
   user?: InputMaybe<UserRelationFilter>;
   userId?: InputMaybe<StringFilter>;
+  validation_status?: InputMaybe<EnumValidationStatusFilter>;
   websiteId?: InputMaybe<StringFilter>;
 };
 
@@ -788,9 +922,12 @@ export type BugWhereUniqueInput = {
 export type Category = {
   __typename?: 'Category';
   Bug: Array<Bug>;
+  Feature: Array<Feature>;
   _count: Maybe<CategoryCount>;
+  backgroundColor: Maybe<Scalars['String']>;
   created_at: Scalars['DateTime'];
   description: Scalars['String'];
+  icon: Maybe<Scalars['String']>;
   id: Scalars['String'];
   is_disabled: Scalars['Boolean'];
   name: Scalars['String'];
@@ -807,16 +944,29 @@ export type CategoryBugArgs = {
   where: InputMaybe<BugWhereInput>;
 };
 
+
+export type CategoryFeatureArgs = {
+  cursor: InputMaybe<FeatureWhereUniqueInput>;
+  distinct: InputMaybe<Array<FeatureScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<FeatureOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<FeatureWhereInput>;
+};
+
 export type CategoryCount = {
   __typename?: 'CategoryCount';
   Bug: Scalars['Int'];
+  Feature: Scalars['Int'];
 };
 
 export type CategoryCountAggregate = {
   __typename?: 'CategoryCountAggregate';
   _all: Scalars['Int'];
+  backgroundColor: Scalars['Int'];
   created_at: Scalars['Int'];
   description: Scalars['Int'];
+  icon: Scalars['Int'];
   id: Scalars['Int'];
   is_disabled: Scalars['Int'];
   name: Scalars['Int'];
@@ -824,8 +974,10 @@ export type CategoryCountAggregate = {
 };
 
 export type CategoryCountOrderByAggregateInput = {
+  backgroundColor?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
+  icon?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
@@ -834,8 +986,11 @@ export type CategoryCountOrderByAggregateInput = {
 
 export type CategoryCreateInput = {
   Bug?: InputMaybe<BugCreateNestedManyWithoutCategoryInput>;
+  Feature?: InputMaybe<FeatureCreateNestedManyWithoutCategoryInput>;
+  backgroundColor?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
+  icon?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   is_disabled: Scalars['Boolean'];
   name: Scalars['String'];
@@ -843,8 +998,10 @@ export type CategoryCreateInput = {
 };
 
 export type CategoryCreateManyInput = {
+  backgroundColor?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
+  icon?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   is_disabled: Scalars['Boolean'];
   name: Scalars['String'];
@@ -857,14 +1014,40 @@ export type CategoryCreateNestedOneWithoutBugInput = {
   create?: InputMaybe<CategoryCreateWithoutBugInput>;
 };
 
+export type CategoryCreateNestedOneWithoutFeatureInput = {
+  connect?: InputMaybe<CategoryWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<CategoryCreateOrConnectWithoutFeatureInput>;
+  create?: InputMaybe<CategoryCreateWithoutFeatureInput>;
+};
+
 export type CategoryCreateOrConnectWithoutBugInput = {
   create: CategoryCreateWithoutBugInput;
   where: CategoryWhereUniqueInput;
 };
 
+export type CategoryCreateOrConnectWithoutFeatureInput = {
+  create: CategoryCreateWithoutFeatureInput;
+  where: CategoryWhereUniqueInput;
+};
+
 export type CategoryCreateWithoutBugInput = {
+  Feature?: InputMaybe<FeatureCreateNestedManyWithoutCategoryInput>;
+  backgroundColor?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   description: Scalars['String'];
+  icon?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type CategoryCreateWithoutFeatureInput = {
+  Bug?: InputMaybe<BugCreateNestedManyWithoutCategoryInput>;
+  backgroundColor?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  icon?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   is_disabled: Scalars['Boolean'];
   name: Scalars['String'];
@@ -876,8 +1059,10 @@ export type CategoryGroupBy = {
   _count: Maybe<CategoryCountAggregate>;
   _max: Maybe<CategoryMaxAggregate>;
   _min: Maybe<CategoryMinAggregate>;
+  backgroundColor: Maybe<Scalars['String']>;
   created_at: Scalars['DateTime'];
   description: Scalars['String'];
+  icon: Maybe<Scalars['String']>;
   id: Scalars['String'];
   is_disabled: Scalars['Boolean'];
   name: Scalars['String'];
@@ -886,8 +1071,10 @@ export type CategoryGroupBy = {
 
 export type CategoryMaxAggregate = {
   __typename?: 'CategoryMaxAggregate';
+  backgroundColor: Maybe<Scalars['String']>;
   created_at: Maybe<Scalars['DateTime']>;
   description: Maybe<Scalars['String']>;
+  icon: Maybe<Scalars['String']>;
   id: Maybe<Scalars['String']>;
   is_disabled: Maybe<Scalars['Boolean']>;
   name: Maybe<Scalars['String']>;
@@ -895,8 +1082,10 @@ export type CategoryMaxAggregate = {
 };
 
 export type CategoryMaxOrderByAggregateInput = {
+  backgroundColor?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
+  icon?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
@@ -905,8 +1094,10 @@ export type CategoryMaxOrderByAggregateInput = {
 
 export type CategoryMinAggregate = {
   __typename?: 'CategoryMinAggregate';
+  backgroundColor: Maybe<Scalars['String']>;
   created_at: Maybe<Scalars['DateTime']>;
   description: Maybe<Scalars['String']>;
+  icon: Maybe<Scalars['String']>;
   id: Maybe<Scalars['String']>;
   is_disabled: Maybe<Scalars['Boolean']>;
   name: Maybe<Scalars['String']>;
@@ -914,8 +1105,10 @@ export type CategoryMinAggregate = {
 };
 
 export type CategoryMinOrderByAggregateInput = {
+  backgroundColor?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
+  icon?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
@@ -926,8 +1119,10 @@ export type CategoryOrderByWithAggregationInput = {
   _count?: InputMaybe<CategoryCountOrderByAggregateInput>;
   _max?: InputMaybe<CategoryMaxOrderByAggregateInput>;
   _min?: InputMaybe<CategoryMinOrderByAggregateInput>;
+  backgroundColor?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
+  icon?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
@@ -936,8 +1131,11 @@ export type CategoryOrderByWithAggregationInput = {
 
 export type CategoryOrderByWithRelationInput = {
   Bug?: InputMaybe<BugOrderByRelationAggregateInput>;
+  Feature?: InputMaybe<FeatureOrderByRelationAggregateInput>;
+  backgroundColor?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
+  icon?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
@@ -950,8 +1148,10 @@ export type CategoryRelationFilter = {
 };
 
 export enum CategoryScalarFieldEnum {
+  BackgroundColor = 'backgroundColor',
   CreatedAt = 'created_at',
   Description = 'description',
+  Icon = 'icon',
   Id = 'id',
   IsDisabled = 'is_disabled',
   Name = 'name',
@@ -962,8 +1162,10 @@ export type CategoryScalarWhereWithAggregatesInput = {
   AND?: InputMaybe<Array<CategoryScalarWhereWithAggregatesInput>>;
   NOT?: InputMaybe<Array<CategoryScalarWhereWithAggregatesInput>>;
   OR?: InputMaybe<Array<CategoryScalarWhereWithAggregatesInput>>;
+  backgroundColor?: InputMaybe<StringNullableWithAggregatesFilter>;
   created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
   description?: InputMaybe<StringWithAggregatesFilter>;
+  icon?: InputMaybe<StringNullableWithAggregatesFilter>;
   id?: InputMaybe<StringWithAggregatesFilter>;
   is_disabled?: InputMaybe<BoolWithAggregatesFilter>;
   name?: InputMaybe<StringWithAggregatesFilter>;
@@ -972,8 +1174,11 @@ export type CategoryScalarWhereWithAggregatesInput = {
 
 export type CategoryUpdateInput = {
   Bug?: InputMaybe<BugUpdateManyWithoutCategoryInput>;
+  Feature?: InputMaybe<FeatureUpdateManyWithoutCategoryInput>;
+  backgroundColor?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  icon?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -981,12 +1186,22 @@ export type CategoryUpdateInput = {
 };
 
 export type CategoryUpdateManyMutationInput = {
+  backgroundColor?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  icon?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type CategoryUpdateOneRequiredWithoutFeatureInput = {
+  connect?: InputMaybe<CategoryWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<CategoryCreateOrConnectWithoutFeatureInput>;
+  create?: InputMaybe<CategoryCreateWithoutFeatureInput>;
+  update?: InputMaybe<CategoryUpdateWithoutFeatureInput>;
+  upsert?: InputMaybe<CategoryUpsertWithoutFeatureInput>;
 };
 
 export type CategoryUpdateOneWithoutBugInput = {
@@ -1000,8 +1215,23 @@ export type CategoryUpdateOneWithoutBugInput = {
 };
 
 export type CategoryUpdateWithoutBugInput = {
+  Feature?: InputMaybe<FeatureUpdateManyWithoutCategoryInput>;
+  backgroundColor?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  icon?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type CategoryUpdateWithoutFeatureInput = {
+  Bug?: InputMaybe<BugUpdateManyWithoutCategoryInput>;
+  backgroundColor?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  icon?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -1013,13 +1243,21 @@ export type CategoryUpsertWithoutBugInput = {
   update: CategoryUpdateWithoutBugInput;
 };
 
+export type CategoryUpsertWithoutFeatureInput = {
+  create: CategoryCreateWithoutFeatureInput;
+  update: CategoryUpdateWithoutFeatureInput;
+};
+
 export type CategoryWhereInput = {
   AND?: InputMaybe<Array<CategoryWhereInput>>;
   Bug?: InputMaybe<BugListRelationFilter>;
+  Feature?: InputMaybe<FeatureListRelationFilter>;
   NOT?: InputMaybe<Array<CategoryWhereInput>>;
   OR?: InputMaybe<Array<CategoryWhereInput>>;
+  backgroundColor?: InputMaybe<StringNullableFilter>;
   created_at?: InputMaybe<DateTimeFilter>;
   description?: InputMaybe<StringFilter>;
+  icon?: InputMaybe<StringNullableFilter>;
   id?: InputMaybe<StringFilter>;
   is_disabled?: InputMaybe<BoolFilter>;
   name?: InputMaybe<StringFilter>;
@@ -1027,6 +1265,476 @@ export type CategoryWhereInput = {
 };
 
 export type CategoryWhereUniqueInput = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type Comment = {
+  __typename?: 'Comment';
+  Bug: Maybe<Bug>;
+  Feature: Maybe<Feature>;
+  bugId: Maybe<Scalars['String']>;
+  created_at: Scalars['DateTime'];
+  featureId: Maybe<Scalars['String']>;
+  fileId: Scalars['String'];
+  id: Scalars['String'];
+  text: Scalars['String'];
+  updated_at: Scalars['DateTime'];
+  user: User;
+  userId: Scalars['String'];
+};
+
+export type CommentCountAggregate = {
+  __typename?: 'CommentCountAggregate';
+  _all: Scalars['Int'];
+  bugId: Scalars['Int'];
+  created_at: Scalars['Int'];
+  featureId: Scalars['Int'];
+  fileId: Scalars['Int'];
+  id: Scalars['Int'];
+  text: Scalars['Int'];
+  updated_at: Scalars['Int'];
+  userId: Scalars['Int'];
+};
+
+export type CommentCountOrderByAggregateInput = {
+  bugId?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  featureId?: InputMaybe<SortOrder>;
+  fileId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  text?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type CommentCreateInput = {
+  Bug?: InputMaybe<BugCreateNestedOneWithoutCommentsInput>;
+  Feature?: InputMaybe<FeatureCreateNestedOneWithoutCommentsInput>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  fileId: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  text: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  user: UserCreateNestedOneWithoutCommentInput;
+};
+
+export type CommentCreateManyBugInput = {
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  featureId?: InputMaybe<Scalars['String']>;
+  fileId: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  text: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  userId: Scalars['String'];
+};
+
+export type CommentCreateManyBugInputEnvelope = {
+  data: Array<CommentCreateManyBugInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type CommentCreateManyFeatureInput = {
+  bugId?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  fileId: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  text: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  userId: Scalars['String'];
+};
+
+export type CommentCreateManyFeatureInputEnvelope = {
+  data: Array<CommentCreateManyFeatureInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type CommentCreateManyInput = {
+  bugId?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  featureId?: InputMaybe<Scalars['String']>;
+  fileId: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  text: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  userId: Scalars['String'];
+};
+
+export type CommentCreateManyUserInput = {
+  bugId?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  featureId?: InputMaybe<Scalars['String']>;
+  fileId: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  text: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type CommentCreateManyUserInputEnvelope = {
+  data: Array<CommentCreateManyUserInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type CommentCreateNestedManyWithoutBugInput = {
+  connect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<CommentCreateOrConnectWithoutBugInput>>;
+  create?: InputMaybe<Array<CommentCreateWithoutBugInput>>;
+  createMany?: InputMaybe<CommentCreateManyBugInputEnvelope>;
+};
+
+export type CommentCreateNestedManyWithoutFeatureInput = {
+  connect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<CommentCreateOrConnectWithoutFeatureInput>>;
+  create?: InputMaybe<Array<CommentCreateWithoutFeatureInput>>;
+  createMany?: InputMaybe<CommentCreateManyFeatureInputEnvelope>;
+};
+
+export type CommentCreateNestedManyWithoutUserInput = {
+  connect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<CommentCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<CommentCreateWithoutUserInput>>;
+  createMany?: InputMaybe<CommentCreateManyUserInputEnvelope>;
+};
+
+export type CommentCreateOrConnectWithoutBugInput = {
+  create: CommentCreateWithoutBugInput;
+  where: CommentWhereUniqueInput;
+};
+
+export type CommentCreateOrConnectWithoutFeatureInput = {
+  create: CommentCreateWithoutFeatureInput;
+  where: CommentWhereUniqueInput;
+};
+
+export type CommentCreateOrConnectWithoutUserInput = {
+  create: CommentCreateWithoutUserInput;
+  where: CommentWhereUniqueInput;
+};
+
+export type CommentCreateWithoutBugInput = {
+  Feature?: InputMaybe<FeatureCreateNestedOneWithoutCommentsInput>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  fileId: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  text: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  user: UserCreateNestedOneWithoutCommentInput;
+};
+
+export type CommentCreateWithoutFeatureInput = {
+  Bug?: InputMaybe<BugCreateNestedOneWithoutCommentsInput>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  fileId: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  text: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  user: UserCreateNestedOneWithoutCommentInput;
+};
+
+export type CommentCreateWithoutUserInput = {
+  Bug?: InputMaybe<BugCreateNestedOneWithoutCommentsInput>;
+  Feature?: InputMaybe<FeatureCreateNestedOneWithoutCommentsInput>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  fileId: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  text: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type CommentGroupBy = {
+  __typename?: 'CommentGroupBy';
+  _count: Maybe<CommentCountAggregate>;
+  _max: Maybe<CommentMaxAggregate>;
+  _min: Maybe<CommentMinAggregate>;
+  bugId: Maybe<Scalars['String']>;
+  created_at: Scalars['DateTime'];
+  featureId: Maybe<Scalars['String']>;
+  fileId: Scalars['String'];
+  id: Scalars['String'];
+  text: Scalars['String'];
+  updated_at: Scalars['DateTime'];
+  userId: Scalars['String'];
+};
+
+export type CommentListRelationFilter = {
+  every?: InputMaybe<CommentWhereInput>;
+  none?: InputMaybe<CommentWhereInput>;
+  some?: InputMaybe<CommentWhereInput>;
+};
+
+export type CommentMaxAggregate = {
+  __typename?: 'CommentMaxAggregate';
+  bugId: Maybe<Scalars['String']>;
+  created_at: Maybe<Scalars['DateTime']>;
+  featureId: Maybe<Scalars['String']>;
+  fileId: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['String']>;
+  text: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+  userId: Maybe<Scalars['String']>;
+};
+
+export type CommentMaxOrderByAggregateInput = {
+  bugId?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  featureId?: InputMaybe<SortOrder>;
+  fileId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  text?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type CommentMinAggregate = {
+  __typename?: 'CommentMinAggregate';
+  bugId: Maybe<Scalars['String']>;
+  created_at: Maybe<Scalars['DateTime']>;
+  featureId: Maybe<Scalars['String']>;
+  fileId: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['String']>;
+  text: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+  userId: Maybe<Scalars['String']>;
+};
+
+export type CommentMinOrderByAggregateInput = {
+  bugId?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  featureId?: InputMaybe<SortOrder>;
+  fileId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  text?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type CommentOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type CommentOrderByWithAggregationInput = {
+  _count?: InputMaybe<CommentCountOrderByAggregateInput>;
+  _max?: InputMaybe<CommentMaxOrderByAggregateInput>;
+  _min?: InputMaybe<CommentMinOrderByAggregateInput>;
+  bugId?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  featureId?: InputMaybe<SortOrder>;
+  fileId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  text?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type CommentOrderByWithRelationInput = {
+  Bug?: InputMaybe<BugOrderByWithRelationInput>;
+  Feature?: InputMaybe<FeatureOrderByWithRelationInput>;
+  bugId?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  featureId?: InputMaybe<SortOrder>;
+  fileId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  text?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  user?: InputMaybe<UserOrderByWithRelationInput>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export enum CommentScalarFieldEnum {
+  BugId = 'bugId',
+  CreatedAt = 'created_at',
+  FeatureId = 'featureId',
+  FileId = 'fileId',
+  Id = 'id',
+  Text = 'text',
+  UpdatedAt = 'updated_at',
+  UserId = 'userId'
+}
+
+export type CommentScalarWhereInput = {
+  AND?: InputMaybe<Array<CommentScalarWhereInput>>;
+  NOT?: InputMaybe<Array<CommentScalarWhereInput>>;
+  OR?: InputMaybe<Array<CommentScalarWhereInput>>;
+  bugId?: InputMaybe<StringNullableFilter>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  featureId?: InputMaybe<StringNullableFilter>;
+  fileId?: InputMaybe<StringFilter>;
+  id?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+  userId?: InputMaybe<StringFilter>;
+};
+
+export type CommentScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<CommentScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<CommentScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<CommentScalarWhereWithAggregatesInput>>;
+  bugId?: InputMaybe<StringNullableWithAggregatesFilter>;
+  created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+  featureId?: InputMaybe<StringNullableWithAggregatesFilter>;
+  fileId?: InputMaybe<StringWithAggregatesFilter>;
+  id?: InputMaybe<StringWithAggregatesFilter>;
+  text?: InputMaybe<StringWithAggregatesFilter>;
+  updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+  userId?: InputMaybe<StringWithAggregatesFilter>;
+};
+
+export type CommentUpdateInput = {
+  Bug?: InputMaybe<BugUpdateOneWithoutCommentsInput>;
+  Feature?: InputMaybe<FeatureUpdateOneWithoutCommentsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  fileId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  text?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutCommentInput>;
+};
+
+export type CommentUpdateManyMutationInput = {
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  fileId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  text?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type CommentUpdateManyWithWhereWithoutBugInput = {
+  data: CommentUpdateManyMutationInput;
+  where: CommentScalarWhereInput;
+};
+
+export type CommentUpdateManyWithWhereWithoutFeatureInput = {
+  data: CommentUpdateManyMutationInput;
+  where: CommentScalarWhereInput;
+};
+
+export type CommentUpdateManyWithWhereWithoutUserInput = {
+  data: CommentUpdateManyMutationInput;
+  where: CommentScalarWhereInput;
+};
+
+export type CommentUpdateManyWithoutBugInput = {
+  connect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<CommentCreateOrConnectWithoutBugInput>>;
+  create?: InputMaybe<Array<CommentCreateWithoutBugInput>>;
+  createMany?: InputMaybe<CommentCreateManyBugInputEnvelope>;
+  delete?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<CommentScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  set?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  update?: InputMaybe<Array<CommentUpdateWithWhereUniqueWithoutBugInput>>;
+  updateMany?: InputMaybe<Array<CommentUpdateManyWithWhereWithoutBugInput>>;
+  upsert?: InputMaybe<Array<CommentUpsertWithWhereUniqueWithoutBugInput>>;
+};
+
+export type CommentUpdateManyWithoutFeatureInput = {
+  connect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<CommentCreateOrConnectWithoutFeatureInput>>;
+  create?: InputMaybe<Array<CommentCreateWithoutFeatureInput>>;
+  createMany?: InputMaybe<CommentCreateManyFeatureInputEnvelope>;
+  delete?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<CommentScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  set?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  update?: InputMaybe<Array<CommentUpdateWithWhereUniqueWithoutFeatureInput>>;
+  updateMany?: InputMaybe<Array<CommentUpdateManyWithWhereWithoutFeatureInput>>;
+  upsert?: InputMaybe<Array<CommentUpsertWithWhereUniqueWithoutFeatureInput>>;
+};
+
+export type CommentUpdateManyWithoutUserInput = {
+  connect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<CommentCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<CommentCreateWithoutUserInput>>;
+  createMany?: InputMaybe<CommentCreateManyUserInputEnvelope>;
+  delete?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<CommentScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  set?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  update?: InputMaybe<Array<CommentUpdateWithWhereUniqueWithoutUserInput>>;
+  updateMany?: InputMaybe<Array<CommentUpdateManyWithWhereWithoutUserInput>>;
+  upsert?: InputMaybe<Array<CommentUpsertWithWhereUniqueWithoutUserInput>>;
+};
+
+export type CommentUpdateWithWhereUniqueWithoutBugInput = {
+  data: CommentUpdateWithoutBugInput;
+  where: CommentWhereUniqueInput;
+};
+
+export type CommentUpdateWithWhereUniqueWithoutFeatureInput = {
+  data: CommentUpdateWithoutFeatureInput;
+  where: CommentWhereUniqueInput;
+};
+
+export type CommentUpdateWithWhereUniqueWithoutUserInput = {
+  data: CommentUpdateWithoutUserInput;
+  where: CommentWhereUniqueInput;
+};
+
+export type CommentUpdateWithoutBugInput = {
+  Feature?: InputMaybe<FeatureUpdateOneWithoutCommentsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  fileId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  text?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutCommentInput>;
+};
+
+export type CommentUpdateWithoutFeatureInput = {
+  Bug?: InputMaybe<BugUpdateOneWithoutCommentsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  fileId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  text?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutCommentInput>;
+};
+
+export type CommentUpdateWithoutUserInput = {
+  Bug?: InputMaybe<BugUpdateOneWithoutCommentsInput>;
+  Feature?: InputMaybe<FeatureUpdateOneWithoutCommentsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  fileId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  text?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type CommentUpsertWithWhereUniqueWithoutBugInput = {
+  create: CommentCreateWithoutBugInput;
+  update: CommentUpdateWithoutBugInput;
+  where: CommentWhereUniqueInput;
+};
+
+export type CommentUpsertWithWhereUniqueWithoutFeatureInput = {
+  create: CommentCreateWithoutFeatureInput;
+  update: CommentUpdateWithoutFeatureInput;
+  where: CommentWhereUniqueInput;
+};
+
+export type CommentUpsertWithWhereUniqueWithoutUserInput = {
+  create: CommentCreateWithoutUserInput;
+  update: CommentUpdateWithoutUserInput;
+  where: CommentWhereUniqueInput;
+};
+
+export type CommentWhereInput = {
+  AND?: InputMaybe<Array<CommentWhereInput>>;
+  Bug?: InputMaybe<BugRelationFilter>;
+  Feature?: InputMaybe<FeatureRelationFilter>;
+  NOT?: InputMaybe<Array<CommentWhereInput>>;
+  OR?: InputMaybe<Array<CommentWhereInput>>;
+  bugId?: InputMaybe<StringNullableFilter>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  featureId?: InputMaybe<StringNullableFilter>;
+  fileId?: InputMaybe<StringFilter>;
+  id?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+  user?: InputMaybe<UserRelationFilter>;
+  userId?: InputMaybe<StringFilter>;
+};
+
+export type CommentWhereUniqueInput = {
   id?: InputMaybe<Scalars['String']>;
 };
 
@@ -1122,12 +1830,620 @@ export type EnumBugStatusWithAggregatesFilter = {
   notIn?: InputMaybe<Array<BugStatus>>;
 };
 
+export type EnumNotificationTopicsNullableListFilter = {
+  equals?: InputMaybe<Array<NotificationTopics>>;
+  has?: InputMaybe<NotificationTopics>;
+  hasEvery?: InputMaybe<Array<NotificationTopics>>;
+  hasSome?: InputMaybe<Array<NotificationTopics>>;
+  isEmpty?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type EnumRoleNullableListFilter = {
   equals?: InputMaybe<Array<Role>>;
   has?: InputMaybe<Role>;
   hasEvery?: InputMaybe<Array<Role>>;
   hasSome?: InputMaybe<Array<Role>>;
   isEmpty?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type EnumValidationStatusFieldUpdateOperationsInput = {
+  set?: InputMaybe<ValidationStatus>;
+};
+
+export type EnumValidationStatusFilter = {
+  equals?: InputMaybe<ValidationStatus>;
+  in?: InputMaybe<Array<ValidationStatus>>;
+  not?: InputMaybe<NestedEnumValidationStatusFilter>;
+  notIn?: InputMaybe<Array<ValidationStatus>>;
+};
+
+export type EnumValidationStatusWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedEnumValidationStatusFilter>;
+  _min?: InputMaybe<NestedEnumValidationStatusFilter>;
+  equals?: InputMaybe<ValidationStatus>;
+  in?: InputMaybe<Array<ValidationStatus>>;
+  not?: InputMaybe<NestedEnumValidationStatusWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<ValidationStatus>>;
+};
+
+export type Feature = {
+  __typename?: 'Feature';
+  User: Maybe<User>;
+  _count: Maybe<FeatureCount>;
+  category: Category;
+  categoryId: Scalars['String'];
+  comments: Array<Comment>;
+  created_at: Scalars['DateTime'];
+  description: Scalars['String'];
+  id: Scalars['String'];
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at: Scalars['DateTime'];
+  userId: Maybe<Scalars['String']>;
+  website: Website;
+  websiteId: Scalars['String'];
+};
+
+
+export type FeatureCommentsArgs = {
+  cursor: InputMaybe<CommentWhereUniqueInput>;
+  distinct: InputMaybe<Array<CommentScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<CommentOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<CommentWhereInput>;
+};
+
+export type FeatureCount = {
+  __typename?: 'FeatureCount';
+  comments: Scalars['Int'];
+};
+
+export type FeatureCountAggregate = {
+  __typename?: 'FeatureCountAggregate';
+  _all: Scalars['Int'];
+  categoryId: Scalars['Int'];
+  created_at: Scalars['Int'];
+  description: Scalars['Int'];
+  id: Scalars['Int'];
+  is_disabled: Scalars['Int'];
+  name: Scalars['Int'];
+  updated_at: Scalars['Int'];
+  userId: Scalars['Int'];
+  websiteId: Scalars['Int'];
+};
+
+export type FeatureCountOrderByAggregateInput = {
+  categoryId?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+  websiteId?: InputMaybe<SortOrder>;
+};
+
+export type FeatureCreateInput = {
+  User?: InputMaybe<UserCreateNestedOneWithoutFeatureInput>;
+  category: CategoryCreateNestedOneWithoutFeatureInput;
+  comments?: InputMaybe<CommentCreateNestedManyWithoutFeatureInput>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  website: WebsiteCreateNestedOneWithoutFeatureInput;
+};
+
+export type FeatureCreateManyCategoryInput = {
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  userId?: InputMaybe<Scalars['String']>;
+  websiteId: Scalars['String'];
+};
+
+export type FeatureCreateManyCategoryInputEnvelope = {
+  data: Array<FeatureCreateManyCategoryInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type FeatureCreateManyInput = {
+  categoryId: Scalars['String'];
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  userId?: InputMaybe<Scalars['String']>;
+  websiteId: Scalars['String'];
+};
+
+export type FeatureCreateManyUserInput = {
+  categoryId: Scalars['String'];
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  websiteId: Scalars['String'];
+};
+
+export type FeatureCreateManyUserInputEnvelope = {
+  data: Array<FeatureCreateManyUserInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type FeatureCreateManyWebsiteInput = {
+  categoryId: Scalars['String'];
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  userId?: InputMaybe<Scalars['String']>;
+};
+
+export type FeatureCreateManyWebsiteInputEnvelope = {
+  data: Array<FeatureCreateManyWebsiteInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type FeatureCreateNestedManyWithoutCategoryInput = {
+  connect?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<FeatureCreateOrConnectWithoutCategoryInput>>;
+  create?: InputMaybe<Array<FeatureCreateWithoutCategoryInput>>;
+  createMany?: InputMaybe<FeatureCreateManyCategoryInputEnvelope>;
+};
+
+export type FeatureCreateNestedManyWithoutUserInput = {
+  connect?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<FeatureCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<FeatureCreateWithoutUserInput>>;
+  createMany?: InputMaybe<FeatureCreateManyUserInputEnvelope>;
+};
+
+export type FeatureCreateNestedManyWithoutWebsiteInput = {
+  connect?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<FeatureCreateOrConnectWithoutWebsiteInput>>;
+  create?: InputMaybe<Array<FeatureCreateWithoutWebsiteInput>>;
+  createMany?: InputMaybe<FeatureCreateManyWebsiteInputEnvelope>;
+};
+
+export type FeatureCreateNestedOneWithoutCommentsInput = {
+  connect?: InputMaybe<FeatureWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<FeatureCreateOrConnectWithoutCommentsInput>;
+  create?: InputMaybe<FeatureCreateWithoutCommentsInput>;
+};
+
+export type FeatureCreateOrConnectWithoutCategoryInput = {
+  create: FeatureCreateWithoutCategoryInput;
+  where: FeatureWhereUniqueInput;
+};
+
+export type FeatureCreateOrConnectWithoutCommentsInput = {
+  create: FeatureCreateWithoutCommentsInput;
+  where: FeatureWhereUniqueInput;
+};
+
+export type FeatureCreateOrConnectWithoutUserInput = {
+  create: FeatureCreateWithoutUserInput;
+  where: FeatureWhereUniqueInput;
+};
+
+export type FeatureCreateOrConnectWithoutWebsiteInput = {
+  create: FeatureCreateWithoutWebsiteInput;
+  where: FeatureWhereUniqueInput;
+};
+
+export type FeatureCreateWithoutCategoryInput = {
+  User?: InputMaybe<UserCreateNestedOneWithoutFeatureInput>;
+  comments?: InputMaybe<CommentCreateNestedManyWithoutFeatureInput>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  website: WebsiteCreateNestedOneWithoutFeatureInput;
+};
+
+export type FeatureCreateWithoutCommentsInput = {
+  User?: InputMaybe<UserCreateNestedOneWithoutFeatureInput>;
+  category: CategoryCreateNestedOneWithoutFeatureInput;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  website: WebsiteCreateNestedOneWithoutFeatureInput;
+};
+
+export type FeatureCreateWithoutUserInput = {
+  category: CategoryCreateNestedOneWithoutFeatureInput;
+  comments?: InputMaybe<CommentCreateNestedManyWithoutFeatureInput>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  website: WebsiteCreateNestedOneWithoutFeatureInput;
+};
+
+export type FeatureCreateWithoutWebsiteInput = {
+  User?: InputMaybe<UserCreateNestedOneWithoutFeatureInput>;
+  category: CategoryCreateNestedOneWithoutFeatureInput;
+  comments?: InputMaybe<CommentCreateNestedManyWithoutFeatureInput>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type FeatureGroupBy = {
+  __typename?: 'FeatureGroupBy';
+  _count: Maybe<FeatureCountAggregate>;
+  _max: Maybe<FeatureMaxAggregate>;
+  _min: Maybe<FeatureMinAggregate>;
+  categoryId: Scalars['String'];
+  created_at: Scalars['DateTime'];
+  description: Scalars['String'];
+  id: Scalars['String'];
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at: Scalars['DateTime'];
+  userId: Maybe<Scalars['String']>;
+  websiteId: Scalars['String'];
+};
+
+export type FeatureListRelationFilter = {
+  every?: InputMaybe<FeatureWhereInput>;
+  none?: InputMaybe<FeatureWhereInput>;
+  some?: InputMaybe<FeatureWhereInput>;
+};
+
+export type FeatureMaxAggregate = {
+  __typename?: 'FeatureMaxAggregate';
+  categoryId: Maybe<Scalars['String']>;
+  created_at: Maybe<Scalars['DateTime']>;
+  description: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['String']>;
+  is_disabled: Maybe<Scalars['Boolean']>;
+  name: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+  userId: Maybe<Scalars['String']>;
+  websiteId: Maybe<Scalars['String']>;
+};
+
+export type FeatureMaxOrderByAggregateInput = {
+  categoryId?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+  websiteId?: InputMaybe<SortOrder>;
+};
+
+export type FeatureMinAggregate = {
+  __typename?: 'FeatureMinAggregate';
+  categoryId: Maybe<Scalars['String']>;
+  created_at: Maybe<Scalars['DateTime']>;
+  description: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['String']>;
+  is_disabled: Maybe<Scalars['Boolean']>;
+  name: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+  userId: Maybe<Scalars['String']>;
+  websiteId: Maybe<Scalars['String']>;
+};
+
+export type FeatureMinOrderByAggregateInput = {
+  categoryId?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+  websiteId?: InputMaybe<SortOrder>;
+};
+
+export type FeatureOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type FeatureOrderByWithAggregationInput = {
+  _count?: InputMaybe<FeatureCountOrderByAggregateInput>;
+  _max?: InputMaybe<FeatureMaxOrderByAggregateInput>;
+  _min?: InputMaybe<FeatureMinOrderByAggregateInput>;
+  categoryId?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+  websiteId?: InputMaybe<SortOrder>;
+};
+
+export type FeatureOrderByWithRelationInput = {
+  User?: InputMaybe<UserOrderByWithRelationInput>;
+  category?: InputMaybe<CategoryOrderByWithRelationInput>;
+  categoryId?: InputMaybe<SortOrder>;
+  comments?: InputMaybe<CommentOrderByRelationAggregateInput>;
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+  website?: InputMaybe<WebsiteOrderByWithRelationInput>;
+  websiteId?: InputMaybe<SortOrder>;
+};
+
+export type FeatureRelationFilter = {
+  is?: InputMaybe<FeatureWhereInput>;
+  isNot?: InputMaybe<FeatureWhereInput>;
+};
+
+export enum FeatureScalarFieldEnum {
+  CategoryId = 'categoryId',
+  CreatedAt = 'created_at',
+  Description = 'description',
+  Id = 'id',
+  IsDisabled = 'is_disabled',
+  Name = 'name',
+  UpdatedAt = 'updated_at',
+  UserId = 'userId',
+  WebsiteId = 'websiteId'
+}
+
+export type FeatureScalarWhereInput = {
+  AND?: InputMaybe<Array<FeatureScalarWhereInput>>;
+  NOT?: InputMaybe<Array<FeatureScalarWhereInput>>;
+  OR?: InputMaybe<Array<FeatureScalarWhereInput>>;
+  categoryId?: InputMaybe<StringFilter>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  description?: InputMaybe<StringFilter>;
+  id?: InputMaybe<StringFilter>;
+  is_disabled?: InputMaybe<BoolFilter>;
+  name?: InputMaybe<StringFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+  userId?: InputMaybe<StringNullableFilter>;
+  websiteId?: InputMaybe<StringFilter>;
+};
+
+export type FeatureScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<FeatureScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<FeatureScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<FeatureScalarWhereWithAggregatesInput>>;
+  categoryId?: InputMaybe<StringWithAggregatesFilter>;
+  created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+  description?: InputMaybe<StringWithAggregatesFilter>;
+  id?: InputMaybe<StringWithAggregatesFilter>;
+  is_disabled?: InputMaybe<BoolWithAggregatesFilter>;
+  name?: InputMaybe<StringWithAggregatesFilter>;
+  updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+  userId?: InputMaybe<StringNullableWithAggregatesFilter>;
+  websiteId?: InputMaybe<StringWithAggregatesFilter>;
+};
+
+export type FeatureUpdateInput = {
+  User?: InputMaybe<UserUpdateOneWithoutFeatureInput>;
+  category?: InputMaybe<CategoryUpdateOneRequiredWithoutFeatureInput>;
+  comments?: InputMaybe<CommentUpdateManyWithoutFeatureInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  website?: InputMaybe<WebsiteUpdateOneRequiredWithoutFeatureInput>;
+};
+
+export type FeatureUpdateManyMutationInput = {
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type FeatureUpdateManyWithWhereWithoutCategoryInput = {
+  data: FeatureUpdateManyMutationInput;
+  where: FeatureScalarWhereInput;
+};
+
+export type FeatureUpdateManyWithWhereWithoutUserInput = {
+  data: FeatureUpdateManyMutationInput;
+  where: FeatureScalarWhereInput;
+};
+
+export type FeatureUpdateManyWithWhereWithoutWebsiteInput = {
+  data: FeatureUpdateManyMutationInput;
+  where: FeatureScalarWhereInput;
+};
+
+export type FeatureUpdateManyWithoutCategoryInput = {
+  connect?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<FeatureCreateOrConnectWithoutCategoryInput>>;
+  create?: InputMaybe<Array<FeatureCreateWithoutCategoryInput>>;
+  createMany?: InputMaybe<FeatureCreateManyCategoryInputEnvelope>;
+  delete?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<FeatureScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  set?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  update?: InputMaybe<Array<FeatureUpdateWithWhereUniqueWithoutCategoryInput>>;
+  updateMany?: InputMaybe<Array<FeatureUpdateManyWithWhereWithoutCategoryInput>>;
+  upsert?: InputMaybe<Array<FeatureUpsertWithWhereUniqueWithoutCategoryInput>>;
+};
+
+export type FeatureUpdateManyWithoutUserInput = {
+  connect?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<FeatureCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<FeatureCreateWithoutUserInput>>;
+  createMany?: InputMaybe<FeatureCreateManyUserInputEnvelope>;
+  delete?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<FeatureScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  set?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  update?: InputMaybe<Array<FeatureUpdateWithWhereUniqueWithoutUserInput>>;
+  updateMany?: InputMaybe<Array<FeatureUpdateManyWithWhereWithoutUserInput>>;
+  upsert?: InputMaybe<Array<FeatureUpsertWithWhereUniqueWithoutUserInput>>;
+};
+
+export type FeatureUpdateManyWithoutWebsiteInput = {
+  connect?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<FeatureCreateOrConnectWithoutWebsiteInput>>;
+  create?: InputMaybe<Array<FeatureCreateWithoutWebsiteInput>>;
+  createMany?: InputMaybe<FeatureCreateManyWebsiteInputEnvelope>;
+  delete?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<FeatureScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  set?: InputMaybe<Array<FeatureWhereUniqueInput>>;
+  update?: InputMaybe<Array<FeatureUpdateWithWhereUniqueWithoutWebsiteInput>>;
+  updateMany?: InputMaybe<Array<FeatureUpdateManyWithWhereWithoutWebsiteInput>>;
+  upsert?: InputMaybe<Array<FeatureUpsertWithWhereUniqueWithoutWebsiteInput>>;
+};
+
+export type FeatureUpdateOneWithoutCommentsInput = {
+  connect?: InputMaybe<FeatureWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<FeatureCreateOrConnectWithoutCommentsInput>;
+  create?: InputMaybe<FeatureCreateWithoutCommentsInput>;
+  delete?: InputMaybe<Scalars['Boolean']>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  update?: InputMaybe<FeatureUpdateWithoutCommentsInput>;
+  upsert?: InputMaybe<FeatureUpsertWithoutCommentsInput>;
+};
+
+export type FeatureUpdateWithWhereUniqueWithoutCategoryInput = {
+  data: FeatureUpdateWithoutCategoryInput;
+  where: FeatureWhereUniqueInput;
+};
+
+export type FeatureUpdateWithWhereUniqueWithoutUserInput = {
+  data: FeatureUpdateWithoutUserInput;
+  where: FeatureWhereUniqueInput;
+};
+
+export type FeatureUpdateWithWhereUniqueWithoutWebsiteInput = {
+  data: FeatureUpdateWithoutWebsiteInput;
+  where: FeatureWhereUniqueInput;
+};
+
+export type FeatureUpdateWithoutCategoryInput = {
+  User?: InputMaybe<UserUpdateOneWithoutFeatureInput>;
+  comments?: InputMaybe<CommentUpdateManyWithoutFeatureInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  website?: InputMaybe<WebsiteUpdateOneRequiredWithoutFeatureInput>;
+};
+
+export type FeatureUpdateWithoutCommentsInput = {
+  User?: InputMaybe<UserUpdateOneWithoutFeatureInput>;
+  category?: InputMaybe<CategoryUpdateOneRequiredWithoutFeatureInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  website?: InputMaybe<WebsiteUpdateOneRequiredWithoutFeatureInput>;
+};
+
+export type FeatureUpdateWithoutUserInput = {
+  category?: InputMaybe<CategoryUpdateOneRequiredWithoutFeatureInput>;
+  comments?: InputMaybe<CommentUpdateManyWithoutFeatureInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  website?: InputMaybe<WebsiteUpdateOneRequiredWithoutFeatureInput>;
+};
+
+export type FeatureUpdateWithoutWebsiteInput = {
+  User?: InputMaybe<UserUpdateOneWithoutFeatureInput>;
+  category?: InputMaybe<CategoryUpdateOneRequiredWithoutFeatureInput>;
+  comments?: InputMaybe<CommentUpdateManyWithoutFeatureInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type FeatureUpsertWithWhereUniqueWithoutCategoryInput = {
+  create: FeatureCreateWithoutCategoryInput;
+  update: FeatureUpdateWithoutCategoryInput;
+  where: FeatureWhereUniqueInput;
+};
+
+export type FeatureUpsertWithWhereUniqueWithoutUserInput = {
+  create: FeatureCreateWithoutUserInput;
+  update: FeatureUpdateWithoutUserInput;
+  where: FeatureWhereUniqueInput;
+};
+
+export type FeatureUpsertWithWhereUniqueWithoutWebsiteInput = {
+  create: FeatureCreateWithoutWebsiteInput;
+  update: FeatureUpdateWithoutWebsiteInput;
+  where: FeatureWhereUniqueInput;
+};
+
+export type FeatureUpsertWithoutCommentsInput = {
+  create: FeatureCreateWithoutCommentsInput;
+  update: FeatureUpdateWithoutCommentsInput;
+};
+
+export type FeatureWhereInput = {
+  AND?: InputMaybe<Array<FeatureWhereInput>>;
+  NOT?: InputMaybe<Array<FeatureWhereInput>>;
+  OR?: InputMaybe<Array<FeatureWhereInput>>;
+  User?: InputMaybe<UserRelationFilter>;
+  category?: InputMaybe<CategoryRelationFilter>;
+  categoryId?: InputMaybe<StringFilter>;
+  comments?: InputMaybe<CommentListRelationFilter>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  description?: InputMaybe<StringFilter>;
+  id?: InputMaybe<StringFilter>;
+  is_disabled?: InputMaybe<BoolFilter>;
+  name?: InputMaybe<StringFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+  userId?: InputMaybe<StringNullableFilter>;
+  website?: InputMaybe<WebsiteRelationFilter>;
+  websiteId?: InputMaybe<StringFilter>;
+};
+
+export type FeatureWhereUniqueInput = {
+  id?: InputMaybe<Scalars['String']>;
 };
 
 export type File = {
@@ -1634,42 +2950,67 @@ export type LoginInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createBug: Bug;
+  createBugCustom: Bug;
   createCategory: Category;
+  createComment: Comment;
+  createFeature: Feature;
   createFile: File;
   createManyBug: AffectedRowsOutput;
   createManyCategory: AffectedRowsOutput;
+  createManyComment: AffectedRowsOutput;
+  createManyFeature: AffectedRowsOutput;
   createManyFile: AffectedRowsOutput;
+  createManyNotification: AffectedRowsOutput;
   createManyUser: AffectedRowsOutput;
   createManyWebsite: AffectedRowsOutput;
+  createNotification: Notification;
   createUser: User;
   createWebsite: Website;
   deleteBug: Maybe<Bug>;
   deleteCategory: Maybe<Category>;
+  deleteComment: Maybe<Comment>;
+  deleteFeature: Maybe<Feature>;
   deleteFile: Maybe<File>;
   deleteManyBug: AffectedRowsOutput;
   deleteManyCategory: AffectedRowsOutput;
+  deleteManyComment: AffectedRowsOutput;
+  deleteManyFeature: AffectedRowsOutput;
   deleteManyFile: AffectedRowsOutput;
+  deleteManyNotification: AffectedRowsOutput;
   deleteManyUser: AffectedRowsOutput;
   deleteManyWebsite: AffectedRowsOutput;
+  deleteNotification: Maybe<Notification>;
   deleteUser: Maybe<User>;
   deleteWebsite: Maybe<Website>;
   login: User;
   me: User;
+  pubSubMutation: Scalars['Boolean'];
+  pubSubMutationToDynamicTopic: Scalars['Boolean'];
+  publisherMutation: Scalars['Boolean'];
   register: User;
   updateBug: Maybe<Bug>;
   updateCategory: Maybe<Category>;
+  updateComment: Maybe<Comment>;
+  updateFeature: Maybe<Feature>;
   updateFile: Maybe<File>;
   updateManyBug: AffectedRowsOutput;
   updateManyCategory: AffectedRowsOutput;
+  updateManyComment: AffectedRowsOutput;
+  updateManyFeature: AffectedRowsOutput;
   updateManyFile: AffectedRowsOutput;
+  updateManyNotification: AffectedRowsOutput;
   updateManyUser: AffectedRowsOutput;
   updateManyWebsite: AffectedRowsOutput;
+  updateNotification: Maybe<Notification>;
   updateUser: Maybe<User>;
   updateWebsite: Maybe<Website>;
   uploadFile: File;
   upsertBug: Bug;
   upsertCategory: Category;
+  upsertComment: Comment;
+  upsertFeature: Feature;
   upsertFile: File;
+  upsertNotification: Notification;
   upsertUser: User;
   upsertWebsite: Website;
 };
@@ -1680,8 +3021,23 @@ export type MutationCreateBugArgs = {
 };
 
 
+export type MutationCreateBugCustomArgs = {
+  data: BugCreateInput;
+};
+
+
 export type MutationCreateCategoryArgs = {
   data: CategoryCreateInput;
+};
+
+
+export type MutationCreateCommentArgs = {
+  data: CommentCreateInput;
+};
+
+
+export type MutationCreateFeatureArgs = {
+  data: FeatureCreateInput;
 };
 
 
@@ -1702,8 +3058,26 @@ export type MutationCreateManyCategoryArgs = {
 };
 
 
+export type MutationCreateManyCommentArgs = {
+  data: Array<CommentCreateManyInput>;
+  skipDuplicates: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationCreateManyFeatureArgs = {
+  data: Array<FeatureCreateManyInput>;
+  skipDuplicates: InputMaybe<Scalars['Boolean']>;
+};
+
+
 export type MutationCreateManyFileArgs = {
   data: Array<FileCreateManyInput>;
+  skipDuplicates: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationCreateManyNotificationArgs = {
+  data: Array<NotificationCreateManyInput>;
   skipDuplicates: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -1717,6 +3091,11 @@ export type MutationCreateManyUserArgs = {
 export type MutationCreateManyWebsiteArgs = {
   data: Array<WebsiteCreateManyInput>;
   skipDuplicates: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationCreateNotificationArgs = {
+  data: NotificationCreateInput;
 };
 
 
@@ -1740,6 +3119,16 @@ export type MutationDeleteCategoryArgs = {
 };
 
 
+export type MutationDeleteCommentArgs = {
+  where: CommentWhereUniqueInput;
+};
+
+
+export type MutationDeleteFeatureArgs = {
+  where: FeatureWhereUniqueInput;
+};
+
+
 export type MutationDeleteFileArgs = {
   where: FileWhereUniqueInput;
 };
@@ -1755,8 +3144,23 @@ export type MutationDeleteManyCategoryArgs = {
 };
 
 
+export type MutationDeleteManyCommentArgs = {
+  where: InputMaybe<CommentWhereInput>;
+};
+
+
+export type MutationDeleteManyFeatureArgs = {
+  where: InputMaybe<FeatureWhereInput>;
+};
+
+
 export type MutationDeleteManyFileArgs = {
   where: InputMaybe<FileWhereInput>;
+};
+
+
+export type MutationDeleteManyNotificationArgs = {
+  where: InputMaybe<NotificationWhereInput>;
 };
 
 
@@ -1767,6 +3171,11 @@ export type MutationDeleteManyUserArgs = {
 
 export type MutationDeleteManyWebsiteArgs = {
   where: InputMaybe<WebsiteWhereInput>;
+};
+
+
+export type MutationDeleteNotificationArgs = {
+  where: NotificationWhereUniqueInput;
 };
 
 
@@ -1785,6 +3194,22 @@ export type MutationLoginArgs = {
 };
 
 
+export type MutationPubSubMutationArgs = {
+  message: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationPubSubMutationToDynamicTopicArgs = {
+  message: InputMaybe<Scalars['String']>;
+  topic: Scalars['String'];
+};
+
+
+export type MutationPublisherMutationArgs = {
+  message: InputMaybe<Scalars['String']>;
+};
+
+
 export type MutationRegisterArgs = {
   data: RegisterInput;
 };
@@ -1799,6 +3224,18 @@ export type MutationUpdateBugArgs = {
 export type MutationUpdateCategoryArgs = {
   data: CategoryUpdateInput;
   where: CategoryWhereUniqueInput;
+};
+
+
+export type MutationUpdateCommentArgs = {
+  data: CommentUpdateInput;
+  where: CommentWhereUniqueInput;
+};
+
+
+export type MutationUpdateFeatureArgs = {
+  data: FeatureUpdateInput;
+  where: FeatureWhereUniqueInput;
 };
 
 
@@ -1820,9 +3257,27 @@ export type MutationUpdateManyCategoryArgs = {
 };
 
 
+export type MutationUpdateManyCommentArgs = {
+  data: CommentUpdateManyMutationInput;
+  where: InputMaybe<CommentWhereInput>;
+};
+
+
+export type MutationUpdateManyFeatureArgs = {
+  data: FeatureUpdateManyMutationInput;
+  where: InputMaybe<FeatureWhereInput>;
+};
+
+
 export type MutationUpdateManyFileArgs = {
   data: FileUpdateManyMutationInput;
   where: InputMaybe<FileWhereInput>;
+};
+
+
+export type MutationUpdateManyNotificationArgs = {
+  data: NotificationUpdateManyMutationInput;
+  where: InputMaybe<NotificationWhereInput>;
 };
 
 
@@ -1835,6 +3290,12 @@ export type MutationUpdateManyUserArgs = {
 export type MutationUpdateManyWebsiteArgs = {
   data: WebsiteUpdateManyMutationInput;
   where: InputMaybe<WebsiteWhereInput>;
+};
+
+
+export type MutationUpdateNotificationArgs = {
+  data: NotificationUpdateInput;
+  where: NotificationWhereUniqueInput;
 };
 
 
@@ -1869,10 +3330,31 @@ export type MutationUpsertCategoryArgs = {
 };
 
 
+export type MutationUpsertCommentArgs = {
+  create: CommentCreateInput;
+  update: CommentUpdateInput;
+  where: CommentWhereUniqueInput;
+};
+
+
+export type MutationUpsertFeatureArgs = {
+  create: FeatureCreateInput;
+  update: FeatureUpdateInput;
+  where: FeatureWhereUniqueInput;
+};
+
+
 export type MutationUpsertFileArgs = {
   create: FileCreateInput;
   update: FileUpdateInput;
   where: FileWhereUniqueInput;
+};
+
+
+export type MutationUpsertNotificationArgs = {
+  create: NotificationCreateInput;
+  update: NotificationUpdateInput;
+  where: NotificationWhereUniqueInput;
 };
 
 
@@ -1976,6 +3458,23 @@ export type NestedEnumBugStatusWithAggregatesFilter = {
   in?: InputMaybe<Array<BugStatus>>;
   not?: InputMaybe<NestedEnumBugStatusWithAggregatesFilter>;
   notIn?: InputMaybe<Array<BugStatus>>;
+};
+
+export type NestedEnumValidationStatusFilter = {
+  equals?: InputMaybe<ValidationStatus>;
+  in?: InputMaybe<Array<ValidationStatus>>;
+  not?: InputMaybe<NestedEnumValidationStatusFilter>;
+  notIn?: InputMaybe<Array<ValidationStatus>>;
+};
+
+export type NestedEnumValidationStatusWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedEnumValidationStatusFilter>;
+  _min?: InputMaybe<NestedEnumValidationStatusFilter>;
+  equals?: InputMaybe<ValidationStatus>;
+  in?: InputMaybe<Array<ValidationStatus>>;
+  not?: InputMaybe<NestedEnumValidationStatusWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<ValidationStatus>>;
 };
 
 export type NestedFloatFilter = {
@@ -2089,6 +3588,502 @@ export type NestedStringWithAggregatesFilter = {
   startsWith?: InputMaybe<Scalars['String']>;
 };
 
+export type Notification = {
+  __typename?: 'Notification';
+  bugId: Maybe<Scalars['String']>;
+  created_at: Scalars['DateTime'];
+  description: Scalars['String'];
+  id: Scalars['String'];
+  isRead: Scalars['Boolean'];
+  is_disabled: Scalars['Boolean'];
+  sender: User;
+  senderId: Scalars['String'];
+  title: Scalars['String'];
+  topics: Array<NotificationTopics>;
+  updated_at: Scalars['DateTime'];
+  user: User;
+  userId: Scalars['String'];
+};
+
+export type NotificationCountAggregate = {
+  __typename?: 'NotificationCountAggregate';
+  _all: Scalars['Int'];
+  bugId: Scalars['Int'];
+  created_at: Scalars['Int'];
+  description: Scalars['Int'];
+  id: Scalars['Int'];
+  isRead: Scalars['Int'];
+  is_disabled: Scalars['Int'];
+  senderId: Scalars['Int'];
+  title: Scalars['Int'];
+  topics: Scalars['Int'];
+  updated_at: Scalars['Int'];
+  userId: Scalars['Int'];
+};
+
+export type NotificationCountOrderByAggregateInput = {
+  bugId?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  isRead?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  senderId?: InputMaybe<SortOrder>;
+  title?: InputMaybe<SortOrder>;
+  topics?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type NotificationCreateInput = {
+  bugId?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  isRead?: InputMaybe<Scalars['Boolean']>;
+  is_disabled: Scalars['Boolean'];
+  sender: UserCreateNestedOneWithoutNotifications_SentInput;
+  title: Scalars['String'];
+  topics?: InputMaybe<NotificationCreatetopicsInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  user: UserCreateNestedOneWithoutNotificationInput;
+};
+
+export type NotificationCreateManyInput = {
+  bugId?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  isRead?: InputMaybe<Scalars['Boolean']>;
+  is_disabled: Scalars['Boolean'];
+  senderId: Scalars['String'];
+  title: Scalars['String'];
+  topics?: InputMaybe<NotificationCreateManytopicsInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  userId: Scalars['String'];
+};
+
+export type NotificationCreateManySenderInput = {
+  bugId?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  isRead?: InputMaybe<Scalars['Boolean']>;
+  is_disabled: Scalars['Boolean'];
+  title: Scalars['String'];
+  topics?: InputMaybe<NotificationCreateManytopicsInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  userId: Scalars['String'];
+};
+
+export type NotificationCreateManySenderInputEnvelope = {
+  data: Array<NotificationCreateManySenderInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type NotificationCreateManyUserInput = {
+  bugId?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  isRead?: InputMaybe<Scalars['Boolean']>;
+  is_disabled: Scalars['Boolean'];
+  senderId: Scalars['String'];
+  title: Scalars['String'];
+  topics?: InputMaybe<NotificationCreateManytopicsInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type NotificationCreateManyUserInputEnvelope = {
+  data: Array<NotificationCreateManyUserInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type NotificationCreateManytopicsInput = {
+  set: Array<NotificationTopics>;
+};
+
+export type NotificationCreateNestedManyWithoutSenderInput = {
+  connect?: InputMaybe<Array<NotificationWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<NotificationCreateOrConnectWithoutSenderInput>>;
+  create?: InputMaybe<Array<NotificationCreateWithoutSenderInput>>;
+  createMany?: InputMaybe<NotificationCreateManySenderInputEnvelope>;
+};
+
+export type NotificationCreateNestedManyWithoutUserInput = {
+  connect?: InputMaybe<Array<NotificationWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<NotificationCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<NotificationCreateWithoutUserInput>>;
+  createMany?: InputMaybe<NotificationCreateManyUserInputEnvelope>;
+};
+
+export type NotificationCreateOrConnectWithoutSenderInput = {
+  create: NotificationCreateWithoutSenderInput;
+  where: NotificationWhereUniqueInput;
+};
+
+export type NotificationCreateOrConnectWithoutUserInput = {
+  create: NotificationCreateWithoutUserInput;
+  where: NotificationWhereUniqueInput;
+};
+
+export type NotificationCreateWithoutSenderInput = {
+  bugId?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  isRead?: InputMaybe<Scalars['Boolean']>;
+  is_disabled: Scalars['Boolean'];
+  title: Scalars['String'];
+  topics?: InputMaybe<NotificationCreatetopicsInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  user: UserCreateNestedOneWithoutNotificationInput;
+};
+
+export type NotificationCreateWithoutUserInput = {
+  bugId?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  isRead?: InputMaybe<Scalars['Boolean']>;
+  is_disabled: Scalars['Boolean'];
+  sender: UserCreateNestedOneWithoutNotifications_SentInput;
+  title: Scalars['String'];
+  topics?: InputMaybe<NotificationCreatetopicsInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type NotificationCreatetopicsInput = {
+  set: Array<NotificationTopics>;
+};
+
+export type NotificationGroupBy = {
+  __typename?: 'NotificationGroupBy';
+  _count: Maybe<NotificationCountAggregate>;
+  _max: Maybe<NotificationMaxAggregate>;
+  _min: Maybe<NotificationMinAggregate>;
+  bugId: Maybe<Scalars['String']>;
+  created_at: Scalars['DateTime'];
+  description: Scalars['String'];
+  id: Scalars['String'];
+  isRead: Scalars['Boolean'];
+  is_disabled: Scalars['Boolean'];
+  senderId: Scalars['String'];
+  title: Scalars['String'];
+  topics: Maybe<Array<NotificationTopics>>;
+  updated_at: Scalars['DateTime'];
+  userId: Scalars['String'];
+};
+
+export type NotificationListRelationFilter = {
+  every?: InputMaybe<NotificationWhereInput>;
+  none?: InputMaybe<NotificationWhereInput>;
+  some?: InputMaybe<NotificationWhereInput>;
+};
+
+export type NotificationMaxAggregate = {
+  __typename?: 'NotificationMaxAggregate';
+  bugId: Maybe<Scalars['String']>;
+  created_at: Maybe<Scalars['DateTime']>;
+  description: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['String']>;
+  isRead: Maybe<Scalars['Boolean']>;
+  is_disabled: Maybe<Scalars['Boolean']>;
+  senderId: Maybe<Scalars['String']>;
+  title: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+  userId: Maybe<Scalars['String']>;
+};
+
+export type NotificationMaxOrderByAggregateInput = {
+  bugId?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  isRead?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  senderId?: InputMaybe<SortOrder>;
+  title?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type NotificationMinAggregate = {
+  __typename?: 'NotificationMinAggregate';
+  bugId: Maybe<Scalars['String']>;
+  created_at: Maybe<Scalars['DateTime']>;
+  description: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['String']>;
+  isRead: Maybe<Scalars['Boolean']>;
+  is_disabled: Maybe<Scalars['Boolean']>;
+  senderId: Maybe<Scalars['String']>;
+  title: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+  userId: Maybe<Scalars['String']>;
+};
+
+export type NotificationMinOrderByAggregateInput = {
+  bugId?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  isRead?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  senderId?: InputMaybe<SortOrder>;
+  title?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type NotificationOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type NotificationOrderByWithAggregationInput = {
+  _count?: InputMaybe<NotificationCountOrderByAggregateInput>;
+  _max?: InputMaybe<NotificationMaxOrderByAggregateInput>;
+  _min?: InputMaybe<NotificationMinOrderByAggregateInput>;
+  bugId?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  isRead?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  senderId?: InputMaybe<SortOrder>;
+  title?: InputMaybe<SortOrder>;
+  topics?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type NotificationOrderByWithRelationInput = {
+  bugId?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  isRead?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  sender?: InputMaybe<UserOrderByWithRelationInput>;
+  senderId?: InputMaybe<SortOrder>;
+  title?: InputMaybe<SortOrder>;
+  topics?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  user?: InputMaybe<UserOrderByWithRelationInput>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export enum NotificationScalarFieldEnum {
+  BugId = 'bugId',
+  CreatedAt = 'created_at',
+  Description = 'description',
+  Id = 'id',
+  IsRead = 'isRead',
+  IsDisabled = 'is_disabled',
+  SenderId = 'senderId',
+  Title = 'title',
+  Topics = 'topics',
+  UpdatedAt = 'updated_at',
+  UserId = 'userId'
+}
+
+export type NotificationScalarWhereInput = {
+  AND?: InputMaybe<Array<NotificationScalarWhereInput>>;
+  NOT?: InputMaybe<Array<NotificationScalarWhereInput>>;
+  OR?: InputMaybe<Array<NotificationScalarWhereInput>>;
+  bugId?: InputMaybe<StringNullableFilter>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  description?: InputMaybe<StringFilter>;
+  id?: InputMaybe<StringFilter>;
+  isRead?: InputMaybe<BoolFilter>;
+  is_disabled?: InputMaybe<BoolFilter>;
+  senderId?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  topics?: InputMaybe<EnumNotificationTopicsNullableListFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+  userId?: InputMaybe<StringFilter>;
+};
+
+export type NotificationScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<NotificationScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<NotificationScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<NotificationScalarWhereWithAggregatesInput>>;
+  bugId?: InputMaybe<StringNullableWithAggregatesFilter>;
+  created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+  description?: InputMaybe<StringWithAggregatesFilter>;
+  id?: InputMaybe<StringWithAggregatesFilter>;
+  isRead?: InputMaybe<BoolWithAggregatesFilter>;
+  is_disabled?: InputMaybe<BoolWithAggregatesFilter>;
+  senderId?: InputMaybe<StringWithAggregatesFilter>;
+  title?: InputMaybe<StringWithAggregatesFilter>;
+  topics?: InputMaybe<EnumNotificationTopicsNullableListFilter>;
+  updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+  userId?: InputMaybe<StringWithAggregatesFilter>;
+};
+
+export enum NotificationTopics {
+  BugClosed = 'BUG_CLOSED',
+  FeatureClosed = 'FEATURE_CLOSED',
+  FileUploaded = 'FILE_UPLOADED',
+  NewBug = 'NEW_BUG',
+  NewComment = 'NEW_COMMENT',
+  NewFeature = 'NEW_FEATURE',
+  NewFile = 'NEW_FILE',
+  NewReply = 'NEW_REPLY',
+  NewReview = 'NEW_REVIEW',
+  NewUser = 'NEW_USER',
+  Other = 'OTHER',
+  WebsiteAdded = 'WEBSITE_ADDED',
+  WebsiteRemoved = 'WEBSITE_REMOVED',
+  WebsiteUpdated = 'WEBSITE_UPDATED'
+}
+
+export type NotificationType = {
+  __typename?: 'NotificationType';
+  date: Scalars['DateTime'];
+  id: Scalars['ID'];
+  message: Maybe<Scalars['String']>;
+};
+
+export type NotificationUpdateInput = {
+  bugId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  isRead?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  sender?: InputMaybe<UserUpdateOneRequiredWithoutNotifications_SentInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  topics?: InputMaybe<NotificationUpdatetopicsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutNotificationInput>;
+};
+
+export type NotificationUpdateManyMutationInput = {
+  bugId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  isRead?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  topics?: InputMaybe<NotificationUpdatetopicsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type NotificationUpdateManyWithWhereWithoutSenderInput = {
+  data: NotificationUpdateManyMutationInput;
+  where: NotificationScalarWhereInput;
+};
+
+export type NotificationUpdateManyWithWhereWithoutUserInput = {
+  data: NotificationUpdateManyMutationInput;
+  where: NotificationScalarWhereInput;
+};
+
+export type NotificationUpdateManyWithoutSenderInput = {
+  connect?: InputMaybe<Array<NotificationWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<NotificationCreateOrConnectWithoutSenderInput>>;
+  create?: InputMaybe<Array<NotificationCreateWithoutSenderInput>>;
+  createMany?: InputMaybe<NotificationCreateManySenderInputEnvelope>;
+  delete?: InputMaybe<Array<NotificationWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<NotificationScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<NotificationWhereUniqueInput>>;
+  set?: InputMaybe<Array<NotificationWhereUniqueInput>>;
+  update?: InputMaybe<Array<NotificationUpdateWithWhereUniqueWithoutSenderInput>>;
+  updateMany?: InputMaybe<Array<NotificationUpdateManyWithWhereWithoutSenderInput>>;
+  upsert?: InputMaybe<Array<NotificationUpsertWithWhereUniqueWithoutSenderInput>>;
+};
+
+export type NotificationUpdateManyWithoutUserInput = {
+  connect?: InputMaybe<Array<NotificationWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<NotificationCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<NotificationCreateWithoutUserInput>>;
+  createMany?: InputMaybe<NotificationCreateManyUserInputEnvelope>;
+  delete?: InputMaybe<Array<NotificationWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<NotificationScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<NotificationWhereUniqueInput>>;
+  set?: InputMaybe<Array<NotificationWhereUniqueInput>>;
+  update?: InputMaybe<Array<NotificationUpdateWithWhereUniqueWithoutUserInput>>;
+  updateMany?: InputMaybe<Array<NotificationUpdateManyWithWhereWithoutUserInput>>;
+  upsert?: InputMaybe<Array<NotificationUpsertWithWhereUniqueWithoutUserInput>>;
+};
+
+export type NotificationUpdateWithWhereUniqueWithoutSenderInput = {
+  data: NotificationUpdateWithoutSenderInput;
+  where: NotificationWhereUniqueInput;
+};
+
+export type NotificationUpdateWithWhereUniqueWithoutUserInput = {
+  data: NotificationUpdateWithoutUserInput;
+  where: NotificationWhereUniqueInput;
+};
+
+export type NotificationUpdateWithoutSenderInput = {
+  bugId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  isRead?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  topics?: InputMaybe<NotificationUpdatetopicsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutNotificationInput>;
+};
+
+export type NotificationUpdateWithoutUserInput = {
+  bugId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  isRead?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  sender?: InputMaybe<UserUpdateOneRequiredWithoutNotifications_SentInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  topics?: InputMaybe<NotificationUpdatetopicsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type NotificationUpdatetopicsInput = {
+  push?: InputMaybe<Array<NotificationTopics>>;
+  set?: InputMaybe<Array<NotificationTopics>>;
+};
+
+export type NotificationUpsertWithWhereUniqueWithoutSenderInput = {
+  create: NotificationCreateWithoutSenderInput;
+  update: NotificationUpdateWithoutSenderInput;
+  where: NotificationWhereUniqueInput;
+};
+
+export type NotificationUpsertWithWhereUniqueWithoutUserInput = {
+  create: NotificationCreateWithoutUserInput;
+  update: NotificationUpdateWithoutUserInput;
+  where: NotificationWhereUniqueInput;
+};
+
+export type NotificationWhereInput = {
+  AND?: InputMaybe<Array<NotificationWhereInput>>;
+  NOT?: InputMaybe<Array<NotificationWhereInput>>;
+  OR?: InputMaybe<Array<NotificationWhereInput>>;
+  bugId?: InputMaybe<StringNullableFilter>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  description?: InputMaybe<StringFilter>;
+  id?: InputMaybe<StringFilter>;
+  isRead?: InputMaybe<BoolFilter>;
+  is_disabled?: InputMaybe<BoolFilter>;
+  sender?: InputMaybe<UserRelationFilter>;
+  senderId?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  topics?: InputMaybe<EnumNotificationTopicsNullableListFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+  user?: InputMaybe<UserRelationFilter>;
+  userId?: InputMaybe<StringFilter>;
+};
+
+export type NotificationWhereUniqueInput = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
 export type NullableStringFieldUpdateOperationsInput = {
   set?: InputMaybe<Scalars['String']>;
 };
@@ -2097,25 +4092,41 @@ export type Query = {
   __typename?: 'Query';
   aggregateBug: AggregateBug;
   aggregateCategory: AggregateCategory;
+  aggregateComment: AggregateComment;
+  aggregateFeature: AggregateFeature;
   aggregateFile: AggregateFile;
+  aggregateNotification: AggregateNotification;
   aggregateUser: AggregateUser;
   aggregateWebsite: AggregateWebsite;
   bug: Maybe<Bug>;
   bugs: Array<Bug>;
   categories: Array<Category>;
   category: Maybe<Category>;
+  comment: Maybe<Comment>;
+  comments: Array<Comment>;
+  currentDate: Scalars['DateTime'];
+  feature: Maybe<Feature>;
+  features: Array<Feature>;
   file: Maybe<File>;
   files: Array<File>;
   findFirstBug: Maybe<Bug>;
   findFirstCategory: Maybe<Category>;
+  findFirstComment: Maybe<Comment>;
+  findFirstFeature: Maybe<Feature>;
   findFirstFile: Maybe<File>;
+  findFirstNotification: Maybe<Notification>;
   findFirstUser: Maybe<User>;
   findFirstWebsite: Maybe<Website>;
   groupByBug: Array<BugGroupBy>;
   groupByCategory: Array<CategoryGroupBy>;
+  groupByComment: Array<CommentGroupBy>;
+  groupByFeature: Array<FeatureGroupBy>;
   groupByFile: Array<FileGroupBy>;
+  groupByNotification: Array<NotificationGroupBy>;
   groupByUser: Array<UserGroupBy>;
   groupByWebsite: Array<WebsiteGroupBy>;
+  notification: Maybe<Notification>;
+  notifications: Array<Notification>;
   user: Maybe<User>;
   users: Array<User>;
   website: Maybe<Website>;
@@ -2141,12 +4152,39 @@ export type QueryAggregateCategoryArgs = {
 };
 
 
+export type QueryAggregateCommentArgs = {
+  cursor: InputMaybe<CommentWhereUniqueInput>;
+  orderBy: InputMaybe<Array<CommentOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<CommentWhereInput>;
+};
+
+
+export type QueryAggregateFeatureArgs = {
+  cursor: InputMaybe<FeatureWhereUniqueInput>;
+  orderBy: InputMaybe<Array<FeatureOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<FeatureWhereInput>;
+};
+
+
 export type QueryAggregateFileArgs = {
   cursor: InputMaybe<FileWhereUniqueInput>;
   orderBy: InputMaybe<Array<FileOrderByWithRelationInput>>;
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<FileWhereInput>;
+};
+
+
+export type QueryAggregateNotificationArgs = {
+  cursor: InputMaybe<NotificationWhereUniqueInput>;
+  orderBy: InputMaybe<Array<NotificationOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<NotificationWhereInput>;
 };
 
 
@@ -2198,6 +4236,36 @@ export type QueryCategoryArgs = {
 };
 
 
+export type QueryCommentArgs = {
+  where: CommentWhereUniqueInput;
+};
+
+
+export type QueryCommentsArgs = {
+  cursor: InputMaybe<CommentWhereUniqueInput>;
+  distinct: InputMaybe<Array<CommentScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<CommentOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<CommentWhereInput>;
+};
+
+
+export type QueryFeatureArgs = {
+  where: FeatureWhereUniqueInput;
+};
+
+
+export type QueryFeaturesArgs = {
+  cursor: InputMaybe<FeatureWhereUniqueInput>;
+  distinct: InputMaybe<Array<FeatureScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<FeatureOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<FeatureWhereInput>;
+};
+
+
 export type QueryFileArgs = {
   where: FileWhereUniqueInput;
 };
@@ -2233,6 +4301,26 @@ export type QueryFindFirstCategoryArgs = {
 };
 
 
+export type QueryFindFirstCommentArgs = {
+  cursor: InputMaybe<CommentWhereUniqueInput>;
+  distinct: InputMaybe<Array<CommentScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<CommentOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<CommentWhereInput>;
+};
+
+
+export type QueryFindFirstFeatureArgs = {
+  cursor: InputMaybe<FeatureWhereUniqueInput>;
+  distinct: InputMaybe<Array<FeatureScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<FeatureOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<FeatureWhereInput>;
+};
+
+
 export type QueryFindFirstFileArgs = {
   cursor: InputMaybe<FileWhereUniqueInput>;
   distinct: InputMaybe<Array<FileScalarFieldEnum>>;
@@ -2240,6 +4328,16 @@ export type QueryFindFirstFileArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<FileWhereInput>;
+};
+
+
+export type QueryFindFirstNotificationArgs = {
+  cursor: InputMaybe<NotificationWhereUniqueInput>;
+  distinct: InputMaybe<Array<NotificationScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<NotificationOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<NotificationWhereInput>;
 };
 
 
@@ -2283,6 +4381,26 @@ export type QueryGroupByCategoryArgs = {
 };
 
 
+export type QueryGroupByCommentArgs = {
+  by: Array<CommentScalarFieldEnum>;
+  having: InputMaybe<CommentScalarWhereWithAggregatesInput>;
+  orderBy: InputMaybe<Array<CommentOrderByWithAggregationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<CommentWhereInput>;
+};
+
+
+export type QueryGroupByFeatureArgs = {
+  by: Array<FeatureScalarFieldEnum>;
+  having: InputMaybe<FeatureScalarWhereWithAggregatesInput>;
+  orderBy: InputMaybe<Array<FeatureOrderByWithAggregationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<FeatureWhereInput>;
+};
+
+
 export type QueryGroupByFileArgs = {
   by: Array<FileScalarFieldEnum>;
   having: InputMaybe<FileScalarWhereWithAggregatesInput>;
@@ -2290,6 +4408,16 @@ export type QueryGroupByFileArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<FileWhereInput>;
+};
+
+
+export type QueryGroupByNotificationArgs = {
+  by: Array<NotificationScalarFieldEnum>;
+  having: InputMaybe<NotificationScalarWhereWithAggregatesInput>;
+  orderBy: InputMaybe<Array<NotificationOrderByWithAggregationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<NotificationWhereInput>;
 };
 
 
@@ -2310,6 +4438,21 @@ export type QueryGroupByWebsiteArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<WebsiteWhereInput>;
+};
+
+
+export type QueryNotificationArgs = {
+  where: NotificationWhereUniqueInput;
+};
+
+
+export type QueryNotificationsArgs = {
+  cursor: InputMaybe<NotificationWhereUniqueInput>;
+  distinct: InputMaybe<Array<NotificationScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<NotificationOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<NotificationWhereInput>;
 };
 
 
@@ -2437,18 +4580,34 @@ export type StringWithAggregatesFilter = {
   startsWith?: InputMaybe<Scalars['String']>;
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  normalSubscription: NotificationType;
+  subscriptionWithFilter: NotificationType;
+  subscriptionWithFilterToDynamicTopic: NotificationType;
+};
+
+
+export type SubscriptionSubscriptionWithFilterToDynamicTopicArgs = {
+  topic: Scalars['String'];
+};
+
 export type User = {
   __typename?: 'User';
   Bug: Array<Bug>;
+  Comment: Array<Comment>;
+  Notification: Array<Notification>;
   _count: Maybe<UserCount>;
   avatar: Maybe<Scalars['String']>;
   created_at: Scalars['DateTime'];
   email: Scalars['String'];
+  feature: Array<Feature>;
   files: Array<File>;
   first_name: Scalars['String'];
   id: Scalars['String'];
   is_disabled: Scalars['Boolean'];
   last_name: Scalars['String'];
+  notifications_sent: Array<Notification>;
   password: Scalars['String'];
   role: Array<Role>;
   updated_at: Scalars['DateTime'];
@@ -2465,6 +4624,36 @@ export type UserBugArgs = {
 };
 
 
+export type UserCommentArgs = {
+  cursor: InputMaybe<CommentWhereUniqueInput>;
+  distinct: InputMaybe<Array<CommentScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<CommentOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<CommentWhereInput>;
+};
+
+
+export type UserNotificationArgs = {
+  cursor: InputMaybe<NotificationWhereUniqueInput>;
+  distinct: InputMaybe<Array<NotificationScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<NotificationOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<NotificationWhereInput>;
+};
+
+
+export type UserFeatureArgs = {
+  cursor: InputMaybe<FeatureWhereUniqueInput>;
+  distinct: InputMaybe<Array<FeatureScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<FeatureOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<FeatureWhereInput>;
+};
+
+
 export type UserFilesArgs = {
   cursor: InputMaybe<FileWhereUniqueInput>;
   distinct: InputMaybe<Array<FileScalarFieldEnum>>;
@@ -2474,10 +4663,24 @@ export type UserFilesArgs = {
   where: InputMaybe<FileWhereInput>;
 };
 
+
+export type UserNotifications_SentArgs = {
+  cursor: InputMaybe<NotificationWhereUniqueInput>;
+  distinct: InputMaybe<Array<NotificationScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<NotificationOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<NotificationWhereInput>;
+};
+
 export type UserCount = {
   __typename?: 'UserCount';
   Bug: Scalars['Int'];
+  Comment: Scalars['Int'];
+  Notification: Scalars['Int'];
+  feature: Scalars['Int'];
   files: Scalars['Int'];
+  notifications_sent: Scalars['Int'];
 };
 
 export type UserCountAggregate = {
@@ -2510,14 +4713,18 @@ export type UserCountOrderByAggregateInput = {
 
 export type UserCreateInput = {
   Bug?: InputMaybe<BugCreateNestedManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutUserInput>;
+  Notification?: InputMaybe<NotificationCreateNestedManyWithoutUserInput>;
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   email: Scalars['String'];
+  feature?: InputMaybe<FeatureCreateNestedManyWithoutUserInput>;
   files?: InputMaybe<FileCreateNestedManyWithoutUserInput>;
   first_name: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
   is_disabled: Scalars['Boolean'];
   last_name: Scalars['String'];
+  notifications_sent?: InputMaybe<NotificationCreateNestedManyWithoutSenderInput>;
   password: Scalars['String'];
   role?: InputMaybe<UserCreateroleInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -2546,14 +4753,48 @@ export type UserCreateNestedOneWithoutBugInput = {
   create?: InputMaybe<UserCreateWithoutBugInput>;
 };
 
+export type UserCreateNestedOneWithoutCommentInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutCommentInput>;
+  create?: InputMaybe<UserCreateWithoutCommentInput>;
+};
+
+export type UserCreateNestedOneWithoutFeatureInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutFeatureInput>;
+  create?: InputMaybe<UserCreateWithoutFeatureInput>;
+};
+
 export type UserCreateNestedOneWithoutFilesInput = {
   connect?: InputMaybe<UserWhereUniqueInput>;
   connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutFilesInput>;
   create?: InputMaybe<UserCreateWithoutFilesInput>;
 };
 
+export type UserCreateNestedOneWithoutNotificationInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutNotificationInput>;
+  create?: InputMaybe<UserCreateWithoutNotificationInput>;
+};
+
+export type UserCreateNestedOneWithoutNotifications_SentInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutNotifications_SentInput>;
+  create?: InputMaybe<UserCreateWithoutNotifications_SentInput>;
+};
+
 export type UserCreateOrConnectWithoutBugInput = {
   create: UserCreateWithoutBugInput;
+  where: UserWhereUniqueInput;
+};
+
+export type UserCreateOrConnectWithoutCommentInput = {
+  create: UserCreateWithoutCommentInput;
+  where: UserWhereUniqueInput;
+};
+
+export type UserCreateOrConnectWithoutFeatureInput = {
+  create: UserCreateWithoutFeatureInput;
   where: UserWhereUniqueInput;
 };
 
@@ -2562,7 +4803,56 @@ export type UserCreateOrConnectWithoutFilesInput = {
   where: UserWhereUniqueInput;
 };
 
+export type UserCreateOrConnectWithoutNotificationInput = {
+  create: UserCreateWithoutNotificationInput;
+  where: UserWhereUniqueInput;
+};
+
+export type UserCreateOrConnectWithoutNotifications_SentInput = {
+  create: UserCreateWithoutNotifications_SentInput;
+  where: UserWhereUniqueInput;
+};
+
 export type UserCreateWithoutBugInput = {
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutUserInput>;
+  Notification?: InputMaybe<NotificationCreateNestedManyWithoutUserInput>;
+  avatar?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  feature?: InputMaybe<FeatureCreateNestedManyWithoutUserInput>;
+  files?: InputMaybe<FileCreateNestedManyWithoutUserInput>;
+  first_name: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  last_name: Scalars['String'];
+  notifications_sent?: InputMaybe<NotificationCreateNestedManyWithoutSenderInput>;
+  password: Scalars['String'];
+  role?: InputMaybe<UserCreateroleInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type UserCreateWithoutCommentInput = {
+  Bug?: InputMaybe<BugCreateNestedManyWithoutUserInput>;
+  Notification?: InputMaybe<NotificationCreateNestedManyWithoutUserInput>;
+  avatar?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  feature?: InputMaybe<FeatureCreateNestedManyWithoutUserInput>;
+  files?: InputMaybe<FileCreateNestedManyWithoutUserInput>;
+  first_name: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  last_name: Scalars['String'];
+  notifications_sent?: InputMaybe<NotificationCreateNestedManyWithoutSenderInput>;
+  password: Scalars['String'];
+  role?: InputMaybe<UserCreateroleInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type UserCreateWithoutFeatureInput = {
+  Bug?: InputMaybe<BugCreateNestedManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutUserInput>;
+  Notification?: InputMaybe<NotificationCreateNestedManyWithoutUserInput>;
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   email: Scalars['String'];
@@ -2571,6 +4861,7 @@ export type UserCreateWithoutBugInput = {
   id?: InputMaybe<Scalars['String']>;
   is_disabled: Scalars['Boolean'];
   last_name: Scalars['String'];
+  notifications_sent?: InputMaybe<NotificationCreateNestedManyWithoutSenderInput>;
   password: Scalars['String'];
   role?: InputMaybe<UserCreateroleInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -2578,9 +4869,49 @@ export type UserCreateWithoutBugInput = {
 
 export type UserCreateWithoutFilesInput = {
   Bug?: InputMaybe<BugCreateNestedManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutUserInput>;
+  Notification?: InputMaybe<NotificationCreateNestedManyWithoutUserInput>;
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   email: Scalars['String'];
+  feature?: InputMaybe<FeatureCreateNestedManyWithoutUserInput>;
+  first_name: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  last_name: Scalars['String'];
+  notifications_sent?: InputMaybe<NotificationCreateNestedManyWithoutSenderInput>;
+  password: Scalars['String'];
+  role?: InputMaybe<UserCreateroleInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type UserCreateWithoutNotificationInput = {
+  Bug?: InputMaybe<BugCreateNestedManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutUserInput>;
+  avatar?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  feature?: InputMaybe<FeatureCreateNestedManyWithoutUserInput>;
+  files?: InputMaybe<FileCreateNestedManyWithoutUserInput>;
+  first_name: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  last_name: Scalars['String'];
+  notifications_sent?: InputMaybe<NotificationCreateNestedManyWithoutSenderInput>;
+  password: Scalars['String'];
+  role?: InputMaybe<UserCreateroleInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type UserCreateWithoutNotifications_SentInput = {
+  Bug?: InputMaybe<BugCreateNestedManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutUserInput>;
+  Notification?: InputMaybe<NotificationCreateNestedManyWithoutUserInput>;
+  avatar?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  feature?: InputMaybe<FeatureCreateNestedManyWithoutUserInput>;
+  files?: InputMaybe<FileCreateNestedManyWithoutUserInput>;
   first_name: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
   is_disabled: Scalars['Boolean'];
@@ -2679,14 +5010,18 @@ export type UserOrderByWithAggregationInput = {
 
 export type UserOrderByWithRelationInput = {
   Bug?: InputMaybe<BugOrderByRelationAggregateInput>;
+  Comment?: InputMaybe<CommentOrderByRelationAggregateInput>;
+  Notification?: InputMaybe<NotificationOrderByRelationAggregateInput>;
   avatar?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   email?: InputMaybe<SortOrder>;
+  feature?: InputMaybe<FeatureOrderByRelationAggregateInput>;
   files?: InputMaybe<FileOrderByRelationAggregateInput>;
   first_name?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
   last_name?: InputMaybe<SortOrder>;
+  notifications_sent?: InputMaybe<NotificationOrderByRelationAggregateInput>;
   password?: InputMaybe<SortOrder>;
   role?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -2728,14 +5063,18 @@ export type UserScalarWhereWithAggregatesInput = {
 
 export type UserUpdateInput = {
   Bug?: InputMaybe<BugUpdateManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentUpdateManyWithoutUserInput>;
+  Notification?: InputMaybe<NotificationUpdateManyWithoutUserInput>;
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  feature?: InputMaybe<FeatureUpdateManyWithoutUserInput>;
   files?: InputMaybe<FileUpdateManyWithoutUserInput>;
   first_name?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  notifications_sent?: InputMaybe<NotificationUpdateManyWithoutSenderInput>;
   password?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<UserUpdateroleInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -2762,6 +5101,14 @@ export type UserUpdateOneRequiredWithoutBugInput = {
   upsert?: InputMaybe<UserUpsertWithoutBugInput>;
 };
 
+export type UserUpdateOneRequiredWithoutCommentInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutCommentInput>;
+  create?: InputMaybe<UserCreateWithoutCommentInput>;
+  update?: InputMaybe<UserUpdateWithoutCommentInput>;
+  upsert?: InputMaybe<UserUpsertWithoutCommentInput>;
+};
+
 export type UserUpdateOneRequiredWithoutFilesInput = {
   connect?: InputMaybe<UserWhereUniqueInput>;
   connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutFilesInput>;
@@ -2770,7 +5117,72 @@ export type UserUpdateOneRequiredWithoutFilesInput = {
   upsert?: InputMaybe<UserUpsertWithoutFilesInput>;
 };
 
+export type UserUpdateOneRequiredWithoutNotificationInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutNotificationInput>;
+  create?: InputMaybe<UserCreateWithoutNotificationInput>;
+  update?: InputMaybe<UserUpdateWithoutNotificationInput>;
+  upsert?: InputMaybe<UserUpsertWithoutNotificationInput>;
+};
+
+export type UserUpdateOneRequiredWithoutNotifications_SentInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutNotifications_SentInput>;
+  create?: InputMaybe<UserCreateWithoutNotifications_SentInput>;
+  update?: InputMaybe<UserUpdateWithoutNotifications_SentInput>;
+  upsert?: InputMaybe<UserUpsertWithoutNotifications_SentInput>;
+};
+
+export type UserUpdateOneWithoutFeatureInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutFeatureInput>;
+  create?: InputMaybe<UserCreateWithoutFeatureInput>;
+  delete?: InputMaybe<Scalars['Boolean']>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  update?: InputMaybe<UserUpdateWithoutFeatureInput>;
+  upsert?: InputMaybe<UserUpsertWithoutFeatureInput>;
+};
+
 export type UserUpdateWithoutBugInput = {
+  Comment?: InputMaybe<CommentUpdateManyWithoutUserInput>;
+  Notification?: InputMaybe<NotificationUpdateManyWithoutUserInput>;
+  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  feature?: InputMaybe<FeatureUpdateManyWithoutUserInput>;
+  files?: InputMaybe<FileUpdateManyWithoutUserInput>;
+  first_name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  last_name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  notifications_sent?: InputMaybe<NotificationUpdateManyWithoutSenderInput>;
+  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  role?: InputMaybe<UserUpdateroleInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateWithoutCommentInput = {
+  Bug?: InputMaybe<BugUpdateManyWithoutUserInput>;
+  Notification?: InputMaybe<NotificationUpdateManyWithoutUserInput>;
+  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  feature?: InputMaybe<FeatureUpdateManyWithoutUserInput>;
+  files?: InputMaybe<FileUpdateManyWithoutUserInput>;
+  first_name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  last_name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  notifications_sent?: InputMaybe<NotificationUpdateManyWithoutSenderInput>;
+  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  role?: InputMaybe<UserUpdateroleInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateWithoutFeatureInput = {
+  Bug?: InputMaybe<BugUpdateManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentUpdateManyWithoutUserInput>;
+  Notification?: InputMaybe<NotificationUpdateManyWithoutUserInput>;
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -2779,6 +5191,7 @@ export type UserUpdateWithoutBugInput = {
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  notifications_sent?: InputMaybe<NotificationUpdateManyWithoutSenderInput>;
   password?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<UserUpdateroleInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -2786,9 +5199,49 @@ export type UserUpdateWithoutBugInput = {
 
 export type UserUpdateWithoutFilesInput = {
   Bug?: InputMaybe<BugUpdateManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentUpdateManyWithoutUserInput>;
+  Notification?: InputMaybe<NotificationUpdateManyWithoutUserInput>;
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  feature?: InputMaybe<FeatureUpdateManyWithoutUserInput>;
+  first_name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  last_name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  notifications_sent?: InputMaybe<NotificationUpdateManyWithoutSenderInput>;
+  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  role?: InputMaybe<UserUpdateroleInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateWithoutNotificationInput = {
+  Bug?: InputMaybe<BugUpdateManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentUpdateManyWithoutUserInput>;
+  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  feature?: InputMaybe<FeatureUpdateManyWithoutUserInput>;
+  files?: InputMaybe<FileUpdateManyWithoutUserInput>;
+  first_name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  last_name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  notifications_sent?: InputMaybe<NotificationUpdateManyWithoutSenderInput>;
+  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  role?: InputMaybe<UserUpdateroleInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateWithoutNotifications_SentInput = {
+  Bug?: InputMaybe<BugUpdateManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentUpdateManyWithoutUserInput>;
+  Notification?: InputMaybe<NotificationUpdateManyWithoutUserInput>;
+  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  feature?: InputMaybe<FeatureUpdateManyWithoutUserInput>;
+  files?: InputMaybe<FileUpdateManyWithoutUserInput>;
   first_name?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -2808,24 +5261,48 @@ export type UserUpsertWithoutBugInput = {
   update: UserUpdateWithoutBugInput;
 };
 
+export type UserUpsertWithoutCommentInput = {
+  create: UserCreateWithoutCommentInput;
+  update: UserUpdateWithoutCommentInput;
+};
+
+export type UserUpsertWithoutFeatureInput = {
+  create: UserCreateWithoutFeatureInput;
+  update: UserUpdateWithoutFeatureInput;
+};
+
 export type UserUpsertWithoutFilesInput = {
   create: UserCreateWithoutFilesInput;
   update: UserUpdateWithoutFilesInput;
 };
 
+export type UserUpsertWithoutNotificationInput = {
+  create: UserCreateWithoutNotificationInput;
+  update: UserUpdateWithoutNotificationInput;
+};
+
+export type UserUpsertWithoutNotifications_SentInput = {
+  create: UserCreateWithoutNotifications_SentInput;
+  update: UserUpdateWithoutNotifications_SentInput;
+};
+
 export type UserWhereInput = {
   AND?: InputMaybe<Array<UserWhereInput>>;
   Bug?: InputMaybe<BugListRelationFilter>;
+  Comment?: InputMaybe<CommentListRelationFilter>;
   NOT?: InputMaybe<Array<UserWhereInput>>;
+  Notification?: InputMaybe<NotificationListRelationFilter>;
   OR?: InputMaybe<Array<UserWhereInput>>;
   avatar?: InputMaybe<StringNullableFilter>;
   created_at?: InputMaybe<DateTimeFilter>;
   email?: InputMaybe<StringFilter>;
+  feature?: InputMaybe<FeatureListRelationFilter>;
   files?: InputMaybe<FileListRelationFilter>;
   first_name?: InputMaybe<StringFilter>;
   id?: InputMaybe<StringFilter>;
   is_disabled?: InputMaybe<BoolFilter>;
   last_name?: InputMaybe<StringFilter>;
+  notifications_sent?: InputMaybe<NotificationListRelationFilter>;
   password?: InputMaybe<StringFilter>;
   role?: InputMaybe<EnumRoleNullableListFilter>;
   updated_at?: InputMaybe<DateTimeFilter>;
@@ -2836,9 +5313,16 @@ export type UserWhereUniqueInput = {
   id?: InputMaybe<Scalars['String']>;
 };
 
+export enum ValidationStatus {
+  NotValidated = 'NOT_VALIDATED',
+  Pending = 'PENDING',
+  Validated = 'VALIDATED'
+}
+
 export type Website = {
   __typename?: 'Website';
   Bug: Array<Bug>;
+  Feature: Array<Feature>;
   _count: Maybe<WebsiteCount>;
   created_at: Scalars['DateTime'];
   id: Scalars['String'];
@@ -2859,9 +5343,20 @@ export type WebsiteBugArgs = {
   where: InputMaybe<BugWhereInput>;
 };
 
+
+export type WebsiteFeatureArgs = {
+  cursor: InputMaybe<FeatureWhereUniqueInput>;
+  distinct: InputMaybe<Array<FeatureScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<FeatureOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<FeatureWhereInput>;
+};
+
 export type WebsiteCount = {
   __typename?: 'WebsiteCount';
   Bug: Scalars['Int'];
+  Feature: Scalars['Int'];
 };
 
 export type WebsiteCountAggregate = {
@@ -2888,6 +5383,7 @@ export type WebsiteCountOrderByAggregateInput = {
 
 export type WebsiteCreateInput = {
   Bug?: InputMaybe<BugCreateNestedManyWithoutWebsiteInput>;
+  Feature?: InputMaybe<FeatureCreateNestedManyWithoutWebsiteInput>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
   isPreview: Scalars['Boolean'];
@@ -2913,12 +5409,35 @@ export type WebsiteCreateNestedOneWithoutBugInput = {
   create?: InputMaybe<WebsiteCreateWithoutBugInput>;
 };
 
+export type WebsiteCreateNestedOneWithoutFeatureInput = {
+  connect?: InputMaybe<WebsiteWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<WebsiteCreateOrConnectWithoutFeatureInput>;
+  create?: InputMaybe<WebsiteCreateWithoutFeatureInput>;
+};
+
 export type WebsiteCreateOrConnectWithoutBugInput = {
   create: WebsiteCreateWithoutBugInput;
   where: WebsiteWhereUniqueInput;
 };
 
+export type WebsiteCreateOrConnectWithoutFeatureInput = {
+  create: WebsiteCreateWithoutFeatureInput;
+  where: WebsiteWhereUniqueInput;
+};
+
 export type WebsiteCreateWithoutBugInput = {
+  Feature?: InputMaybe<FeatureCreateNestedManyWithoutWebsiteInput>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  isPreview: Scalars['Boolean'];
+  logo: Scalars['String'];
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  url: Scalars['String'];
+};
+
+export type WebsiteCreateWithoutFeatureInput = {
+  Bug?: InputMaybe<BugCreateNestedManyWithoutWebsiteInput>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
   isPreview: Scalars['Boolean'];
@@ -2999,6 +5518,7 @@ export type WebsiteOrderByWithAggregationInput = {
 
 export type WebsiteOrderByWithRelationInput = {
   Bug?: InputMaybe<BugOrderByRelationAggregateInput>;
+  Feature?: InputMaybe<FeatureOrderByRelationAggregateInput>;
   created_at?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   isPreview?: InputMaybe<SortOrder>;
@@ -3038,6 +5558,7 @@ export type WebsiteScalarWhereWithAggregatesInput = {
 
 export type WebsiteUpdateInput = {
   Bug?: InputMaybe<BugUpdateManyWithoutWebsiteInput>;
+  Feature?: InputMaybe<FeatureUpdateManyWithoutWebsiteInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   isPreview?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -3065,7 +5586,27 @@ export type WebsiteUpdateOneRequiredWithoutBugInput = {
   upsert?: InputMaybe<WebsiteUpsertWithoutBugInput>;
 };
 
+export type WebsiteUpdateOneRequiredWithoutFeatureInput = {
+  connect?: InputMaybe<WebsiteWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<WebsiteCreateOrConnectWithoutFeatureInput>;
+  create?: InputMaybe<WebsiteCreateWithoutFeatureInput>;
+  update?: InputMaybe<WebsiteUpdateWithoutFeatureInput>;
+  upsert?: InputMaybe<WebsiteUpsertWithoutFeatureInput>;
+};
+
 export type WebsiteUpdateWithoutBugInput = {
+  Feature?: InputMaybe<FeatureUpdateManyWithoutWebsiteInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  isPreview?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  logo?: InputMaybe<StringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  url?: InputMaybe<StringFieldUpdateOperationsInput>;
+};
+
+export type WebsiteUpdateWithoutFeatureInput = {
+  Bug?: InputMaybe<BugUpdateManyWithoutWebsiteInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   isPreview?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -3080,9 +5621,15 @@ export type WebsiteUpsertWithoutBugInput = {
   update: WebsiteUpdateWithoutBugInput;
 };
 
+export type WebsiteUpsertWithoutFeatureInput = {
+  create: WebsiteCreateWithoutFeatureInput;
+  update: WebsiteUpdateWithoutFeatureInput;
+};
+
 export type WebsiteWhereInput = {
   AND?: InputMaybe<Array<WebsiteWhereInput>>;
   Bug?: InputMaybe<BugListRelationFilter>;
+  Feature?: InputMaybe<FeatureListRelationFilter>;
   NOT?: InputMaybe<Array<WebsiteWhereInput>>;
   OR?: InputMaybe<Array<WebsiteWhereInput>>;
   created_at?: InputMaybe<DateTimeFilter>;
@@ -3100,12 +5647,12 @@ export type WebsiteWhereUniqueInput = {
 
 export type UserFragment = { __typename?: 'User', id: string, first_name: string, last_name: string, email: string, avatar: string, role: Array<Role> };
 
-export type CreateBugMutationVariables = Exact<{
+export type CreateCustomBugMutationVariables = Exact<{
   data: BugCreateInput;
 }>;
 
 
-export type CreateBugMutation = { __typename?: 'Mutation', createBug: { __typename?: 'Bug', id: string } };
+export type CreateCustomBugMutation = { __typename?: 'Mutation', createBugCustom: { __typename?: 'Bug', id: string } };
 
 export type MutateLoginMutationVariables = Exact<{
   data: LoginInput;
@@ -3126,12 +5673,35 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'User', id: string, first_name: string, last_name: string, email: string, avatar: string, role: Array<Role> } };
 
+export type SetNotificationReadMutationVariables = Exact<{
+  where: NotificationWhereUniqueInput;
+  data: NotificationUpdateInput;
+}>;
+
+
+export type SetNotificationReadMutation = { __typename?: 'Mutation', updateNotification: { __typename?: 'Notification', id: string } };
+
 export type GetAllBugsByQueryVariables = Exact<{
-  where: BugWhereInput;
+  orderBy: InputMaybe<Array<BugOrderByWithRelationInput> | BugOrderByWithRelationInput>;
 }>;
 
 
 export type GetAllBugsByQuery = { __typename?: 'Query', bugs: Array<{ __typename?: 'Bug', id: string, title: string, description: string, created_at: any, status: BugStatus, number: number, Website: { __typename?: 'Website', id: string, name: string, url: string, logo: string, isPreview: boolean }, user: { __typename?: 'User', first_name: string, last_name: string, email: string } }> };
+
+export type GetAllCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllCategoriesQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string, backgroundColor: string, description: string, icon: string }> };
+
+export type GetAllFeaturesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllFeaturesQuery = { __typename?: 'Query', features: Array<{ __typename?: 'Feature', id: string, name: string, description: string, category: { __typename?: 'Category', id: string, name: string, backgroundColor: string, description: string, icon: string }, website: { __typename?: 'Website', name: string, url: string, logo: string } }> };
+
+export type GetAllNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllNotificationsQuery = { __typename?: 'Query', notifications: Array<{ __typename?: 'Notification', id: string, title: string, isRead: boolean, description: string, created_at: any, updated_at: any, sender: { __typename?: 'User', id: string, first_name: string, last_name: string, email: string, avatar: string } }> };
 
 export type GetAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3150,6 +5720,21 @@ export type GetBugDatasQueryVariables = Exact<{
 
 export type GetBugDatasQuery = { __typename?: 'Query', bug: { __typename?: 'Bug', id: string, number: number, title: string, status: BugStatus, severity: BugSeverity, priority: BugPriority, description: string, Website: { __typename?: 'Website', id: string, name: string, url: string, logo: string, isPreview: boolean }, File: Array<{ __typename?: 'File', id: string, name: string, path: string }>, user: { __typename?: 'User', first_name: string, last_name: string, email: string } } };
 
+export type AllNotificationsSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllNotificationsSubscription = { __typename?: 'Subscription', normalSubscription: { __typename?: 'NotificationType', id: string, message: string, date: any } };
+
+export type DynamicTopicSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DynamicTopicSubscription = { __typename?: 'Subscription', subscriptionWithFilterToDynamicTopic: { __typename?: 'NotificationType', id: string, message: string } };
+
+export type EvenNotificationsSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EvenNotificationsSubscription = { __typename?: 'Subscription', subscriptionWithFilter: { __typename?: 'NotificationType', id: string, message: string, date: any } };
+
 export const UserFragmentDoc = gql`
     fragment User on User {
   id
@@ -3160,39 +5745,39 @@ export const UserFragmentDoc = gql`
   role
 }
     `;
-export const CreateBugDocument = gql`
-    mutation createBug($data: BugCreateInput!) {
-  createBug(data: $data) {
+export const CreateCustomBugDocument = gql`
+    mutation createCustomBug($data: BugCreateInput!) {
+  createBugCustom(data: $data) {
     id
   }
 }
     `;
-export type CreateBugMutationFn = Apollo.MutationFunction<CreateBugMutation, CreateBugMutationVariables>;
+export type CreateCustomBugMutationFn = Apollo.MutationFunction<CreateCustomBugMutation, CreateCustomBugMutationVariables>;
 
 /**
- * __useCreateBugMutation__
+ * __useCreateCustomBugMutation__
  *
- * To run a mutation, you first call `useCreateBugMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateBugMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useCreateCustomBugMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCustomBugMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createBugMutation, { data, loading, error }] = useCreateBugMutation({
+ * const [createCustomBugMutation, { data, loading, error }] = useCreateCustomBugMutation({
  *   variables: {
  *      data: // value for 'data'
  *   },
  * });
  */
-export function useCreateBugMutation(baseOptions?: Apollo.MutationHookOptions<CreateBugMutation, CreateBugMutationVariables>) {
+export function useCreateCustomBugMutation(baseOptions?: Apollo.MutationHookOptions<CreateCustomBugMutation, CreateCustomBugMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateBugMutation, CreateBugMutationVariables>(CreateBugDocument, options);
+        return Apollo.useMutation<CreateCustomBugMutation, CreateCustomBugMutationVariables>(CreateCustomBugDocument, options);
       }
-export type CreateBugMutationHookResult = ReturnType<typeof useCreateBugMutation>;
-export type CreateBugMutationResult = Apollo.MutationResult<CreateBugMutation>;
-export type CreateBugMutationOptions = Apollo.BaseMutationOptions<CreateBugMutation, CreateBugMutationVariables>;
+export type CreateCustomBugMutationHookResult = ReturnType<typeof useCreateCustomBugMutation>;
+export type CreateCustomBugMutationResult = Apollo.MutationResult<CreateCustomBugMutation>;
+export type CreateCustomBugMutationOptions = Apollo.BaseMutationOptions<CreateCustomBugMutation, CreateCustomBugMutationVariables>;
 export const MutateLoginDocument = gql`
     mutation MutateLogin($data: LoginInput!) {
   login(data: $data) {
@@ -3291,9 +5876,43 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const SetNotificationReadDocument = gql`
+    mutation SetNotificationRead($where: NotificationWhereUniqueInput!, $data: NotificationUpdateInput!) {
+  updateNotification(where: $where, data: $data) {
+    id
+  }
+}
+    `;
+export type SetNotificationReadMutationFn = Apollo.MutationFunction<SetNotificationReadMutation, SetNotificationReadMutationVariables>;
+
+/**
+ * __useSetNotificationReadMutation__
+ *
+ * To run a mutation, you first call `useSetNotificationReadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetNotificationReadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setNotificationReadMutation, { data, loading, error }] = useSetNotificationReadMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useSetNotificationReadMutation(baseOptions?: Apollo.MutationHookOptions<SetNotificationReadMutation, SetNotificationReadMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetNotificationReadMutation, SetNotificationReadMutationVariables>(SetNotificationReadDocument, options);
+      }
+export type SetNotificationReadMutationHookResult = ReturnType<typeof useSetNotificationReadMutation>;
+export type SetNotificationReadMutationResult = Apollo.MutationResult<SetNotificationReadMutation>;
+export type SetNotificationReadMutationOptions = Apollo.BaseMutationOptions<SetNotificationReadMutation, SetNotificationReadMutationVariables>;
 export const GetAllBugsByDocument = gql`
-    query GetAllBugsBy($where: BugWhereInput!) {
-  bugs(where: $where) {
+    query GetAllBugsBy($orderBy: [BugOrderByWithRelationInput!]) {
+  bugs(orderBy: $orderBy) {
     id
     title
     description
@@ -3328,11 +5947,11 @@ export const GetAllBugsByDocument = gql`
  * @example
  * const { data, loading, error } = useGetAllBugsByQuery({
  *   variables: {
- *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
  *   },
  * });
  */
-export function useGetAllBugsByQuery(baseOptions: Apollo.QueryHookOptions<GetAllBugsByQuery, GetAllBugsByQueryVariables>) {
+export function useGetAllBugsByQuery(baseOptions?: Apollo.QueryHookOptions<GetAllBugsByQuery, GetAllBugsByQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetAllBugsByQuery, GetAllBugsByQueryVariables>(GetAllBugsByDocument, options);
       }
@@ -3343,6 +5962,138 @@ export function useGetAllBugsByLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetAllBugsByQueryHookResult = ReturnType<typeof useGetAllBugsByQuery>;
 export type GetAllBugsByLazyQueryHookResult = ReturnType<typeof useGetAllBugsByLazyQuery>;
 export type GetAllBugsByQueryResult = Apollo.QueryResult<GetAllBugsByQuery, GetAllBugsByQueryVariables>;
+export const GetAllCategoriesDocument = gql`
+    query GetAllCategories {
+  categories {
+    id
+    name
+    backgroundColor
+    description
+    icon
+  }
+}
+    `;
+
+/**
+ * __useGetAllCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetAllCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllCategoriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllCategoriesQuery, GetAllCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllCategoriesQuery, GetAllCategoriesQueryVariables>(GetAllCategoriesDocument, options);
+      }
+export function useGetAllCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllCategoriesQuery, GetAllCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllCategoriesQuery, GetAllCategoriesQueryVariables>(GetAllCategoriesDocument, options);
+        }
+export type GetAllCategoriesQueryHookResult = ReturnType<typeof useGetAllCategoriesQuery>;
+export type GetAllCategoriesLazyQueryHookResult = ReturnType<typeof useGetAllCategoriesLazyQuery>;
+export type GetAllCategoriesQueryResult = Apollo.QueryResult<GetAllCategoriesQuery, GetAllCategoriesQueryVariables>;
+export const GetAllFeaturesDocument = gql`
+    query GetAllFeatures {
+  features {
+    id
+    name
+    description
+    category {
+      id
+      name
+      backgroundColor
+      description
+      icon
+    }
+    website {
+      name
+      url
+      logo
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllFeaturesQuery__
+ *
+ * To run a query within a React component, call `useGetAllFeaturesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllFeaturesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllFeaturesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllFeaturesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllFeaturesQuery, GetAllFeaturesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllFeaturesQuery, GetAllFeaturesQueryVariables>(GetAllFeaturesDocument, options);
+      }
+export function useGetAllFeaturesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllFeaturesQuery, GetAllFeaturesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllFeaturesQuery, GetAllFeaturesQueryVariables>(GetAllFeaturesDocument, options);
+        }
+export type GetAllFeaturesQueryHookResult = ReturnType<typeof useGetAllFeaturesQuery>;
+export type GetAllFeaturesLazyQueryHookResult = ReturnType<typeof useGetAllFeaturesLazyQuery>;
+export type GetAllFeaturesQueryResult = Apollo.QueryResult<GetAllFeaturesQuery, GetAllFeaturesQueryVariables>;
+export const GetAllNotificationsDocument = gql`
+    query GetAllNotifications {
+  notifications {
+    id
+    title
+    isRead
+    sender {
+      id
+      first_name
+      last_name
+      email
+      avatar
+    }
+    description
+    created_at
+    updated_at
+  }
+}
+    `;
+
+/**
+ * __useGetAllNotificationsQuery__
+ *
+ * To run a query within a React component, call `useGetAllNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllNotificationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllNotificationsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllNotificationsQuery, GetAllNotificationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllNotificationsQuery, GetAllNotificationsQueryVariables>(GetAllNotificationsDocument, options);
+      }
+export function useGetAllNotificationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllNotificationsQuery, GetAllNotificationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllNotificationsQuery, GetAllNotificationsQueryVariables>(GetAllNotificationsDocument, options);
+        }
+export type GetAllNotificationsQueryHookResult = ReturnType<typeof useGetAllNotificationsQuery>;
+export type GetAllNotificationsLazyQueryHookResult = ReturnType<typeof useGetAllNotificationsLazyQuery>;
+export type GetAllNotificationsQueryResult = Apollo.QueryResult<GetAllNotificationsQuery, GetAllNotificationsQueryVariables>;
 export const GetAllUsersDocument = gql`
     query GetAllUsers {
   users {
@@ -3472,3 +6223,95 @@ export function useGetBugDatasLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetBugDatasQueryHookResult = ReturnType<typeof useGetBugDatasQuery>;
 export type GetBugDatasLazyQueryHookResult = ReturnType<typeof useGetBugDatasLazyQuery>;
 export type GetBugDatasQueryResult = Apollo.QueryResult<GetBugDatasQuery, GetBugDatasQueryVariables>;
+export const AllNotificationsDocument = gql`
+    subscription AllNotifications {
+  normalSubscription {
+    id
+    message
+    date
+  }
+}
+    `;
+
+/**
+ * __useAllNotificationsSubscription__
+ *
+ * To run a query within a React component, call `useAllNotificationsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useAllNotificationsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllNotificationsSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAllNotificationsSubscription(baseOptions?: Apollo.SubscriptionHookOptions<AllNotificationsSubscription, AllNotificationsSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<AllNotificationsSubscription, AllNotificationsSubscriptionVariables>(AllNotificationsDocument, options);
+      }
+export type AllNotificationsSubscriptionHookResult = ReturnType<typeof useAllNotificationsSubscription>;
+export type AllNotificationsSubscriptionResult = Apollo.SubscriptionResult<AllNotificationsSubscription>;
+export const DynamicTopicDocument = gql`
+    subscription DynamicTopic {
+  subscriptionWithFilterToDynamicTopic(topic: "FOO_MESSAGES") {
+    id
+    message
+  }
+}
+    `;
+
+/**
+ * __useDynamicTopicSubscription__
+ *
+ * To run a query within a React component, call `useDynamicTopicSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useDynamicTopicSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDynamicTopicSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDynamicTopicSubscription(baseOptions?: Apollo.SubscriptionHookOptions<DynamicTopicSubscription, DynamicTopicSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<DynamicTopicSubscription, DynamicTopicSubscriptionVariables>(DynamicTopicDocument, options);
+      }
+export type DynamicTopicSubscriptionHookResult = ReturnType<typeof useDynamicTopicSubscription>;
+export type DynamicTopicSubscriptionResult = Apollo.SubscriptionResult<DynamicTopicSubscription>;
+export const EvenNotificationsDocument = gql`
+    subscription EvenNotifications {
+  subscriptionWithFilter {
+    id
+    message
+    date
+  }
+}
+    `;
+
+/**
+ * __useEvenNotificationsSubscription__
+ *
+ * To run a query within a React component, call `useEvenNotificationsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useEvenNotificationsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEvenNotificationsSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useEvenNotificationsSubscription(baseOptions?: Apollo.SubscriptionHookOptions<EvenNotificationsSubscription, EvenNotificationsSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<EvenNotificationsSubscription, EvenNotificationsSubscriptionVariables>(EvenNotificationsDocument, options);
+      }
+export type EvenNotificationsSubscriptionHookResult = ReturnType<typeof useEvenNotificationsSubscription>;
+export type EvenNotificationsSubscriptionResult = Apollo.SubscriptionResult<EvenNotificationsSubscription>;

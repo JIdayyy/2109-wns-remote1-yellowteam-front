@@ -1,17 +1,12 @@
 /* eslint-disable no-console */
 import {
   Box,
-  Button,
   Text,
+  Button,
   Image,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  MenuDivider,
-  MenuList,
-  Menu,
-  MenuItem,
-  MenuButton,
   SkeletonCircle,
   SkeletonText,
   useToast,
@@ -20,32 +15,21 @@ import { useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import useAppState from 'src/hooks/useAppState'
 import { useAllNotificationsSubscription } from 'src/generated/graphql'
-import useSearchState from 'src/hooks/useSearchState'
 import { customClient } from 'src/App'
-import { useGetAllWebSitesQuery } from '../../generated/graphql'
-import BugList from '../List/BugList'
 import UserNavBar from './UserNavBar'
-import Notifications from '../Notifications'
 
 interface IBreadcrumb {
   breadcrumb: string
   href: string
 }
 
-export const NavBar = (): JSX.Element => {
-  const { data } = useGetAllWebSitesQuery()
-
-  const [selectedWebsite, setSelectedWebsite] = useState(`All`)
-  const { dispatchSetBugOnSearch, dispatchResetSearchState } = useSearchState()
+const NavBar = (): JSX.Element => {
+  const toast = useToast()
   const navigation = useNavigate()
 
-  const toast = useToast()
-
   useAllNotificationsSubscription({
-    onSubscriptionComplete: async () => {
-      const Res = await customClient.refetchQueries({
-        include: ['GetAllBugsBy', 'GetAllNotifications'],
-      })
+    onSubscriptionComplete: () => {
+      const Res = customClient.refetchQueries({ include: ['GetAllBugsBy'] })
       console.log(Res)
       toast({
         title: 'You just received a notification',
@@ -55,10 +39,7 @@ export const NavBar = (): JSX.Element => {
 
     shouldResubscribe: true,
     onSubscriptionData: async (r) => {
-      console.log(r)
-      await customClient.refetchQueries({
-        include: ['GetAllBugsBy', 'GetAllNotifications'],
-      })
+      await customClient.refetchQueries({ include: ['GetAllBugsBy'] })
       toast({
         title: `${r.subscriptionData.data?.normalSubscription.message}`,
         status: 'info',
@@ -80,77 +61,19 @@ export const NavBar = (): JSX.Element => {
       px={10}
       backgroundColor="white"
     >
-      <Box
-        width="275px"
-        minW="275px"
-        backgroundColor="white"
-        borderRight="2px solid #DDDDDD"
-        position="absolute"
-        left={0}
-        height="100%"
-        display="flex"
-        justifyContent="space-between"
-        px={7}
-        alignItems="center"
-      >
-        <Text mx={4}>Filter:</Text>
-        <Menu onClose={() => console.log('test')}>
-          <MenuButton
-            onChange={(e) => console.log(e)}
-            px={4}
-            py={2}
-            transition="all 0.2s"
-            borderRadius="md"
-            borderWidth="1px"
-            _hover={{ bg: 'gray.400' }}
-            _expanded={{ bg: 'blue.400' }}
-            _focus={{ boxShadow: 'outline' }}
-          >
-            {selectedWebsite}
-          </MenuButton>
-
-          <MenuList>
-            <MenuItem
-              onClick={() => {
-                setSelectedWebsite('All')
-                dispatchResetSearchState()
-              }}
-            >
-              All
-            </MenuItem>
-            {data?.websites.map((website) => (
-              <MenuItem
-                onClick={() => {
-                  setSelectedWebsite(website.name)
-                  dispatchSetBugOnSearch(website.id)
-                }}
-                key={website.id}
-              >
-                {website.name}
-              </MenuItem>
-            ))}
-
-            <MenuDivider />
-            <MenuItem onClick={() => navigation('/newwebsite')}>
-              New Website
-            </MenuItem>
-          </MenuList>
-        </Menu>
-      </Box>
       <Button
         backgroundColor="#24323F"
         color="white"
         mx={2}
-        onClick={() => navigation('/createbug')}
+        onClick={() => navigation('/features/commit')}
       >
-        Report a new Bug 🐛
+        Propose a new feature
       </Button>
-      <Notifications />
     </Box>
   )
 }
 
-export const Header = (): JSX.Element => {
+const Header = (): JSX.Element => {
   const [breadcrumbs, setBreadcrumbs] = useState<IBreadcrumb[]>([])
   const { user } = useAppState()
   const router = useLocation()
@@ -172,6 +95,7 @@ export const Header = (): JSX.Element => {
   function capitalizeFirstLetter(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
+
   if (!user)
     return (
       <Box
@@ -208,12 +132,11 @@ export const Header = (): JSX.Element => {
               <Text fontSize={10}>Dc bug report</Text>
             </BreadcrumbLink>
           </BreadcrumbItem>
-
           {breadcrumbs.map((link, index) => (
             <BreadcrumbItem key={link.href}>
               <BreadcrumbLink fontSize={10} href={link.href}>
                 {index === breadcrumbs.length - 1
-                  ? capitalizeFirstLetter(`${link.breadcrumb}`)
+                  ? `${link.breadcrumb}`
                   : capitalizeFirstLetter(link.breadcrumb)}
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -234,7 +157,7 @@ export const Header = (): JSX.Element => {
   )
 }
 
-export default function Layout(): JSX.Element {
+export default function FeaturesLayout(): JSX.Element {
   return (
     <Box
       fontFamily="Poppins"
@@ -245,12 +168,17 @@ export default function Layout(): JSX.Element {
       zIndex={20}
     >
       <UserNavBar />
-      <Box position="fixed" pl="60px" zIndex={20} width="100%" height="100%">
+      <Box position="fixed" left="66px" zIndex={20} width="95%" height="100%">
         <Header />
         <NavBar />
-        <Box display="flex" width="100%" zIndex={1} height="100%">
-          <BugList />
-
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="flex-start"
+          width="100%"
+          zIndex={1}
+          height="80%"
+        >
           <Outlet />
         </Box>
       </Box>

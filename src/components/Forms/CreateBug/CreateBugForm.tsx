@@ -14,7 +14,7 @@ import { FieldValues, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
   GetAllBugsByDocument,
-  useCreateBugMutation,
+  useCreateCustomBugMutation,
 } from 'src/generated/graphql'
 import useAppState from 'src/hooks/useAppState'
 import RadioGroup from '../RadioGroup'
@@ -39,7 +39,7 @@ export default function CreateBugForm(): JSX.Element {
     },
   }
 
-  const [mutate, { loading }] = useCreateBugMutation({
+  const [mutate, { loading }] = useCreateCustomBugMutation({
     refetchQueries: [
       {
         query: GetAllBugsByDocument,
@@ -55,7 +55,9 @@ export default function CreateBugForm(): JSX.Element {
         duration: 3000,
         isClosable: true,
       })
-      navigate(`/createbug/websites/${id}/bug/${data.createBug.id}/uploadfiles`)
+      navigate(
+        `/createbug/websites/${id}/bug/${data.createBugCustom.id}/uploadfiles`
+      )
     },
   })
 

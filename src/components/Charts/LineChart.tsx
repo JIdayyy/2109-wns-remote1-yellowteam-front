@@ -10,10 +10,8 @@ import { DateTime } from 'luxon'
 const LineChart = (): JSX.Element => {
   const { data, loading } = useGetAllBugsByQuery({
     variables: {
-      where: {
-        websiteId: {
-          contains: '',
-        },
+      orderBy: {
+        number: 'desc' as unknown as undefined,
       },
     },
   })

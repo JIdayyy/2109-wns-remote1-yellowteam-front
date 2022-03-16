@@ -1,0 +1,22 @@
+import { Flex, Spinner } from '@chakra-ui/react'
+import { useGetAllCategoriesQuery } from 'src/generated/graphql'
+import CategoryCard from './ListItems/Category.card'
+
+export default function CategoriesList(): JSX.Element {
+  const { data, loading } = useGetAllCategoriesQuery()
+  if (loading) return <Spinner />
+
+  return (
+    <Flex
+      w="100%"
+      flexWrap="wrap"
+      justifyContent="flex-start"
+      alignItems="flex-start"
+      flexDir="row"
+    >
+      {data?.categories.map((category) => (
+        <CategoryCard category={category} />
+      ))}
+    </Flex>
+  )
+}

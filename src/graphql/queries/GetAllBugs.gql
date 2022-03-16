@@ -1,5 +1,5 @@
-query GetAllBugsBy($where: BugWhereInput!) {
-  bugs(where: $where) {
+query GetAllBugsBy($orderBy: [BugOrderByWithRelationInput!]) {
+  bugs(orderBy: $orderBy) {
     id
     title
     description

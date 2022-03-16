@@ -1,18 +1,28 @@
 import React, { useState } from 'react'
-import { Flex, Text, Link } from '@chakra-ui/react'
+import { Flex, Text, Link, Image } from '@chakra-ui/react'
 import DcBug from 'src/static/svg/DbBug'
-
 import { AnimatePresence, motion } from 'framer-motion'
 import DcTm from 'src/static/svg/DcTm'
 import useAppState from 'src/hooks/useAppState'
+import { useNavigate } from 'react-router-dom'
 
 const MotionFLex = motion(Flex)
 const MotionText = motion(Text)
 
 const navLinks = [
   {
+    name: 'Home',
+    path: '/',
+    newTab: false,
+  },
+  {
     name: 'Reports',
     path: '/',
+    newTab: false,
+  },
+  {
+    name: 'Features',
+    path: '/features',
     newTab: false,
   },
   {
@@ -24,7 +34,8 @@ const navLinks = [
 
 const UserNavBar = (): JSX.Element => {
   const [isHover, setIsHover] = useState(false)
-  const { dispatchLogout } = useAppState()
+  const { dispatchLogout, user } = useAppState()
+  const navigate = useNavigate()
 
   return (
     <MotionFLex
@@ -38,7 +49,7 @@ const UserNavBar = (): JSX.Element => {
       px="10px"
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      width="5%"
+      width="60px"
       backgroundColor="#24323F"
       height="100%"
       flexDirection="column"
@@ -68,31 +79,49 @@ const UserNavBar = (): JSX.Element => {
               px={2}
               justifyContent="space-between"
               alignItems="center"
-              width="35%"
+              width="80px"
               animate={{ opacity: 1 }}
               initial={{ opacity: 0 }}
             >
               <DcBug />
               <DcTm />
             </MotionFLex>
-            {navLinks.map((link) => (
-              <MotionFLex
-                width="100%"
-                px={2}
-                rounded={2}
-                py={1}
-                whileHover={{ backgroundColor: '#3A4D5F' }}
-              >
-                <Text textAlign="right" flexWrap="nowrap" fontWeight="bold">
-                  <Link
-                    href={link.path}
-                    target={`${link.newTab ? '_blank' : ''}`}
-                  >
-                    {link.name}
-                  </Link>
-                </Text>
-              </MotionFLex>
-            ))}
+            <AnimatePresence key="navlinks">
+              {user && <Image w="100%" src={user.avatar} />}
+              {navLinks.map((link) => (
+                <MotionFLex
+                  cursor="pointer"
+                  onClick={() => {
+                    return link.newTab
+                      ? window.open(link.path)
+                      : navigate(link.path)
+                  }}
+                  key={link.name}
+                  width="100%"
+                  px={2}
+                  rounded={2}
+                  py={1}
+                  animate={{ opacity: 1 }}
+                  initial={{ opacity: 0 }}
+                  exit={{ opacity: 0, x: -999 }}
+                  transition={{ default: { duration: 0.01, delay: 0 } }}
+                  whileHover={{ backgroundColor: '#3A4D5F' }}
+                >
+                  <Text textAlign="right" flexWrap="nowrap" fontWeight="bold">
+                    {link.newTab ? (
+                      <Link
+                        href={link.path}
+                        target={`${link.newTab ? '_blank' : ''}`}
+                      >
+                        {link.name}
+                      </Link>
+                    ) : (
+                      link.name
+                    )}
+                  </Text>
+                </MotionFLex>
+              ))}
+            </AnimatePresence>
             <MotionFLex
               width="100%"
               px={2}
@@ -113,7 +142,7 @@ const UserNavBar = (): JSX.Element => {
           </MotionFLex>
         )}
       </AnimatePresence>
-      <AnimatePresence>
+      <AnimatePresence key="bottom">
         <MotionFLex
           animate={{ opacity: 1 }}
           initial={{ opacity: 0 }}
@@ -131,8 +160,11 @@ const UserNavBar = (): JSX.Element => {
             <MotionText
               animate={{ opacity: 1 }}
               initial={{ opacity: 0 }}
+              px={4}
               transition={{ delay: 0.1 }}
               fontWeight="bold"
+              w="100%"
+              textalign="left"
             >
               DC BUG REPORT
             </MotionText>
