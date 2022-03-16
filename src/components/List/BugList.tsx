@@ -1,17 +1,13 @@
 import { Box } from '@chakra-ui/react'
 import { useGetAllBugsByQuery } from 'src/generated/graphql'
-import useSearchState from 'src/hooks/useSearchState'
 import SkelettonPlaceholder from '../Assets/SkelettonPLaceholder'
 import BugListItem from './ListItems/BugListItem'
 
 export default function BugList(): JSX.Element {
-  const { website } = useSearchState()
   const { data, loading } = useGetAllBugsByQuery({
     variables: {
-      where: {
-        websiteId: {
-          contains: website,
-        },
+      orderBy: {
+        number: 'desc' as unknown as undefined,
       },
     },
   })
@@ -34,8 +30,8 @@ export default function BugList(): JSX.Element {
           borderRadius: '24px',
         },
       }}
-      width="20%"
-      minW="20%"
+      width="275px"
+      minW="275px"
       flexShrink={2}
       height="80%"
       display="flex"

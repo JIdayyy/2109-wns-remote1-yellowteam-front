@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
 import { Box } from '@chakra-ui/react'
 import CutomDonutChart from 'src/components/Charts/PieChart'

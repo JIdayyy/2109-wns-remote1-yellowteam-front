@@ -1,0 +1,9 @@
+query GetAllCategories {
+  categories {
+    id
+    name
+    backgroundColor
+    description
+    icon
+  }
+}

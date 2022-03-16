@@ -7,10 +7,8 @@ import { Spinner } from '@chakra-ui/react'
 const BugDonutChart = (): JSX.Element => {
   const { data, loading } = useGetAllBugsByQuery({
     variables: {
-      where: {
-        websiteId: {
-          contains: '',
-        },
+      orderBy: {
+        number: 'desc' as unknown as undefined,
       },
     },
   })
