@@ -13,7 +13,7 @@ import { getMainDefinition } from '@apollo/client/utilities'
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null
 
 const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000'
-const wsUrl = process.env.REACT_APP_WS_URL || 'ws://localhost:5000'
+const wsUrl = process.env.REACT_APP_WS_URL || 'ws://localhost:5000/graphql'
 
 const wsLink = new GraphQLWsLink(
   createClient({
