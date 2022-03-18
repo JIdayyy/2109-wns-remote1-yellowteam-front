@@ -20,11 +20,14 @@ export default function FilesTable(): JSX.Element {
       </Flex>
       <Flex p={2} backgroundColor="#F6F6F6" width="100%" alignItems="center">
         <Box width="100%" />
-        <Text fontWeight="normal" width="30%">
+        <Text fontWeight="normal" width="20%">
           Size
         </Text>
-        <Text fontWeight="normal" width="30%">
-          Dates
+        <Text fontWeight="normal" width="20%">
+          Type
+        </Text>
+        <Text fontWeight="normal" width="20%">
+          Date
         </Text>
       </Flex>
       <FilesList />

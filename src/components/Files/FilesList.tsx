@@ -57,7 +57,7 @@ export default function FilesList(): JSX.Element {
                 fontWeight="normal"
                 fontSize={12}
                 color="#747474"
-                width="30%"
+                width="20%"
               >
                 {file.size} ko
               </Text>
@@ -66,7 +66,16 @@ export default function FilesList(): JSX.Element {
                 fontWeight="normal"
                 fontSize={12}
                 color="#747474"
-                width="30%"
+                width="20%"
+              >
+                {file.type}
+              </Text>
+              <Text
+                noOfLines={1}
+                fontWeight="normal"
+                fontSize={12}
+                color="#747474"
+                width="20%"
               >
                 {file.created_at}
               </Text>
