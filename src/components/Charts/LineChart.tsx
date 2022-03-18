@@ -6,12 +6,24 @@ import 'chart.js/auto'
 import { useGetAllBugsByQuery } from 'src/generated/graphql'
 import { Spinner } from '@chakra-ui/react'
 import { DateTime } from 'luxon'
+import useSearchState from 'src/hooks/useSearchState'
 
 const LineChart = (): JSX.Element => {
+  const { website } = useSearchState()
+
   const { data, loading } = useGetAllBugsByQuery({
     variables: {
       orderBy: {
         number: 'desc' as unknown as undefined,
+      },
+      where: {
+        Website: {
+          is: {
+            id: {
+              equals: website || undefined,
+            },
+          },
+        },
       },
     },
   })

@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
-import { Flex, Text, Link, Image } from '@chakra-ui/react'
+import React, { useRef, useState } from 'react'
+import { Flex, Text, Link, Image, Button } from '@chakra-ui/react'
 import DcBug from 'src/static/svg/DbBug'
 import { AnimatePresence, motion } from 'framer-motion'
 import DcTm from 'src/static/svg/DcTm'
 import useAppState from 'src/hooks/useAppState'
 import { useNavigate } from 'react-router-dom'
+import useOnClickOutside from '../Hook/UseOnClickOutside'
 
 const MotionFLex = motion(Flex)
+const MotionButton = motion(Button)
 const MotionText = motion(Text)
 
 const navLinks = [
@@ -36,26 +38,43 @@ const UserNavBar = (): JSX.Element => {
   const [isHover, setIsHover] = useState(false)
   const { dispatchLogout, user } = useAppState()
   const navigate = useNavigate()
+  const ref = useRef(null)
+
+  const variants = {
+    open: { width: '12%', backgroundColor: '#24323F' },
+    closed: { width: '66px', backgroundColor: '#24323F' },
+  }
+
+  const handleClickOutside = () => setIsHover(false)
+
+  const handleClickTogle = () => setIsHover((c) => !c)
+
+  useOnClickOutside(ref, handleClickOutside)
 
   return (
-    <MotionFLex
+    <MotionButton
+      ref={ref}
       fontFamily="Poppins"
-      whileHover={{ width: '12%' }}
-      transition={{ default: { duration: 0.2 } }}
+      variant="solid"
+      whileHover={{ backgroundColor: `${isHover ? '#24323F' : '#30475B'}` }}
+      onClick={handleClickTogle}
+      variants={variants}
+      animate={isHover ? 'open' : 'closed'}
+      closed={isHover ? 'closed' : 'open'}
+      transition={{ default: { duration: 0.2, delay: 0 } }}
       position="fixed"
       left={0}
       top={0}
       py="20px"
       px="10px"
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
       width="60px"
-      backgroundColor="#24323F"
       height="100%"
       flexDirection="column"
       alignItems="flex-end"
+      rounded={0}
       justifyContent={isHover ? 'space-between' : 'flex-end'}
       zIndex={100}
+      overflow="hidden"
     >
       <AnimatePresence>
         {isHover && (
@@ -87,7 +106,13 @@ const UserNavBar = (): JSX.Element => {
               <DcTm />
             </MotionFLex>
             <AnimatePresence key="navlinks">
-              {user && <Image w="100%" src={user.avatar} />}
+              {user && (
+                <Image
+                  fallbackSrc="https://via.placeholder.com/150"
+                  w="100%"
+                  src={user.avatar}
+                />
+              )}
               {navLinks.map((link) => (
                 <MotionFLex
                   cursor="pointer"
@@ -105,7 +130,7 @@ const UserNavBar = (): JSX.Element => {
                   initial={{ opacity: 0 }}
                   exit={{ opacity: 0, x: -999 }}
                   transition={{ default: { duration: 0.01, delay: 0 } }}
-                  whileHover={{ backgroundColor: '#3A4D5F' }}
+                  whileHover={{ backgroundColor: '#24323F' }}
                 >
                   <Text textAlign="right" flexWrap="nowrap" fontWeight="bold">
                     {link.newTab ? (
@@ -171,7 +196,7 @@ const UserNavBar = (): JSX.Element => {
           )}
         </MotionFLex>
       </AnimatePresence>
-    </MotionFLex>
+    </MotionButton>
   )
 }
 
