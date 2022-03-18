@@ -1,0 +1,12 @@
+query GetAllFilesByBug($where: BugWhereUniqueInput!) {
+  bug(where: $where) {
+    File {
+      id
+      name
+      path
+      size
+      type
+      created_at
+    }
+  }
+}

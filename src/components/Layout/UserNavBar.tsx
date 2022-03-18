@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Flex, Text, Link, Image, Button } from '@chakra-ui/react'
+import { Flex, Text, Link, Button } from '@chakra-ui/react'
 import DcBug from 'src/static/svg/DbBug'
 import { AnimatePresence, motion } from 'framer-motion'
 import DcTm from 'src/static/svg/DcTm'
@@ -36,7 +36,7 @@ const navLinks = [
 
 const UserNavBar = (): JSX.Element => {
   const [isHover, setIsHover] = useState(false)
-  const { dispatchLogout, user } = useAppState()
+  const { dispatchLogout } = useAppState()
   const navigate = useNavigate()
   const ref = useRef(null)
 
@@ -106,13 +106,6 @@ const UserNavBar = (): JSX.Element => {
               <DcTm />
             </MotionFLex>
             <AnimatePresence key="navlinks">
-              {user && (
-                <Image
-                  fallbackSrc="https://via.placeholder.com/150"
-                  w="100%"
-                  src={user.avatar}
-                />
-              )}
               {navLinks.map((link) => (
                 <MotionFLex
                   cursor="pointer"
@@ -130,7 +123,7 @@ const UserNavBar = (): JSX.Element => {
                   initial={{ opacity: 0 }}
                   exit={{ opacity: 0, x: -999 }}
                   transition={{ default: { duration: 0.01, delay: 0 } }}
-                  whileHover={{ backgroundColor: '#24323F' }}
+                  whileHover={{ backgroundColor: '#2D3F50' }}
                 >
                   <Text textAlign="right" flexWrap="nowrap" fontWeight="bold">
                     {link.newTab ? (

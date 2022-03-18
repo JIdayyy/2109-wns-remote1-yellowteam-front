@@ -5691,6 +5691,13 @@ export type GetAllFeaturesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllFeaturesQuery = { __typename?: 'Query', features: Array<{ __typename?: 'Feature', id: string, name: string, description: string, category: { __typename?: 'Category', id: string, name: string, backgroundColor: string, description: string, icon: string }, website: { __typename?: 'Website', name: string, url: string, logo: string } }> };
 
+export type GetAllFilesByBugQueryVariables = Exact<{
+  where: BugWhereUniqueInput;
+}>;
+
+
+export type GetAllFilesByBugQuery = { __typename?: 'Query', bug: { __typename?: 'Bug', File: Array<{ __typename?: 'File', id: string, name: string, path: string, size: number, type: string, created_at: any }> } };
+
 export type GetAllNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6042,6 +6049,48 @@ export function useGetAllFeaturesLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetAllFeaturesQueryHookResult = ReturnType<typeof useGetAllFeaturesQuery>;
 export type GetAllFeaturesLazyQueryHookResult = ReturnType<typeof useGetAllFeaturesLazyQuery>;
 export type GetAllFeaturesQueryResult = Apollo.QueryResult<GetAllFeaturesQuery, GetAllFeaturesQueryVariables>;
+export const GetAllFilesByBugDocument = gql`
+    query GetAllFilesByBug($where: BugWhereUniqueInput!) {
+  bug(where: $where) {
+    File {
+      id
+      name
+      path
+      size
+      type
+      created_at
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllFilesByBugQuery__
+ *
+ * To run a query within a React component, call `useGetAllFilesByBugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllFilesByBugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllFilesByBugQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetAllFilesByBugQuery(baseOptions: Apollo.QueryHookOptions<GetAllFilesByBugQuery, GetAllFilesByBugQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllFilesByBugQuery, GetAllFilesByBugQueryVariables>(GetAllFilesByBugDocument, options);
+      }
+export function useGetAllFilesByBugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllFilesByBugQuery, GetAllFilesByBugQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllFilesByBugQuery, GetAllFilesByBugQueryVariables>(GetAllFilesByBugDocument, options);
+        }
+export type GetAllFilesByBugQueryHookResult = ReturnType<typeof useGetAllFilesByBugQuery>;
+export type GetAllFilesByBugLazyQueryHookResult = ReturnType<typeof useGetAllFilesByBugLazyQuery>;
+export type GetAllFilesByBugQueryResult = Apollo.QueryResult<GetAllFilesByBugQuery, GetAllFilesByBugQueryVariables>;
 export const GetAllNotificationsDocument = gql`
     query GetAllNotifications {
   notifications {
