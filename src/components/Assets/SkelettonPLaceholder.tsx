@@ -11,9 +11,9 @@ export default function SkelettonPlaceholder({
   return (
     <>
       {items.map((_, index) => (
-        <Box key={index} padding="12" boxShadow="lg" bg="white">
+        <Box key={index} padding="6" boxShadow="lg" bg="white">
           <SkeletonCircle mt="2" noOfLines={1} />
-          <SkeletonText mt="2" noOfLines={3} spacing="4" />
+          <SkeletonText mt="2" noOfLines={1} spacing="4" />
         </Box>
       ))}
     </>

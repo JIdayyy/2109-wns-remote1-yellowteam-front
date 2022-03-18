@@ -3,13 +3,14 @@ import {
   Button,
   Flex,
   Image,
-  Link,
   SkeletonCircle,
   SkeletonText,
   Text,
 } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
+import FilesList from 'src/components/Files'
 import { useGetBugDatasQuery } from 'src/generated/graphql'
+import useAppState from 'src/hooks/useAppState'
 
 const backgroundColor = (children: string): string => {
   if (children === 'CRITICAL') {
@@ -45,7 +46,7 @@ export default function Bug(): JSX.Element {
       },
     },
   })
-
+  const { user } = useAppState()
   if (loading)
     return (
       <Box padding="20" width="100%" height="2000px%" boxShadow="lg" bg="white">
@@ -60,11 +61,28 @@ export default function Bug(): JSX.Element {
       w="100%"
       rounded="md"
       backgroundColor="white"
-      p={20}
+      p={10}
       shadow="md"
       color="#747474"
       fontFamily="Poppins"
     >
+      <Text>Reported by:</Text>
+      <Box
+        display="flex"
+        w="auto"
+        my={5}
+        shadow="md"
+        alignItems="center"
+        justifyContent="flex-start"
+      >
+        <Image width={50} h={50} src={user?.avatar} />
+        <Flex direction="column">
+          <Text>
+            {data?.bug.user.first_name} {data?.bug.user.last_name}
+          </Text>
+          <Text>{data?.bug.user.email}</Text>
+        </Flex>
+      </Box>
       <Flex direction="row" justifyContent="space-between">
         <Flex direction="column">
           <Text fontSize={30} fontWeight="bold">
@@ -101,10 +119,6 @@ export default function Bug(): JSX.Element {
           </Button>
         </Flex>
       </Flex>
-
-      <Text>Firstname: {data?.bug.user.first_name}</Text>
-      <Text>Lastname: {data?.bug.user.last_name}</Text>
-      <Text>Email: {data?.bug.user.email}</Text>
 
       <Flex
         my={10}
@@ -144,56 +158,8 @@ export default function Bug(): JSX.Element {
           <Text>Description</Text>
           <Text>{data?.bug.description}</Text>
         </Flex>
-        <Box
-          minH="400px"
-          overflowY="scroll"
-          css={{
-            '&::-webkit-scrollbar': {
-              width: '4px',
-            },
-            '&::-webkit-scrollbar-track': {
-              width: '6px',
-            },
-            '&::-webkit-scrollbar-thumb': {
-              background: 'gray',
-              borderRadius: '24px',
-            },
-          }}
-          width="30%"
-          p={4}
-          backgroundColor="#EDEDED"
-          shadow="md"
-        >
-          <Text my={4} fontSize={20} fontWeight="bold">
-            Files
-          </Text>
-          {data?.bug.File.length
-            ? data?.bug.File.map((file) => (
-                <Button
-                  my={1}
-                  fontWeight="normal"
-                  fontSize={17}
-                  px={4}
-                  py={1}
-                  rounded="md"
-                  width="100%"
-                  textAlign="left"
-                  backgroundColor="#B9B9B9"
-                  color="white"
-                >
-                  <Link
-                    isTruncated
-                    noOfLines={1}
-                    target="_blank"
-                    href={file.path}
-                  >
-                    {file.name}
-                  </Link>
-                </Button>
-              ))
-            : 'No files'}
-        </Box>
       </Flex>
+      <FilesList />
     </Box>
   )
 }
