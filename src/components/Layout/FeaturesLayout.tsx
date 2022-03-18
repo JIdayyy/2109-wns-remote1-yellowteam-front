@@ -168,7 +168,7 @@ export default function FeaturesLayout(): JSX.Element {
       zIndex={20}
     >
       <UserNavBar />
-      <Box position="fixed" left="66px" zIndex={20} width="95%" height="100%">
+      <Box position="fixed" pl="60px" zIndex={20} width="100%" height="100%">
         <Header />
         <NavBar />
         <Box

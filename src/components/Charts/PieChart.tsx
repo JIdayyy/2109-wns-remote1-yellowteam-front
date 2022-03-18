@@ -3,12 +3,24 @@ import { Doughnut } from 'react-chartjs-2'
 import 'chart.js/auto'
 import { useGetAllBugsByQuery } from 'src/generated/graphql'
 import { Spinner } from '@chakra-ui/react'
+import useSearchState from 'src/hooks/useSearchState'
 
 const BugDonutChart = (): JSX.Element => {
+  const { website } = useSearchState()
+
   const { data, loading } = useGetAllBugsByQuery({
     variables: {
       orderBy: {
         number: 'desc' as unknown as undefined,
+      },
+      where: {
+        Website: {
+          is: {
+            id: {
+              equals: website || undefined,
+            },
+          },
+        },
       },
     },
   })

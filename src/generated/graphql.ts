@@ -3658,7 +3658,7 @@ export type NotificationCreateManyInput = {
   is_disabled: Scalars['Boolean'];
   senderId: Scalars['String'];
   title: Scalars['String'];
-  topics?: InputMaybe<NotificationCreateManytopicsInput>;
+  topics?: InputMaybe<NotificationCreatetopicsInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
   userId: Scalars['String'];
 };
@@ -3671,7 +3671,7 @@ export type NotificationCreateManySenderInput = {
   isRead?: InputMaybe<Scalars['Boolean']>;
   is_disabled: Scalars['Boolean'];
   title: Scalars['String'];
-  topics?: InputMaybe<NotificationCreateManytopicsInput>;
+  topics?: InputMaybe<NotificationCreatetopicsInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
   userId: Scalars['String'];
 };
@@ -3690,17 +3690,13 @@ export type NotificationCreateManyUserInput = {
   is_disabled: Scalars['Boolean'];
   senderId: Scalars['String'];
   title: Scalars['String'];
-  topics?: InputMaybe<NotificationCreateManytopicsInput>;
+  topics?: InputMaybe<NotificationCreatetopicsInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type NotificationCreateManyUserInputEnvelope = {
   data: Array<NotificationCreateManyUserInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type NotificationCreateManytopicsInput = {
-  set: Array<NotificationTopics>;
 };
 
 export type NotificationCreateNestedManyWithoutSenderInput = {
@@ -4739,12 +4735,8 @@ export type UserCreateManyInput = {
   is_disabled: Scalars['Boolean'];
   last_name: Scalars['String'];
   password: Scalars['String'];
-  role?: InputMaybe<UserCreateManyroleInput>;
+  role?: InputMaybe<UserCreateroleInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
-};
-
-export type UserCreateManyroleInput = {
-  set: Array<Role>;
 };
 
 export type UserCreateNestedOneWithoutBugInput = {
@@ -5683,6 +5675,7 @@ export type SetNotificationReadMutation = { __typename?: 'Mutation', updateNotif
 
 export type GetAllBugsByQueryVariables = Exact<{
   orderBy: InputMaybe<Array<BugOrderByWithRelationInput> | BugOrderByWithRelationInput>;
+  where: BugWhereInput;
 }>;
 
 
@@ -5911,8 +5904,8 @@ export type SetNotificationReadMutationHookResult = ReturnType<typeof useSetNoti
 export type SetNotificationReadMutationResult = Apollo.MutationResult<SetNotificationReadMutation>;
 export type SetNotificationReadMutationOptions = Apollo.BaseMutationOptions<SetNotificationReadMutation, SetNotificationReadMutationVariables>;
 export const GetAllBugsByDocument = gql`
-    query GetAllBugsBy($orderBy: [BugOrderByWithRelationInput!]) {
-  bugs(orderBy: $orderBy) {
+    query GetAllBugsBy($orderBy: [BugOrderByWithRelationInput!], $where: BugWhereInput!) {
+  bugs(orderBy: $orderBy, where: $where) {
     id
     title
     description
@@ -5948,10 +5941,11 @@ export const GetAllBugsByDocument = gql`
  * const { data, loading, error } = useGetAllBugsByQuery({
  *   variables: {
  *      orderBy: // value for 'orderBy'
+ *      where: // value for 'where'
  *   },
  * });
  */
-export function useGetAllBugsByQuery(baseOptions?: Apollo.QueryHookOptions<GetAllBugsByQuery, GetAllBugsByQueryVariables>) {
+export function useGetAllBugsByQuery(baseOptions: Apollo.QueryHookOptions<GetAllBugsByQuery, GetAllBugsByQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetAllBugsByQuery, GetAllBugsByQueryVariables>(GetAllBugsByDocument, options);
       }

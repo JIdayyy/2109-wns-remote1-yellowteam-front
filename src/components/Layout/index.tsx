@@ -227,7 +227,15 @@ export const Header = (): JSX.Element => {
         alignContent="center"
         alignItems="center"
       >
-        <Image mx={2} rounded={100} src={user.avatar} width={50} height={50} />
+        <Image
+          fit="contain"
+          mx={2}
+          fallbackSrc="https://via.placeholder.com/150"
+          rounded={100}
+          src={user.avatar}
+          width={50}
+          height={50}
+        />
         <Text fontSize={12}>( {user.email} )</Text>
       </Box>
     </Box>
