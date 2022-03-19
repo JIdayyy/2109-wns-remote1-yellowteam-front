@@ -4,9 +4,6 @@ import {
   Button,
   Text,
   Image,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
   MenuDivider,
   MenuList,
   Menu,
@@ -15,9 +12,10 @@ import {
   SkeletonCircle,
   SkeletonText,
   useToast,
+  Flex,
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import useAppState from 'src/hooks/useAppState'
 import { useAllNotificationsSubscription } from 'src/generated/graphql'
 import useSearchState from 'src/hooks/useSearchState'
@@ -26,11 +24,6 @@ import { useGetAllWebSitesQuery } from '../../generated/graphql'
 import BugList from '../List/BugList'
 import UserNavBar from './UserNavBar'
 import Notifications from '../Notifications'
-
-interface IBreadcrumb {
-  breadcrumb: string
-  href: string
-}
 
 export const NavBar = (): JSX.Element => {
   const { data } = useGetAllWebSitesQuery()
@@ -151,27 +144,8 @@ export const NavBar = (): JSX.Element => {
 }
 
 export const Header = (): JSX.Element => {
-  const [breadcrumbs, setBreadcrumbs] = useState<IBreadcrumb[]>([])
   const { user } = useAppState()
-  const router = useLocation()
 
-  useEffect(() => {
-    const querySplited = router.pathname.split('?')
-    const linkPath = querySplited[0].split('/')
-    linkPath.shift()
-    const pathArray = linkPath.map((path, i) => ({
-      breadcrumb: path.replace(/-/g, ' '),
-      href: `/${linkPath.slice(0, i + 1).join('/')}${
-        querySplited[1] ? `?${querySplited[querySplited.length - 1]}` : ''
-      }`,
-    }))
-
-    setBreadcrumbs(pathArray)
-  }, [router])
-
-  function capitalizeFirstLetter(string: string) {
-    return string.charAt(0).toUpperCase() + string.slice(1)
-  }
   if (!user)
     return (
       <Box
@@ -195,13 +169,13 @@ export const Header = (): JSX.Element => {
       width="100%"
       display="flex"
       flexDirection="row"
-      justifyContent="space-between"
+      justifyContent="flex-end"
       alignContent="center"
       alignItems="center"
       p={10}
       height="10%"
     >
-      <Box>
+      {/* <Box>
         <Breadcrumb pt="3">
           <BreadcrumbItem>
             <BreadcrumbLink href="/">
@@ -219,14 +193,9 @@ export const Header = (): JSX.Element => {
             </BreadcrumbItem>
           ))}
         </Breadcrumb>
-      </Box>
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="flex-end"
-        alignContent="center"
-        alignItems="center"
-      >
+      </Box> */}
+      <Flex justifyContent="flex-end" alignContent="center" alignItems="center">
+        <Text fontSize={12}> {user.email} </Text>
         <Image
           fit="contain"
           mx={2}
@@ -236,8 +205,7 @@ export const Header = (): JSX.Element => {
           width={50}
           height={50}
         />
-        <Text fontSize={12}>( {user.email} )</Text>
-      </Box>
+      </Flex>
     </Box>
   )
 }

@@ -4,22 +4,11 @@ query GetAllBugsBy(
 ) {
   bugs(orderBy: $orderBy, where: $where) {
     id
-    title
-    description
     created_at
     status
     number
     Website {
-      id
       name
-      url
-      logo
-      isPreview
-    }
-    user {
-      first_name
-      last_name
-      email
     }
   }
 }

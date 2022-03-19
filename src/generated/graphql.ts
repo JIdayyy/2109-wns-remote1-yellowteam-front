@@ -5679,7 +5679,7 @@ export type GetAllBugsByQueryVariables = Exact<{
 }>;
 
 
-export type GetAllBugsByQuery = { __typename?: 'Query', bugs: Array<{ __typename?: 'Bug', id: string, title: string, description: string, created_at: any, status: BugStatus, number: number, Website: { __typename?: 'Website', id: string, name: string, url: string, logo: string, isPreview: boolean }, user: { __typename?: 'User', first_name: string, last_name: string, email: string } }> };
+export type GetAllBugsByQuery = { __typename?: 'Query', bugs: Array<{ __typename?: 'Bug', id: string, created_at: any, status: BugStatus, number: number, Website: { __typename?: 'Website', name: string } }> };
 
 export type GetAllCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5914,22 +5914,11 @@ export const GetAllBugsByDocument = gql`
     query GetAllBugsBy($orderBy: [BugOrderByWithRelationInput!], $where: BugWhereInput!) {
   bugs(orderBy: $orderBy, where: $where) {
     id
-    title
-    description
     created_at
     status
     number
     Website {
-      id
       name
-      url
-      logo
-      isPreview
-    }
-    user {
-      first_name
-      last_name
-      email
     }
   }
 }

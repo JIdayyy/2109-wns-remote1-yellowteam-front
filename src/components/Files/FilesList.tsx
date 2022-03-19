@@ -1,5 +1,6 @@
 import { Box, Divider, Flex, Link, SkeletonText, Text } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
+import { DateTime } from 'luxon'
 import { useParams } from 'react-router-dom'
 import { useGetAllFilesByBugQuery } from 'src/generated/graphql'
 import FileHeaderIcon from 'src/static/svg/FilesHeaderIcon'
@@ -16,6 +17,9 @@ export default function FilesList(): JSX.Element {
       },
     },
   })
+  const creationDate = (file: string) => {
+    return DateTime.fromISO(file)
+  }
 
   return (
     <Box
@@ -77,7 +81,7 @@ export default function FilesList(): JSX.Element {
                 color="#747474"
                 width="20%"
               >
-                {file.created_at}
+                {creationDate(file.created_at).toLocaleString()}
               </Text>
             </MotionFlex>
             <Divider orientation="horizontal" />
