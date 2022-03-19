@@ -8,6 +8,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
+import CommentsModule from 'src/components/Comments'
 import FilesList from 'src/components/Files'
 import { useGetBugDatasQuery } from 'src/generated/graphql'
 import useAppState from 'src/hooks/useAppState'
@@ -66,23 +67,32 @@ export default function Bug(): JSX.Element {
       color="#747474"
       fontFamily="Poppins"
     >
-      <Text>Reported by:</Text>
-      <Box
-        display="flex"
-        w="auto"
-        my={5}
-        shadow="md"
-        alignItems="center"
+      <Flex
+        mb={20}
+        direction="column"
         justifyContent="flex-start"
+        alignItems="flex-start"
+        w="100%"
       >
-        <Image width={50} h={50} src={user?.avatar} />
-        <Flex direction="column">
-          <Text>
-            {data?.bug.user.first_name} {data?.bug.user.last_name}
-          </Text>
-          <Text>{data?.bug.user.email}</Text>
-        </Flex>
-      </Box>
+        <Text fontWeight="normal">Reported by:</Text>
+        <Box
+          p={2}
+          display="flex"
+          w="auto"
+          my={5}
+          shadow="md"
+          alignItems="center"
+          justifyContent="flex-start"
+        >
+          <Image width={50} h={50} src={user?.avatar} />
+          <Flex direction="column">
+            <Text>
+              {data?.bug.user.first_name} {data?.bug.user.last_name}
+            </Text>
+            <Text>{data?.bug.user.email}</Text>
+          </Flex>
+        </Box>
+      </Flex>
       <Flex direction="row" justifyContent="space-between">
         <Flex direction="column">
           <Text fontSize={30} fontWeight="bold">
@@ -160,6 +170,7 @@ export default function Bug(): JSX.Element {
         </Flex>
       </Flex>
       <FilesList />
+      <CommentsModule />
     </Box>
   )
 }

@@ -1,5 +1,13 @@
 /* eslint-disable no-console */
-import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
+import {
+  Center,
+  Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+} from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import {
   GetAllNotificationsDocument,
@@ -71,8 +79,26 @@ export default function Notifications(): JSX.Element {
           },
         }}
       >
+        <Center w="100%" h="10%">
+          <Text fontWeight="bold" color="gray">
+            NOTIFICATIONS
+          </Text>
+          <Text
+            fontWeight="bold"
+            color="white"
+            rounded="full"
+            backgroundColor="gray"
+            py={1}
+            px={2}
+            mx={2}
+          >
+            {data?.notifications.filter((item) => item.isRead === false).length}
+          </Text>
+        </Center>
         {data?.notifications.map((notification) => (
           <MenuItem
+            display="flex"
+            justifyContent="space-between"
             backgroundColor={notification.isRead ? 'gray.200' : 'white'}
             onClick={() =>
               mutate({
@@ -90,7 +116,17 @@ export default function Notifications(): JSX.Element {
             }
             key={notification.id}
           >
-            {notification.title}
+            <Image
+              rounded="full"
+              mx={2}
+              zIndex={100}
+              w={10}
+              h={10}
+              src={notification.sender.avatar}
+            />
+            <Text color="gray" fontWeight="bold">
+              {notification.title}
+            </Text>
           </MenuItem>
         ))}
       </MenuList>
