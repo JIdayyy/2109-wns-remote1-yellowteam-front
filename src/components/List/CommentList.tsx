@@ -1,5 +1,45 @@
-import { Flex } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
+import { useParams } from 'react-router-dom'
+import { SortOrder, useGetAllCommentsQuery } from 'src/generated/graphql'
+import FileHeaderIcon from 'src/static/svg/FilesHeaderIcon'
+import CommentListItem from './ListItems/CommentListItem'
 
 export default function CommentList(): JSX.Element {
-  return <Flex>CommentList</Flex>
+  const { id } = useParams()
+
+  const { data } = useGetAllCommentsQuery({
+    variables: {
+      where: {
+        Bug: {
+          is: {
+            id: {
+              equals: id,
+            },
+          },
+        },
+      },
+      orderBy: {
+        created_at: 'desc' as SortOrder,
+      },
+    },
+  })
+  return (
+    <Flex
+      my={5}
+      shadow="md"
+      direction="column"
+      rounded={4}
+      border="1px solid #B8B8B8"
+    >
+      <Flex p={4} borderBottom="1px solid #B8B8B8">
+        <FileHeaderIcon />
+        <Text mx={2} textStyle="body">
+          Comments
+        </Text>
+      </Flex>
+      {data?.comments.map((comment) => (
+        <CommentListItem comment={comment} />
+      ))}
+    </Flex>
+  )
 }
