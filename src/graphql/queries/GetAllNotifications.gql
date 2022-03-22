@@ -1,5 +1,8 @@
-query GetAllNotifications {
-  notifications {
+query GetAllNotifications(
+  $where: NotificationWhereInput!
+  $orderBy: [NotificationOrderByWithRelationInput!]
+) {
+  notifications(orderBy: $orderBy, where: $where) {
     id
     title
     isRead

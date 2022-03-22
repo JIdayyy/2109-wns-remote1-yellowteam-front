@@ -11,7 +11,11 @@ import {
 } from '@chakra-ui/react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import useAppState from 'src/hooks/useAppState'
-import { useAllNotificationsSubscription } from 'src/generated/graphql'
+import {
+  GetAllBugsByDocument,
+  GetAllNotificationsDocument,
+  useAllNotificationsSubscription,
+} from 'src/generated/graphql'
 import { customClient } from 'src/App'
 import UserNavBar from './UserNavBar'
 import Notifications from '../Notifications'
@@ -23,10 +27,6 @@ export const NavBar = (): JSX.Element => {
 
   useAllNotificationsSubscription({
     onSubscriptionComplete: async () => {
-      const Res = await customClient.refetchQueries({
-        include: ['GetAllBugsBy', 'GetAllNotifications'],
-      })
-      console.log(Res)
       toast({
         title: 'You just received a notification',
         status: 'info',
@@ -37,7 +37,7 @@ export const NavBar = (): JSX.Element => {
     onSubscriptionData: async (r) => {
       console.log(r)
       await customClient.refetchQueries({
-        include: ['GetAllBugsBy', 'GetAllNotifications'],
+        include: [GetAllBugsByDocument, GetAllNotificationsDocument],
       })
       toast({
         title: `${r.subscriptionData.data?.normalSubscription.message}`,
