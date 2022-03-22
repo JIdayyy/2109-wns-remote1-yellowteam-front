@@ -62,7 +62,6 @@ export default function CreateBugForm(): JSX.Element {
   })
 
   if (!user) return <div>You must be logged in to create a bug</div>
-
   const onSubmit = async (data: FieldValues) => {
     mutate({
       variables: {

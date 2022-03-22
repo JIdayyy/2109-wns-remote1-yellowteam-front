@@ -5686,7 +5686,10 @@ export type GetAllFilesByBugQueryVariables = Exact<{
 
 export type GetAllFilesByBugQuery = { __typename?: 'Query', bug: { __typename?: 'Bug', File: Array<{ __typename?: 'File', id: string, name: string, path: string, size: number, type: string, created_at: any }> } };
 
-export type GetAllNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllNotificationsQueryVariables = Exact<{
+  where: NotificationWhereInput;
+  orderBy: InputMaybe<Array<NotificationOrderByWithRelationInput> | NotificationOrderByWithRelationInput>;
+}>;
 
 
 export type GetAllNotificationsQuery = { __typename?: 'Query', notifications: Array<{ __typename?: 'Notification', id: string, title: string, isRead: boolean, description: string, created_at: any, updated_at: any, sender: { __typename?: 'User', id: string, first_name: string, last_name: string, email: string, avatar: string } }> };
@@ -6144,8 +6147,8 @@ export type GetAllFilesByBugQueryHookResult = ReturnType<typeof useGetAllFilesBy
 export type GetAllFilesByBugLazyQueryHookResult = ReturnType<typeof useGetAllFilesByBugLazyQuery>;
 export type GetAllFilesByBugQueryResult = Apollo.QueryResult<GetAllFilesByBugQuery, GetAllFilesByBugQueryVariables>;
 export const GetAllNotificationsDocument = gql`
-    query GetAllNotifications {
-  notifications {
+    query GetAllNotifications($where: NotificationWhereInput!, $orderBy: [NotificationOrderByWithRelationInput!]) {
+  notifications(orderBy: $orderBy, where: $where) {
     id
     title
     isRead
@@ -6175,10 +6178,12 @@ export const GetAllNotificationsDocument = gql`
  * @example
  * const { data, loading, error } = useGetAllNotificationsQuery({
  *   variables: {
+ *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
  *   },
  * });
  */
-export function useGetAllNotificationsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllNotificationsQuery, GetAllNotificationsQueryVariables>) {
+export function useGetAllNotificationsQuery(baseOptions: Apollo.QueryHookOptions<GetAllNotificationsQuery, GetAllNotificationsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetAllNotificationsQuery, GetAllNotificationsQueryVariables>(GetAllNotificationsDocument, options);
       }

@@ -11,7 +11,6 @@ import type { RouteObject } from 'react-router-dom'
 import { ChakraProvider, Spinner, Text } from '@chakra-ui/react'
 import { ApolloProvider } from '@apollo/client'
 import { CookiesProvider } from 'react-cookie'
-import FingerprintJS from '@fingerprintjs/fingerprintjs-pro'
 import Layout from './components/Layout'
 import Login from './pages/Login'
 import initializeCustomApolloClient from './services/graphql'
@@ -31,18 +30,10 @@ import AddFeaturePage from './pages/AddFeaturePage'
 import CreateFeature from './components/Forms/CreateFeature'
 import theme from './definitions/chakra/theme'
 
-const fpPromise = FingerprintJS.load({
-  apiKey: '8OwjmU0dvpZ9QZxBxVlq',
-  region: 'eu',
-})
-
-// Get the visitor identifier when you need it.
-fpPromise.then((fp) => fp.get()).then((result) => console.log(result.visitorId))
-
 export const customClient = initializeCustomApolloClient()
 
 function RequireAuth({ children }: { children: JSX.Element }) {
-  const { isAuth } = useAppState()
+  const { isAuth, user } = useAppState()
   const { dispatchLogin, dispatchLogout } = useAppState()
 
   const [me, { loading }] = useMutateMeMutation({
@@ -59,7 +50,7 @@ function RequireAuth({ children }: { children: JSX.Element }) {
   }, [])
 
   if (!isAuth && loading) return <Spinner />
-  if (!isAuth) {
+  if (!isAuth || !user) {
     return (
       <Routes>
         <Route path="/" element={<Login />} />

@@ -17,7 +17,12 @@ export default function UserCard({ user }: IProps): JSX.Element {
       alignItems="center"
       justifyContent="flex-start"
     >
-      <Image h={55} w={55} src={user.avatar} />
+      <Image
+        fallbackSrc="https://via.placeholder.com/150"
+        h={55}
+        w={55}
+        src={user.avatar}
+      />
       <Flex
         h="100%"
         display="flex"

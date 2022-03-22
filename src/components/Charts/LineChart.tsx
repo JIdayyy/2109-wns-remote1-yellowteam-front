@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Line } from 'react-chartjs-2'
 import 'chart.js/auto'
-import { useGetAllBugsByQuery } from 'src/generated/graphql'
+import { useGetAllBugsByQuery, SortOrder } from 'src/generated/graphql'
 import { Spinner } from '@chakra-ui/react'
 import { DateTime } from 'luxon'
 import useSearchState from 'src/hooks/useSearchState'
@@ -14,7 +14,7 @@ const LineChart = (): JSX.Element => {
   const { data, loading } = useGetAllBugsByQuery({
     variables: {
       orderBy: {
-        number: 'desc' as unknown as undefined,
+        number: 'desc' as SortOrder,
       },
       where: {
         Website: {
@@ -31,9 +31,9 @@ const LineChart = (): JSX.Element => {
   if (loading || !data)
     return (
       <Spinner
-        width="300px"
-        height="300px"
-        thickness="80px"
+        width="100px"
+        height="100px"
+        thickness="20px"
         speed="0.65s"
         emptyColor="gray.200"
         color="blue.500"
