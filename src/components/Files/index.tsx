@@ -1,22 +1,44 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Text } from '@chakra-ui/react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import FileHeaderIcon from 'src/static/svg/FilesHeaderIcon'
-import FilesList from './FilesList'
+import FilesList from '../List/FilesList'
 
 export default function FilesTable(): JSX.Element {
+  const navigation = useNavigate()
+  const { id } = useParams()
   return (
     <Box
-      border="0.5px solid #e6e6e6"
+      border="1px solid #B8B8B8"
       rounded={4}
       width="100%"
       backgroundColor="white"
       shadow="md"
     >
-      <Flex p={2} width="100%" justifyContent="flex-start" alignItems="center">
-        <FileHeaderIcon />
-        <Text mx={2} fontWeight="normal">
-          Files
-        </Text>
+      <Flex
+        borderBottom="1px solid #B8B8B8"
+        p={2}
+        width="100%"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Flex>
+          <FileHeaderIcon />
+          <Text mx={2} textStyle="body">
+            Files
+          </Text>
+        </Flex>
+        <Button
+          mx={1}
+          size="sm"
+          color="white"
+          rounded={4}
+          px={14}
+          backgroundColor="#24323F"
+          onClick={() => navigation(`/websites/bug/${id}/uploadfiles`)}
+        >
+          ADD FILE
+        </Button>
       </Flex>
       <Flex p={2} backgroundColor="#F6F6F6" width="100%" alignItems="center">
         <Box width="100%" />

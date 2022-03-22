@@ -17,8 +17,10 @@ import {
 
 export default function Notifications(): JSX.Element {
   const { data, loading } = useGetAllNotificationsQuery()
+
   const [selectedNotification, setSelectedNotification] =
     useState(`NOTIFICATIONS 🔔`)
+
   const [mutate, { data: notificationsMutationResponse }] =
     useSetNotificationReadMutation({
       variables: {
@@ -95,40 +97,42 @@ export default function Notifications(): JSX.Element {
             {data?.notifications.filter((item) => item.isRead === false).length}
           </Text>
         </Center>
-        {data?.notifications.map((notification) => (
-          <MenuItem
-            display="flex"
-            justifyContent="space-between"
-            backgroundColor={notification.isRead ? 'gray.200' : 'white'}
-            onClick={() =>
-              mutate({
-                variables: {
-                  where: {
-                    id: notification.id,
-                  },
-                  data: {
-                    isRead: {
-                      set: true,
+        {data?.notifications
+          .filter((item) => item.isRead === false)
+          .map((notification) => (
+            <MenuItem
+              display="flex"
+              justifyContent="space-between"
+              backgroundColor={notification.isRead ? 'gray.200' : 'white'}
+              onClick={() =>
+                mutate({
+                  variables: {
+                    where: {
+                      id: notification.id,
+                    },
+                    data: {
+                      isRead: {
+                        set: true,
+                      },
                     },
                   },
-                },
-              })
-            }
-            key={notification.id}
-          >
-            <Image
-              rounded="full"
-              mx={2}
-              zIndex={100}
-              w={10}
-              h={10}
-              src={notification.sender.avatar}
-            />
-            <Text color="gray" fontWeight="bold">
-              {notification.title}
-            </Text>
-          </MenuItem>
-        ))}
+                })
+              }
+              key={notification.id}
+            >
+              <Image
+                rounded="full"
+                mx={2}
+                zIndex={100}
+                w={10}
+                h={10}
+                src={notification.sender.avatar}
+              />
+              <Text color="gray" fontWeight="bold">
+                {notification.title}
+              </Text>
+            </MenuItem>
+          ))}
       </MenuList>
     </Menu>
   )

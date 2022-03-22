@@ -23,7 +23,7 @@ export default function FilesList(): JSX.Element {
 
   return (
     <Box
-      minH="400px"
+      minH="100px"
       maxH="500px"
       overflowY="scroll"
       css={{
@@ -51,34 +51,34 @@ export default function FilesList(): JSX.Element {
               <Flex width="100%">
                 <FileHeaderIcon />
                 <Link target="_blank" href={file.path}>
-                  <Text mx={2} noOfLines={1} fontSize={12} color="#747474">
+                  <Text mx={2} noOfLines={1} isTruncated textStyle="body">
                     {file.name}
                   </Text>
                 </Link>
               </Flex>
               <Text
+                w="20%"
                 noOfLines={1}
-                fontWeight="normal"
-                fontSize={12}
-                color="#747474"
+                isTruncated
+                textStyle="body"
                 width="20%"
               >
                 {file.size} ko
               </Text>
               <Text
+                w="20%"
                 noOfLines={1}
-                fontWeight="normal"
-                fontSize={12}
-                color="#747474"
+                isTruncated
+                textStyle="body"
                 width="20%"
               >
                 {file.type}
               </Text>
               <Text
+                w="20%"
                 noOfLines={1}
-                fontWeight="normal"
-                fontSize={12}
-                color="#747474"
+                isTruncated
+                textStyle="body"
                 width="20%"
               >
                 {creationDate(file.created_at).toLocaleString()}

@@ -8,6 +8,8 @@ import { FileValidated } from '@dropzone-ui/react/build/components/dropzone/comp
 import { useNavigate, useParams } from 'react-router-dom'
 import UploadIcon from 'src/static/svg/UploadIcon'
 import MyDropzone from 'src/components/DropZone'
+import { customClient } from 'src/App'
+import { GetAllFilesByBugDocument } from 'src/generated/graphql'
 import CustomFileItem from './FileItem'
 
 const serverUrl =
@@ -35,6 +37,7 @@ export default function UploadFile(): JSX.Element {
           'mutation upload($file: Upload!){\n uploadFile(file: $file){\n  name\n  path\n  id\n}\n}\n',
       })
     )
+
     formData.append('map', JSON.stringify({ '0': ['variables.file'] }))
     formData.append('0', oneFile.file)
 
@@ -58,6 +61,9 @@ export default function UploadFile(): JSX.Element {
         })
         .then((r) => {
           if (r.data.data.uploadFile) {
+            customClient.refetchQueries({
+              include: [GetAllFilesByBugDocument],
+            })
             toast({
               title: 'Files uploaded successfully.',
               description: 'We got your files !',

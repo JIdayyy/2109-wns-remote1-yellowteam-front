@@ -14,7 +14,6 @@ import { CookiesProvider } from 'react-cookie'
 import FingerprintJS from '@fingerprintjs/fingerprintjs-pro'
 import Layout from './components/Layout'
 import Login from './pages/Login'
-import mainTheme from './theme/mainTheme'
 import initializeCustomApolloClient from './services/graphql'
 import useAppState from './hooks/useAppState'
 import Home from './pages/Home'
@@ -30,6 +29,7 @@ import Features from './pages/Features'
 import FeaturesLayout from './components/Layout/FeaturesLayout'
 import AddFeaturePage from './pages/AddFeaturePage'
 import CreateFeature from './components/Forms/CreateFeature'
+import theme from './definitions/chakra/theme'
 
 const fpPromise = FingerprintJS.load({
   apiKey: '8OwjmU0dvpZ9QZxBxVlq',
@@ -80,7 +80,10 @@ const routes: RouteObject[] = [
         path: '/websites',
         element: <WebSiteList isNew={false} />,
       },
-
+      {
+        path: '/websites/bug/:bugId/uploadfiles',
+        element: <UploadFile />,
+      },
       {
         path: '/websites/:id/bugs',
         element: <Text color="black">test 3</Text>,
@@ -103,8 +106,7 @@ const routes: RouteObject[] = [
       },
       {
         path: '/bugs/:id',
-        element: <HomeLayout />,
-        children: [{ index: true, element: <Bug /> }],
+        element: <Bug />,
       },
       { path: '*', element: <Text>No match</Text> },
     ],
@@ -127,7 +129,7 @@ function App(): JSX.Element {
   return (
     <CookiesProvider>
       <ApolloProvider client={customClient}>
-        <ChakraProvider theme={mainTheme}>
+        <ChakraProvider theme={theme}>
           <Router>
             <RequireAuth>
               <MyRoutes />
