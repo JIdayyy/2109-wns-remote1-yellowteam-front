@@ -10,7 +10,13 @@ export default function CommentListItem({ comment }: Props): JSX.Element {
   const { computeDayDiff, todayDate } = useDateConversion()
   return (
     <Flex w="100%" p={4}>
-      <Image src={comment.user.avatar} width={7} height={7} rounded="full" />
+      <Image
+        fallbackSrc="https://via.placeholder.com/150"
+        src={comment.user.avatar}
+        width={7}
+        height={7}
+        rounded="full"
+      />
       <Flex
         w="100%"
         justifyContent="center"

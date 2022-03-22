@@ -78,7 +78,14 @@ export default function AddComment(): JSX.Element {
       border="1px solid #B8B8B8"
       rounded={4}
     >
-      <Image mx={2} src={user?.avatar} height={7} w={7} rounded="full" />
+      <Image
+        fallbackSrc="https://via.placeholder.com/150"
+        mx={2}
+        src={user?.avatar}
+        height={7}
+        w={7}
+        rounded="full"
+      />
       <Input
         size="sm"
         mx={1}
@@ -87,6 +94,7 @@ export default function AddComment(): JSX.Element {
       />
       <Button
         mx={1}
+        w="200px"
         size="sm"
         color="white"
         rounded={4}

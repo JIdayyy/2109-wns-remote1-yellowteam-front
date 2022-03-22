@@ -9,32 +9,42 @@ import {
   Text,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
+import { customClient } from 'src/App'
 import {
   GetAllNotificationsDocument,
   useGetAllNotificationsQuery,
   useSetNotificationReadMutation,
+  SortOrder,
 } from 'src/generated/graphql'
+import useAppState from 'src/hooks/useAppState'
 
 export default function Notifications(): JSX.Element {
-  const { data, loading } = useGetAllNotificationsQuery()
+  const { user } = useAppState()
 
   const [selectedNotification, setSelectedNotification] =
     useState(`NOTIFICATIONS 🔔`)
 
-  const [mutate, { data: notificationsMutationResponse }] =
+  const [setNotificationRead, { data: notificationsMutationResponse }] =
     useSetNotificationReadMutation({
-      variables: {
-        where: {
-          id: '',
-        },
-        data: {
-          isRead: {
-            set: true,
-          },
+      onCompleted: () => {
+        customClient.refetchQueries({
+          include: [GetAllNotificationsDocument],
+        })
+      },
+    })
+
+  const { data, loading } = useGetAllNotificationsQuery({
+    variables: {
+      where: {
+        userId: {
+          equals: user?.id,
         },
       },
-      refetchQueries: [{ query: GetAllNotificationsDocument }],
-    })
+      orderBy: {
+        created_at: 'desc' as SortOrder,
+      },
+    },
+  })
 
   useEffect(() => {
     setSelectedNotification(
@@ -105,7 +115,7 @@ export default function Notifications(): JSX.Element {
               justifyContent="space-between"
               backgroundColor={notification.isRead ? 'gray.200' : 'white'}
               onClick={() =>
-                mutate({
+                setNotificationRead({
                   variables: {
                     where: {
                       id: notification.id,

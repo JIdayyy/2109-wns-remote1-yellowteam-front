@@ -7,6 +7,7 @@ import FilesList from '../List/FilesList'
 export default function FilesTable(): JSX.Element {
   const navigation = useNavigate()
   const { id } = useParams()
+
   return (
     <Box
       border="1px solid #B8B8B8"
