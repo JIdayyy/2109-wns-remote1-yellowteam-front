@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { extendTheme } from '@chakra-ui/react'
 
 const mainTheme = extendTheme({
@@ -6,7 +7,6 @@ const mainTheme = extendTheme({
       heading: 'Open Sans, sans-serif',
       body: 'Poppins',
     },
-    // you can also use responsive styles
     titleLogin: {
       fontSize: ['42', '56', '72'],
       fontWeight: '800',
@@ -20,10 +20,10 @@ const mainTheme = extendTheme({
       fontFamily: 'Avenir',
     },
     h1: {
-      fontSize: ['32', '36'],
-      fontWeight: '800',
-      color: '#38383A',
-      fontFamily: 'Avenir',
+      fontSize: ['16', '18'],
+      fontWeight: 'bold',
+      color: '#24323F',
+      fontFamily: 'Poppins',
     },
     h2: {
       fontSize: ['22', '24'],
@@ -55,10 +55,16 @@ const mainTheme = extendTheme({
       fontWeight: '800',
     },
     body: {
-      fontSize: ['14', '16'],
-      color: '#38383A',
+      fontSize: ['12', '14'],
+      color: '#24323F',
       fontFamily: 'Poppins',
-      fontWeight: '300',
+      fontWeight: 'bold',
+    },
+    cardBold: {
+      fontSize: ['16', '16'],
+      color: '#24323F',
+      fontFamily: 'Poppins',
+      fontWeight: 700,
     },
     bodyGreenBold: {
       fontSize: ['12', '14'],
@@ -66,10 +72,17 @@ const mainTheme = extendTheme({
       fontFamily: 'Avenir',
       fontWeight: '800',
     },
+    card: {
+      fontSize: ['8', '8'],
+      color: 'white',
+      fontFamily: 'Poppins',
+      fontWeight: '400',
+    },
   },
+
   colors: {
     orange: '#F69826',
-    textPrimary: '#38383A',
+    textPrimary: '#24323F',
     mediumGreyText: '#4E4F54',
     greyText: '#9FA1A5',
     deactivatedGrey: '#BEBDC0',

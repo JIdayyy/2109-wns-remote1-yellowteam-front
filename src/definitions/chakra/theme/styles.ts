@@ -6,11 +6,19 @@ export default {
   styles: {
     global: {
       h1: {
-        fontWeight: 500,
-        marginBottom: '0.5em',
+        fontWeight: 'bold',
+        fontFamily: 'Poppins',
+        fontSize: '16px',
       },
-      p: {
-        marginBottom: '1em',
+      default: {
+        fontWeight: 'normal',
+        fontFamily: 'Poppins',
+        fontSize: '12px',
+      },
+      defaultBold: {
+        fontWeight: 900,
+        fontFamily: '',
+        fontSize: '12px',
       },
     },
   },

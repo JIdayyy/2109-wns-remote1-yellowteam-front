@@ -23,6 +23,7 @@ query GetBugDatas($where: BugWhereUniqueInput!) {
       first_name
       last_name
       email
+      avatar
     }
   }
 }

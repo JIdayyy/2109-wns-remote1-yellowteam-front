@@ -1275,7 +1275,6 @@ export type Comment = {
   bugId: Maybe<Scalars['String']>;
   created_at: Scalars['DateTime'];
   featureId: Maybe<Scalars['String']>;
-  fileId: Scalars['String'];
   id: Scalars['String'];
   text: Scalars['String'];
   updated_at: Scalars['DateTime'];
@@ -1289,7 +1288,6 @@ export type CommentCountAggregate = {
   bugId: Scalars['Int'];
   created_at: Scalars['Int'];
   featureId: Scalars['Int'];
-  fileId: Scalars['Int'];
   id: Scalars['Int'];
   text: Scalars['Int'];
   updated_at: Scalars['Int'];
@@ -1300,7 +1298,6 @@ export type CommentCountOrderByAggregateInput = {
   bugId?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   featureId?: InputMaybe<SortOrder>;
-  fileId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   text?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -1311,7 +1308,6 @@ export type CommentCreateInput = {
   Bug?: InputMaybe<BugCreateNestedOneWithoutCommentsInput>;
   Feature?: InputMaybe<FeatureCreateNestedOneWithoutCommentsInput>;
   created_at?: InputMaybe<Scalars['DateTime']>;
-  fileId: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
   text: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -1321,7 +1317,6 @@ export type CommentCreateInput = {
 export type CommentCreateManyBugInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   featureId?: InputMaybe<Scalars['String']>;
-  fileId: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
   text: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -1336,7 +1331,6 @@ export type CommentCreateManyBugInputEnvelope = {
 export type CommentCreateManyFeatureInput = {
   bugId?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
-  fileId: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
   text: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -1352,7 +1346,6 @@ export type CommentCreateManyInput = {
   bugId?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   featureId?: InputMaybe<Scalars['String']>;
-  fileId: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
   text: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -1363,7 +1356,6 @@ export type CommentCreateManyUserInput = {
   bugId?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   featureId?: InputMaybe<Scalars['String']>;
-  fileId: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
   text: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -1413,7 +1405,6 @@ export type CommentCreateOrConnectWithoutUserInput = {
 export type CommentCreateWithoutBugInput = {
   Feature?: InputMaybe<FeatureCreateNestedOneWithoutCommentsInput>;
   created_at?: InputMaybe<Scalars['DateTime']>;
-  fileId: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
   text: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -1423,7 +1414,6 @@ export type CommentCreateWithoutBugInput = {
 export type CommentCreateWithoutFeatureInput = {
   Bug?: InputMaybe<BugCreateNestedOneWithoutCommentsInput>;
   created_at?: InputMaybe<Scalars['DateTime']>;
-  fileId: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
   text: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -1434,7 +1424,6 @@ export type CommentCreateWithoutUserInput = {
   Bug?: InputMaybe<BugCreateNestedOneWithoutCommentsInput>;
   Feature?: InputMaybe<FeatureCreateNestedOneWithoutCommentsInput>;
   created_at?: InputMaybe<Scalars['DateTime']>;
-  fileId: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
   text: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -1448,7 +1437,6 @@ export type CommentGroupBy = {
   bugId: Maybe<Scalars['String']>;
   created_at: Scalars['DateTime'];
   featureId: Maybe<Scalars['String']>;
-  fileId: Scalars['String'];
   id: Scalars['String'];
   text: Scalars['String'];
   updated_at: Scalars['DateTime'];
@@ -1466,7 +1454,6 @@ export type CommentMaxAggregate = {
   bugId: Maybe<Scalars['String']>;
   created_at: Maybe<Scalars['DateTime']>;
   featureId: Maybe<Scalars['String']>;
-  fileId: Maybe<Scalars['String']>;
   id: Maybe<Scalars['String']>;
   text: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['DateTime']>;
@@ -1477,7 +1464,6 @@ export type CommentMaxOrderByAggregateInput = {
   bugId?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   featureId?: InputMaybe<SortOrder>;
-  fileId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   text?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -1489,7 +1475,6 @@ export type CommentMinAggregate = {
   bugId: Maybe<Scalars['String']>;
   created_at: Maybe<Scalars['DateTime']>;
   featureId: Maybe<Scalars['String']>;
-  fileId: Maybe<Scalars['String']>;
   id: Maybe<Scalars['String']>;
   text: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['DateTime']>;
@@ -1500,7 +1485,6 @@ export type CommentMinOrderByAggregateInput = {
   bugId?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   featureId?: InputMaybe<SortOrder>;
-  fileId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   text?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -1518,7 +1502,6 @@ export type CommentOrderByWithAggregationInput = {
   bugId?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   featureId?: InputMaybe<SortOrder>;
-  fileId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   text?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -1531,7 +1514,6 @@ export type CommentOrderByWithRelationInput = {
   bugId?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   featureId?: InputMaybe<SortOrder>;
-  fileId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   text?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -1543,7 +1525,6 @@ export enum CommentScalarFieldEnum {
   BugId = 'bugId',
   CreatedAt = 'created_at',
   FeatureId = 'featureId',
-  FileId = 'fileId',
   Id = 'id',
   Text = 'text',
   UpdatedAt = 'updated_at',
@@ -1557,7 +1538,6 @@ export type CommentScalarWhereInput = {
   bugId?: InputMaybe<StringNullableFilter>;
   created_at?: InputMaybe<DateTimeFilter>;
   featureId?: InputMaybe<StringNullableFilter>;
-  fileId?: InputMaybe<StringFilter>;
   id?: InputMaybe<StringFilter>;
   text?: InputMaybe<StringFilter>;
   updated_at?: InputMaybe<DateTimeFilter>;
@@ -1571,7 +1551,6 @@ export type CommentScalarWhereWithAggregatesInput = {
   bugId?: InputMaybe<StringNullableWithAggregatesFilter>;
   created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
   featureId?: InputMaybe<StringNullableWithAggregatesFilter>;
-  fileId?: InputMaybe<StringWithAggregatesFilter>;
   id?: InputMaybe<StringWithAggregatesFilter>;
   text?: InputMaybe<StringWithAggregatesFilter>;
   updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
@@ -1582,7 +1561,6 @@ export type CommentUpdateInput = {
   Bug?: InputMaybe<BugUpdateOneWithoutCommentsInput>;
   Feature?: InputMaybe<FeatureUpdateOneWithoutCommentsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  fileId?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   text?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -1591,7 +1569,6 @@ export type CommentUpdateInput = {
 
 export type CommentUpdateManyMutationInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  fileId?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   text?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -1672,7 +1649,6 @@ export type CommentUpdateWithWhereUniqueWithoutUserInput = {
 export type CommentUpdateWithoutBugInput = {
   Feature?: InputMaybe<FeatureUpdateOneWithoutCommentsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  fileId?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   text?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -1682,7 +1658,6 @@ export type CommentUpdateWithoutBugInput = {
 export type CommentUpdateWithoutFeatureInput = {
   Bug?: InputMaybe<BugUpdateOneWithoutCommentsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  fileId?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   text?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -1693,7 +1668,6 @@ export type CommentUpdateWithoutUserInput = {
   Bug?: InputMaybe<BugUpdateOneWithoutCommentsInput>;
   Feature?: InputMaybe<FeatureUpdateOneWithoutCommentsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  fileId?: InputMaybe<StringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   text?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -1726,7 +1700,6 @@ export type CommentWhereInput = {
   bugId?: InputMaybe<StringNullableFilter>;
   created_at?: InputMaybe<DateTimeFilter>;
   featureId?: InputMaybe<StringNullableFilter>;
-  fileId?: InputMaybe<StringFilter>;
   id?: InputMaybe<StringFilter>;
   text?: InputMaybe<StringFilter>;
   updated_at?: InputMaybe<DateTimeFilter>;
@@ -5646,6 +5619,13 @@ export type CreateCustomBugMutationVariables = Exact<{
 
 export type CreateCustomBugMutation = { __typename?: 'Mutation', createBugCustom: { __typename?: 'Bug', id: string } };
 
+export type CreateCommentMutationVariables = Exact<{
+  data: CommentCreateInput;
+}>;
+
+
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'Comment', id: string } };
+
 export type MutateLoginMutationVariables = Exact<{
   data: LoginInput;
 }>;
@@ -5686,6 +5666,14 @@ export type GetAllCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllCategoriesQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string, backgroundColor: string, description: string, icon: string }> };
 
+export type GetAllCommentsQueryVariables = Exact<{
+  orderBy: InputMaybe<Array<CommentOrderByWithRelationInput> | CommentOrderByWithRelationInput>;
+  where: CommentWhereInput;
+}>;
+
+
+export type GetAllCommentsQuery = { __typename?: 'Query', comments: Array<{ __typename?: 'Comment', id: string, text: string, created_at: any, updated_at: any, user: { __typename?: 'User', id: string, first_name: string, last_name: string, email: string, avatar: string, role: Array<Role> } }> };
+
 export type GetAllFeaturesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5718,7 +5706,7 @@ export type GetBugDatasQueryVariables = Exact<{
 }>;
 
 
-export type GetBugDatasQuery = { __typename?: 'Query', bug: { __typename?: 'Bug', id: string, number: number, title: string, status: BugStatus, severity: BugSeverity, priority: BugPriority, description: string, Website: { __typename?: 'Website', id: string, name: string, url: string, logo: string, isPreview: boolean }, File: Array<{ __typename?: 'File', id: string, name: string, path: string }>, user: { __typename?: 'User', first_name: string, last_name: string, email: string } } };
+export type GetBugDatasQuery = { __typename?: 'Query', bug: { __typename?: 'Bug', id: string, number: number, title: string, status: BugStatus, severity: BugSeverity, priority: BugPriority, description: string, Website: { __typename?: 'Website', id: string, name: string, url: string, logo: string, isPreview: boolean }, File: Array<{ __typename?: 'File', id: string, name: string, path: string }>, user: { __typename?: 'User', first_name: string, last_name: string, email: string, avatar: string } } };
 
 export type AllNotificationsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -5778,6 +5766,39 @@ export function useCreateCustomBugMutation(baseOptions?: Apollo.MutationHookOpti
 export type CreateCustomBugMutationHookResult = ReturnType<typeof useCreateCustomBugMutation>;
 export type CreateCustomBugMutationResult = Apollo.MutationResult<CreateCustomBugMutation>;
 export type CreateCustomBugMutationOptions = Apollo.BaseMutationOptions<CreateCustomBugMutation, CreateCustomBugMutationVariables>;
+export const CreateCommentDocument = gql`
+    mutation createComment($data: CommentCreateInput!) {
+  createComment(data: $data) {
+    id
+  }
+}
+    `;
+export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutation, CreateCommentMutationVariables>;
+
+/**
+ * __useCreateCommentMutation__
+ *
+ * To run a mutation, you first call `useCreateCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommentMutation, { data, loading, error }] = useCreateCommentMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOptions<CreateCommentMutation, CreateCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, options);
+      }
+export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
+export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
+export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
 export const MutateLoginDocument = gql`
     mutation MutateLogin($data: LoginInput!) {
   login(data: $data) {
@@ -5990,6 +6011,48 @@ export function useGetAllCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetAllCategoriesQueryHookResult = ReturnType<typeof useGetAllCategoriesQuery>;
 export type GetAllCategoriesLazyQueryHookResult = ReturnType<typeof useGetAllCategoriesLazyQuery>;
 export type GetAllCategoriesQueryResult = Apollo.QueryResult<GetAllCategoriesQuery, GetAllCategoriesQueryVariables>;
+export const GetAllCommentsDocument = gql`
+    query GetAllComments($orderBy: [CommentOrderByWithRelationInput!], $where: CommentWhereInput!) {
+  comments(orderBy: $orderBy, where: $where) {
+    id
+    text
+    created_at
+    updated_at
+    user {
+      ...User
+    }
+  }
+}
+    ${UserFragmentDoc}`;
+
+/**
+ * __useGetAllCommentsQuery__
+ *
+ * To run a query within a React component, call `useGetAllCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllCommentsQuery({
+ *   variables: {
+ *      orderBy: // value for 'orderBy'
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetAllCommentsQuery(baseOptions: Apollo.QueryHookOptions<GetAllCommentsQuery, GetAllCommentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllCommentsQuery, GetAllCommentsQueryVariables>(GetAllCommentsDocument, options);
+      }
+export function useGetAllCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllCommentsQuery, GetAllCommentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllCommentsQuery, GetAllCommentsQueryVariables>(GetAllCommentsDocument, options);
+        }
+export type GetAllCommentsQueryHookResult = ReturnType<typeof useGetAllCommentsQuery>;
+export type GetAllCommentsLazyQueryHookResult = ReturnType<typeof useGetAllCommentsLazyQuery>;
+export type GetAllCommentsQueryResult = Apollo.QueryResult<GetAllCommentsQuery, GetAllCommentsQueryVariables>;
 export const GetAllFeaturesDocument = gql`
     query GetAllFeatures {
   features {
@@ -6223,6 +6286,7 @@ export const GetBugDatasDocument = gql`
       first_name
       last_name
       email
+      avatar
     }
   }
 }
