@@ -1,14 +1,12 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box, Button } from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom'
+import { Box } from '@chakra-ui/react'
 import LineChart from 'src/components/Charts/LineChart'
 import CutomDonutChart from 'src/components/Charts/PieChart'
 import BugList from 'src/components/List/BugList'
 import customScrollBar from 'src/theme/scrollbar'
 
 export default function Home(): JSX.Element {
-  const navigation = useNavigate()
   return (
     <Box
       width="100%"
