@@ -1,11 +1,14 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box } from '@chakra-ui/react'
+import { Box, Button } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
 import LineChart from 'src/components/Charts/LineChart'
 import CutomDonutChart from 'src/components/Charts/PieChart'
 import BugList from 'src/components/List/BugList'
+import customScrollBar from 'src/theme/scrollbar'
 
 export default function Home(): JSX.Element {
+  const navigation = useNavigate()
   return (
     <Box
       width="100%"
@@ -13,18 +16,7 @@ export default function Home(): JSX.Element {
       alignItems="flex-start"
       justifyContent="flex-start"
       height="100%"
-      css={{
-        '&::-webkit-scrollbar': {
-          width: '4px',
-        },
-        '&::-webkit-scrollbar-track': {
-          width: '6px',
-        },
-        '&::-webkit-scrollbar-thumb': {
-          background: 'gray',
-          borderRadius: '24px',
-        },
-      }}
+      css={customScrollBar}
       flexDirection="row"
       overflowY="scroll"
     >
