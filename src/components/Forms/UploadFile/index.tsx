@@ -59,10 +59,14 @@ export default function UploadFile(): JSX.Element {
             setProgress((loaded / total) * 100)
           },
         })
-        .then((r) => {
+        .then(async (r) => {
+          console.log(r)
           if (r.data.data.uploadFile) {
-            customClient.refetchQueries({
-              include: [GetAllFilesByBugDocument],
+            console.log('succes')
+
+            await customClient.query({
+              query: GetAllFilesByBugDocument,
+              variables: { where: { id } },
             })
             toast({
               title: 'Files uploaded successfully.',
@@ -72,7 +76,7 @@ export default function UploadFile(): JSX.Element {
               isClosable: true,
             })
             setUploadSucces((c) => [...c, r.data.data.uploadFile.name])
-            navigate(`/bugs/${id}`)
+            return navigate(`/bugs/${id}`)
           }
           setProgress(0)
           return r.data

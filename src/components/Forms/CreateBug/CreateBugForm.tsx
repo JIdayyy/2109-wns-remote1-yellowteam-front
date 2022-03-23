@@ -17,6 +17,7 @@ import {
   useCreateCustomBugMutation,
 } from 'src/generated/graphql'
 import useAppState from 'src/hooks/useAppState'
+import customScrollBar from 'src/theme/scrollbar'
 import RadioGroup from '../RadioGroup'
 
 export const severityOptions = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']
@@ -93,24 +94,7 @@ export default function CreateBugForm(): JSX.Element {
       shadow="md"
       overflow="scroll"
       p={8}
-      css={{
-        '&::-webkit-scrollbar': {
-          width: '6px',
-          position: 'absolute',
-          right: -10,
-        },
-        '&::-webkit-scrollbar-track': {
-          width: '6px',
-          position: 'absolute',
-          right: -10,
-        },
-        '&::-webkit-scrollbar-thumb': {
-          background: 'gray',
-          position: 'absolute',
-          right: -10,
-          borderRadius: '24px',
-        },
-      }}
+      css={customScrollBar}
     >
       <Box mb={10}>
         <Text color="#747474" fontWeight="bold" fontSize={15}>
