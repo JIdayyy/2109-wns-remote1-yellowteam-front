@@ -4,6 +4,7 @@ import { Box } from '@chakra-ui/react'
 import LineChart from 'src/components/Charts/LineChart'
 import CutomDonutChart from 'src/components/Charts/PieChart'
 import BugList from 'src/components/List/BugList'
+import customScrollBar from 'src/theme/scrollbar'
 
 export default function Home(): JSX.Element {
   return (
@@ -13,18 +14,7 @@ export default function Home(): JSX.Element {
       alignItems="flex-start"
       justifyContent="flex-start"
       height="100%"
-      css={{
-        '&::-webkit-scrollbar': {
-          width: '4px',
-        },
-        '&::-webkit-scrollbar-track': {
-          width: '6px',
-        },
-        '&::-webkit-scrollbar-thumb': {
-          background: 'gray',
-          borderRadius: '24px',
-        },
-      }}
+      css={customScrollBar}
       flexDirection="row"
       overflowY="scroll"
     >

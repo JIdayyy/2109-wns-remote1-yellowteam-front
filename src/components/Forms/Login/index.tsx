@@ -43,14 +43,14 @@ export default function LoginForm(): JSX.Element {
       </Text>
       <FormControl p={10} w={['90%', '80%', '80%', '80%']}>
         <Input
-          id="email"
+          id="emaillogin"
           placeholder="Email"
           my={1}
           type="text"
           {...register('email')}
         />
         <Input
-          id="password"
+          id="passwordlogin"
           placeholder="Password"
           my={1}
           type="password"

@@ -1,9 +1,17 @@
-import { Box, Divider, Flex, Link, SkeletonText, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Divider,
+  Flex,
+  Image,
+  Link,
+  SkeletonText,
+  Text,
+} from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { DateTime } from 'luxon'
+import { Fragment } from 'react'
 import { useParams } from 'react-router-dom'
 import { useGetAllFilesByBugQuery } from 'src/generated/graphql'
-import FileHeaderIcon from 'src/static/svg/FilesHeaderIcon'
 
 const MotionFlex = motion(Flex)
 
@@ -41,7 +49,7 @@ export default function FilesList(): JSX.Element {
     >
       {!loading ? (
         data?.bug.File.map((file) => (
-          <>
+          <Fragment key={file.id}>
             <MotionFlex
               p={2}
               whileHover={{ backgroundColor: '#F2F2F2' }}
@@ -49,13 +57,20 @@ export default function FilesList(): JSX.Element {
               alignItems="center"
             >
               <Flex width="100%">
-                <FileHeaderIcon />
+                <Image
+                  src={file.path}
+                  w={5}
+                  h={5}
+                  rounded="full"
+                  fallbackSrc="https://via.placeholder.com/150"
+                />
                 <Link target="_blank" href={file.path}>
                   <Text mx={2} noOfLines={1} isTruncated textStyle="body">
                     {file.name}
                   </Text>
                 </Link>
               </Flex>
+
               <Text
                 w="20%"
                 noOfLines={1}
@@ -85,7 +100,7 @@ export default function FilesList(): JSX.Element {
               </Text>
             </MotionFlex>
             <Divider orientation="horizontal" />
-          </>
+          </Fragment>
         ))
       ) : (
         <Box padding="2" boxShadow="lg" bg="white">

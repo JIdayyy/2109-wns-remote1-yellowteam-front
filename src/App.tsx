@@ -29,6 +29,7 @@ import FeaturesLayout from './components/Layout/FeaturesLayout'
 import AddFeaturePage from './pages/AddFeaturePage'
 import CreateFeature from './components/Forms/CreateFeature'
 import theme from './definitions/chakra/theme'
+import NoMatchPage from './pages/NoMatch'
 
 export const customClient = initializeCustomApolloClient()
 
@@ -89,6 +90,7 @@ const routes: RouteObject[] = [
             path: '/createbug/websites/:websiteId/bug/:bugId/uploadfiles',
             element: <UploadFile />,
           },
+          { path: '*', element: <NoMatchPage /> },
         ],
       },
       {
@@ -99,7 +101,7 @@ const routes: RouteObject[] = [
         path: '/bugs/:id',
         element: <Bug />,
       },
-      { path: '*', element: <Text>No match</Text> },
+      { path: '*', element: <NoMatchPage /> },
     ],
   },
   {
@@ -109,7 +111,7 @@ const routes: RouteObject[] = [
       { element: <Features />, index: true },
       { element: <AddFeaturePage />, path: '/features/commit' },
       { element: <CreateFeature />, path: '/features/commit/:id' },
-      { path: '*', element: <Text>No match</Text> },
+      { path: '*', element: <NoMatchPage /> },
     ],
   },
 ]
