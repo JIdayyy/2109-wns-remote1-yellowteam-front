@@ -5684,7 +5684,7 @@ export type GetAllFilesByBugQueryVariables = Exact<{
 }>;
 
 
-export type GetAllFilesByBugQuery = { __typename?: 'Query', bug: { __typename?: 'Bug', File: Array<{ __typename?: 'File', id: string, name: string, path: string, size: number, type: string, created_at: any }> } };
+export type GetAllFilesByBugQuery = { __typename?: 'Query', bug: { __typename?: 'Bug', File: Array<{ __typename?: 'File', id: string, name: string, path: string, size: number, type: string, created_at: any, user: { __typename?: 'User', avatar: string, first_name: string, last_name: string } }> } };
 
 export type GetAllNotificationsQueryVariables = Exact<{
   where: NotificationWhereInput;
@@ -6113,6 +6113,11 @@ export const GetAllFilesByBugDocument = gql`
       path
       size
       type
+      user {
+        avatar
+        first_name
+        last_name
+      }
       created_at
     }
   }
