@@ -69,50 +69,6 @@ export default function WebSiteList({
               website={website}
             />
           ))}
-        {data?.websites
-          .filter((item) =>
-            item.name.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((website) => (
-            <WebSitesListItem
-              key={website.id}
-              isNew={isNew}
-              website={website}
-            />
-          ))}
-        {data?.websites
-          .filter((item) =>
-            item.name.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((website) => (
-            <WebSitesListItem
-              key={website.id}
-              isNew={isNew}
-              website={website}
-            />
-          ))}
-        {data?.websites
-          .filter((item) =>
-            item.name.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((website) => (
-            <WebSitesListItem
-              key={website.id}
-              isNew={isNew}
-              website={website}
-            />
-          ))}
-        {data?.websites
-          .filter((item) =>
-            item.name.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((website) => (
-            <WebSitesListItem
-              key={website.id}
-              isNew={isNew}
-              website={website}
-            />
-          ))}
       </Flex>
     </Box>
   )
