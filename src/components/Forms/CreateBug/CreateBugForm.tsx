@@ -5,32 +5,41 @@ import {
   Button,
   FormLabel,
   Input,
-  Spinner,
   Text,
   Textarea,
   useToast,
 } from '@chakra-ui/react'
 import { FieldValues, useForm } from 'react-hook-form'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   GetAllBugsByDocument,
   useCreateCustomBugMutation,
 } from 'src/generated/graphql'
 import useAppState from 'src/hooks/useAppState'
+import useCreateBugState from 'src/hooks/useCreateBugState'
+import useUploadFileState from 'src/hooks/useUploadFileState'
 import customScrollBar from 'src/theme/scrollbar'
 import RadioGroup from '../RadioGroup'
 
 export const severityOptions = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']
 export const priorityOptions = ['LOW', 'MEDIUM', 'HIGH']
 
-export default function CreateBugForm(): JSX.Element {
-  const { control, handleSubmit, register } = useForm()
-  const toast = useToast()
+interface IProps {
+  onClose: () => void
+}
 
-  const { id } = useParams()
+export default function CreateBugForm({ onClose }: IProps): JSX.Element {
+  const { control, handleSubmit, register } = useForm()
+  const { selectedWebsite, selectedCategory } = useCreateBugState()
+  const { dispatchSetSelectedBug } = useUploadFileState()
+  const toast = useToast()
   const navigate = useNavigate()
-  const { user } = useAppState()
-  if (!user) return <>no user</>
+  const { user, dispatchLogout } = useAppState()
+
+  if (!user) {
+    dispatchLogout()
+    navigate('/login')
+  }
 
   const queryVariables = {
     where: {
@@ -39,7 +48,6 @@ export default function CreateBugForm(): JSX.Element {
       },
     },
   }
-
   const [mutate, { loading }] = useCreateCustomBugMutation({
     refetchQueries: [
       {
@@ -47,6 +55,7 @@ export default function CreateBugForm(): JSX.Element {
         variables: queryVariables,
       },
     ],
+
     onCompleted: (data) => {
       console.log(data)
       toast({
@@ -56,9 +65,9 @@ export default function CreateBugForm(): JSX.Element {
         duration: 3000,
         isClosable: true,
       })
-      navigate(
-        `/createbug/websites/${id}/bug/${data.createBugCustom.id}/uploadfiles`
-      )
+      dispatchSetSelectedBug(data.createBugCustom.id)
+      navigate(`/bugs/${data.createBugCustom.id}`)
+      onClose()
     },
   })
 
@@ -68,12 +77,17 @@ export default function CreateBugForm(): JSX.Element {
       variables: {
         data: {
           ...data,
+          Category: {
+            connect: {
+              id: selectedCategory,
+            },
+          },
           description: data.description,
           title: data.title,
           severity: data.severity,
           Website: {
             connect: {
-              id,
+              id: selectedWebsite,
             },
           },
           user: {
@@ -87,24 +101,7 @@ export default function CreateBugForm(): JSX.Element {
   }
 
   return (
-    <Box
-      width={['90%', '90%', '80%', '90%']}
-      backgroundColor="white"
-      rounded={5}
-      shadow="md"
-      overflow="scroll"
-      p={8}
-      css={customScrollBar}
-    >
-      <Box mb={10}>
-        <Text color="#747474" fontWeight="bold" fontSize={15}>
-          Repport a new Bug 🐛
-        </Text>
-        <Text color="#747474" fontWeight="normal" fontSize={15}>
-          First we would like to thank you for using our tool. We’re now going
-          to need some information.
-        </Text>
-      </Box>
+    <Box width="100%" rounded={5} overflow="scroll" css={customScrollBar}>
       <FormLabel color="#747474" fontWeight="normal">
         Please give a title to this bug :
       </FormLabel>
@@ -136,7 +133,7 @@ export default function CreateBugForm(): JSX.Element {
 
       <Textarea
         my={2}
-        minH={400}
+        minH={200}
         color="black"
         {...register('description')}
         placeholder="Description"
@@ -145,9 +142,11 @@ export default function CreateBugForm(): JSX.Element {
       <Button
         variant="solid"
         backgroundColor="green"
+        color="white"
+        isLoading={loading}
         onClick={handleSubmit(onSubmit)}
       >
-        {loading ? <Spinner /> : 'SUBMIT'}
+        SUBMIT
       </Button>
     </Box>
   )

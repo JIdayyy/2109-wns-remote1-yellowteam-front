@@ -95,6 +95,8 @@ const mainTheme = extendTheme({
     lightGreen: '#EBF5ED',
     darkBrown: '#B47539',
     lightBrown: '#FCECE4',
+    redClose: '#961F2D',
+    darkBlueCustom: '#24323F',
   },
   section: {
     card: {

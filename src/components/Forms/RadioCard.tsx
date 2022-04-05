@@ -68,6 +68,7 @@ const RadioCard: FC = (props: RadioProps) => {
         backgroundColor={backgroundColor().color}
         borderRadius="md"
         shadow="md"
+        color="white"
         boxShadow="lg"
         _checked={{
           boxShadow: 'sm',

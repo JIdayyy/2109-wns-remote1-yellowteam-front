@@ -19,10 +19,6 @@ import Home from './pages/Home'
 import '@fontsource/poppins' // Defaults to weight 400.
 import WebSiteList from './components/List/WebSiteList'
 import Bug from './pages/Bug'
-import CreateBug from './components/Forms/CreateBug'
-import HomeLayout from './components/HomeLayout'
-import CreateBugPage from './pages/createBug'
-import UploadFile from './components/Forms/UploadFile'
 import { useMutateMeMutation } from './generated/graphql'
 import Features from './pages/Features'
 import FeaturesLayout from './components/Layout/FeaturesLayout'
@@ -73,29 +69,8 @@ const routes: RouteObject[] = [
         element: <WebSiteList isNew={false} />,
       },
       {
-        path: '/websites/bug/:bugId/uploadfiles',
-        element: <UploadFile />,
-      },
-      {
         path: '/websites/:id/bugs',
         element: <Text color="black">test 3</Text>,
-      },
-      {
-        path: '/createbug',
-        element: <HomeLayout />,
-        children: [
-          { index: true, element: <CreateBugPage /> },
-          { path: '/createbug/websites/:id/', element: <CreateBug /> },
-          {
-            path: '/createbug/websites/:websiteId/bug/:bugId/uploadfiles',
-            element: <UploadFile />,
-          },
-          { path: '*', element: <NoMatchPage /> },
-        ],
-      },
-      {
-        path: '/websites/:id/createbug',
-        element: <CreateBug />,
       },
       {
         path: '/bugs/:id',

@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Box, Button, Text, useToast } from '@chakra-ui/react'
 import useAppState from 'src/hooks/useAppState'
 import { FileValidated } from '@dropzone-ui/react/build/components/dropzone/components/utils/validation.utils'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import UploadIcon from 'src/static/svg/UploadIcon'
 import MyDropzone from 'src/components/DropZone'
 import { customClient } from 'src/App'
@@ -15,16 +15,20 @@ import CustomFileItem from './FileItem'
 const serverUrl =
   process.env.REACT_APP_SERVER_URL || 'http://localhost:5000/graphql'
 
-export default function UploadFile(): JSX.Element {
+interface IProps {
+  onClose: () => void
+}
+
+export default function UploadFile({ onClose }: IProps): JSX.Element {
   const [file, setFile] = useState<FileValidated[]>([])
-  const { bugId } = useParams()
+  const { id: bugId } = useParams()
+  console.log(bugId)
   const { user } = useAppState()
   const toast = useToast()
   const [progress, setProgress] = useState(0)
   const [fileOnUpload, setFileOnUpload] = useState<string | number | undefined>(
     ''
   )
-  const navigate = useNavigate()
   const [uploadSucces, setUploadSucces] = useState<string[]>([])
   if (!user) return <>no user</>
 
@@ -50,7 +54,7 @@ export default function UploadFile(): JSX.Element {
     }
     const data = () =>
       axios
-        .post(`${serverUrl}?userId=${user.id}&bugId=${id}`, formData, {
+        .post(`${serverUrl}?userId=${user.id}&bugId=${bugId}`, formData, {
           ...config,
           onUploadProgress: (progressEvent) => {
             const { loaded, total } = progressEvent
@@ -64,10 +68,6 @@ export default function UploadFile(): JSX.Element {
           if (r.data.data.uploadFile) {
             console.log('succes')
 
-            await customClient.query({
-              query: GetAllFilesByBugDocument,
-              variables: { where: { id } },
-            })
             toast({
               title: 'Files uploaded successfully.',
               description: 'We got your files !',
@@ -75,8 +75,12 @@ export default function UploadFile(): JSX.Element {
               duration: 2000,
               isClosable: true,
             })
+
+            await customClient.refetchQueries({
+              include: [GetAllFilesByBugDocument],
+              optimistic: true,
+            })
             setUploadSucces((c) => [...c, r.data.data.uploadFile.name])
-            return navigate(`/bugs/${id}`)
           }
           setProgress(0)
           return r.data
@@ -94,21 +98,28 @@ export default function UploadFile(): JSX.Element {
     const res = await data()
     return res
   }
+
+  useEffect(() => {
+    if (uploadSucces.length === file.length && uploadSucces.length > 0) {
+      onClose()
+    }
+  }, [uploadSucces])
+
   const uploadAllFiles = async () => {
     const results = await Promise.all(
       file.map((fle) => handleUpload(bugId as string, fle))
     )
     return results
   }
+
   return (
     <>
       <Box
-        width={['90%', '90%', '80%', '90%']}
+        width="100%"
         backgroundColor="white"
         rounded={5}
         overflow="hidden"
         display="flex"
-        shadow="md"
         height="100%"
       >
         <Box
@@ -128,37 +139,18 @@ export default function UploadFile(): JSX.Element {
             position="absolute"
           >
             <UploadIcon />
-            <Text color="#828282">Drag and Drop file or</Text>
-
-            <Button
-              zIndex={30}
-              onClick={() => {
-                console.log('browse')
-              }}
-            >
-              Browse
-            </Button>
+            <Text color="#828282">Drag and Drop file or click to browse</Text>
           </Box>
         </Box>
-        {/* <Input
-        name="file"
-        accept="*"
-        multiple={false}
-        id="file"
-        onChange={handleImage}
-        my={2}
-        color="black"
-        placeholder="File"
-        type="file"
-      /> */}
+
         <Box
           overflow="scroll"
           width="50%"
+          height="-moz-max-content"
           display="flex"
           justifyContent="flex-start"
           alignItems="flex-start"
           flexWrap={['wrap', 'wrap', 'wrap']}
-          height="100%"
           p={5}
           backgroundColor="#ECECEC"
           css={{
@@ -176,6 +168,7 @@ export default function UploadFile(): JSX.Element {
         >
           {file.map((fle) => (
             <CustomFileItem
+              key={fle.id}
               uploadSucces={uploadSucces}
               fileOnUpload={fileOnUpload}
               fle={fle}

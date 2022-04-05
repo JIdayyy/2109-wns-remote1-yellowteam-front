@@ -8,6 +8,7 @@ export default function CategoriesList(): JSX.Element {
 
   return (
     <Flex
+      my={5}
       w="100%"
       flexWrap="wrap"
       justifyContent="flex-start"

@@ -28,9 +28,10 @@ export default function WebSiteList({
     <Box
       display="flex"
       rounded={4}
-      width="auto"
+      width="100%"
       height="100%"
       overflow="scroll"
+      justifyContent="center"
       flexDirection="column"
       css={{
         '&::-webkit-scrollbar': {
@@ -45,10 +46,10 @@ export default function WebSiteList({
         },
       }}
     >
-      <Text fontSize={17} my={5} mx={4}>
+      <Text color="#747474" fontWeight="bold" fontSize={15}>
         On wich website did you encounter this bug ?
       </Text>
-      <InputGroup>
+      <InputGroup my={5} w="100%">
         <InputLeftElement pointerEvents="none" children={<SearchIcon />} />
         <Input
           value={search}
