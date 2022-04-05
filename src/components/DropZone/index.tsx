@@ -16,7 +16,7 @@ export default function MyDropzone({ file, setFile }: IProps): JSX.Element {
       value={file}
     >
       {file.map((fle) => (
-        <FileItem {...fle} preview />
+        <FileItem key={fle.id} {...fle} preview />
       ))}
     </Dropzone>
   )

@@ -1,6 +1,7 @@
 import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { GetAllCategoriesQuery } from 'src/generated/graphql'
+import useCreateBugState from 'src/hooks/useCreateBugState'
 
 type Props = {
   category: GetAllCategoriesQuery['categories'][number]
@@ -9,7 +10,8 @@ type Props = {
 const MotionFlex = motion(Flex)
 
 export default function CategoryCard({ category }: Props): JSX.Element {
-  const sampleImg = `/features_blue.png`
+  const { dispatchSelectedCategory, selectedCategory } = useCreateBugState()
+
   return (
     <Flex
       cursor="pointer"
@@ -29,19 +31,14 @@ export default function CategoryCard({ category }: Props): JSX.Element {
       </Box>
 
       <MotionFlex
-        whileHover={{
-          width: '70%',
-          justifyContent: 'center',
-          boxShadow:
-            'rgba(0, 0, 0, 0) 0px 4px 6px -1px, rgba(0, 0, 0, 0) 0px 2px 4px -1px ',
-        }}
+        onClick={() => dispatchSelectedCategory(category.id)}
+        width={selectedCategory === category.id ? '70%' : '100%'}
         cursor="pointer"
         color="white"
-        w="98%"
         px={5}
         h="100%"
         zIndex={20}
-        justifyContent="flex-start"
+        justifyContent="center"
         alignItems="center"
         rounded={4}
         shadow="md"
@@ -51,9 +48,6 @@ export default function CategoryCard({ category }: Props): JSX.Element {
           <Text fontSize={16} fontWeight="bold" color="#24323F">
             {category.name}
           </Text>
-        </Box>
-        <Box>
-          <Image src={sampleImg} width="40px" height="40px" />
         </Box>
       </MotionFlex>
     </Flex>
