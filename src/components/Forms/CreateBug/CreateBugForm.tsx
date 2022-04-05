@@ -30,7 +30,12 @@ interface IProps {
 
 export default function CreateBugForm({ onClose }: IProps): JSX.Element {
   const { control, handleSubmit, register } = useForm()
-  const { selectedWebsite, selectedCategory } = useCreateBugState()
+  const {
+    selectedWebsite,
+    selectedCategory,
+    dispatchSelectedCategory,
+    dispatchSelectedWebsite,
+  } = useCreateBugState()
   const { dispatchSetSelectedBug } = useUploadFileState()
   const toast = useToast()
   const navigate = useNavigate()
@@ -66,12 +71,15 @@ export default function CreateBugForm({ onClose }: IProps): JSX.Element {
         isClosable: true,
       })
       dispatchSetSelectedBug(data.createBugCustom.id)
+      dispatchSelectedCategory('')
+      dispatchSelectedWebsite('')
       navigate(`/bugs/${data.createBugCustom.id}`)
       onClose()
     },
   })
 
   if (!user) return <div>You must be logged in to create a bug</div>
+
   const onSubmit = async (data: FieldValues) => {
     mutate({
       variables: {
