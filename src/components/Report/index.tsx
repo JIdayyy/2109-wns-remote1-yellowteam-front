@@ -142,10 +142,16 @@ export default function ReportModule(): JSX.Element {
         <BugInfoChip name="severity" priority={data.bug.severity} />
       </Flex>
 
-      <Flex width="100%" justifyContent="space-between">
-        <Flex direction="column" my={10}>
+      <Flex width="100%" justifyContent="space-between" direction="column">
+        <Flex direction="column" my={5}>
           <Text>Description</Text>
           <Text>{data?.bug.description}</Text>
+        </Flex>
+        <Flex direction="column" my={5}>
+          <Text>Category</Text>
+          <Text>
+            {data?.bug.Category ? data?.bug.Category.name : 'no category'}
+          </Text>
         </Flex>
       </Flex>
       <FilesTable />

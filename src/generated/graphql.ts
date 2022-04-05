@@ -5709,7 +5709,7 @@ export type GetBugDatasQueryVariables = Exact<{
 }>;
 
 
-export type GetBugDatasQuery = { __typename?: 'Query', bug: { __typename?: 'Bug', id: string, number: number, title: string, status: BugStatus, severity: BugSeverity, priority: BugPriority, description: string, Website: { __typename?: 'Website', id: string, name: string, url: string, logo: string, isPreview: boolean }, File: Array<{ __typename?: 'File', id: string, name: string, path: string }>, user: { __typename?: 'User', first_name: string, last_name: string, email: string, avatar: string } } };
+export type GetBugDatasQuery = { __typename?: 'Query', bug: { __typename?: 'Bug', id: string, number: number, title: string, status: BugStatus, severity: BugSeverity, priority: BugPriority, description: string, Category: { __typename?: 'Category', name: string }, Website: { __typename?: 'Website', id: string, name: string, url: string, logo: string, isPreview: boolean }, File: Array<{ __typename?: 'File', id: string, name: string, path: string }>, user: { __typename?: 'User', first_name: string, last_name: string, email: string, avatar: string } } };
 
 export type AllNotificationsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -6277,6 +6277,9 @@ export const GetBugDatasDocument = gql`
     number
     title
     status
+    Category {
+      name
+    }
     severity
     Website {
       id

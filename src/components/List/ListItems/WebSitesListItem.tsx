@@ -4,6 +4,7 @@ import { Box, Image, Link, Text } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { GetAllWebSitesQuery } from 'src/generated/graphql'
+import useCreateBugState from 'src/hooks/useCreateBugState'
 
 type Props = {
   website: GetAllWebSitesQuery['websites'][number]
@@ -17,10 +18,11 @@ export default function WebSitesListItem({
   isNew,
 }: Props): JSX.Element {
   const navigation = useNavigate()
+  const { dispatchSelectedWebsite, selectedWebsite } = useCreateBugState()
 
   const handleClick = () => {
     if (isNew) {
-      return navigation(`/createbug/websites/${website.id}`)
+      return dispatchSelectedWebsite(website.id)
     }
     return navigation(`/websites/${website.id}/createbug`)
   }
@@ -34,12 +36,11 @@ export default function WebSitesListItem({
       justifyContent="flex-start"
       alignItems="center"
       m={1}
-      whileHover={{ backgroundColor: '#F0F0F0' }}
+      backgroundColor={selectedWebsite === website.id ? '#F0F0F0' : 'white'}
       onClick={handleClick}
       p={4}
       cursor="pointer"
       display="flex"
-      backgroundColor="white"
       flexDirection="row"
       key={website.id}
     >
