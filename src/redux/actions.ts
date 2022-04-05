@@ -1,2 +1,2 @@
 export { login, logout, updateUser } from './slices/app'
-export { reset, setBugOnSearch } from './slices/search'
+export { reset, setSelectedWebsite } from './slices/search'
