@@ -4,6 +4,9 @@ query GetBugDatas($where: BugWhereUniqueInput!) {
     number
     title
     status
+    Category {
+      name
+    }
     severity
     Website {
       id

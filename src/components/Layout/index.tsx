@@ -8,8 +8,9 @@ import {
   SkeletonText,
   useToast,
   Flex,
+  useDisclosure,
 } from '@chakra-ui/react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import useAppState from 'src/hooks/useAppState'
 import {
   GetAllBugsByDocument,
@@ -19,9 +20,10 @@ import {
 import { customClient } from 'src/App'
 import UserNavBar from './UserNavBar'
 import Notifications from '../Notifications'
+import CreateBugModal from '../Modals/CreateBug.modal'
 
 export const NavBar = (): JSX.Element => {
-  const navigation = useNavigate()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const toast = useToast()
 
@@ -60,14 +62,10 @@ export const NavBar = (): JSX.Element => {
       px={10}
       backgroundColor="white"
     >
-      <Button
-        backgroundColor="#24323F"
-        color="white"
-        mx={2}
-        onClick={() => navigation('/createbug')}
-      >
+      <Button backgroundColor="#24323F" color="white" mx={2} onClick={onOpen}>
         Report a new Bug 🐛
       </Button>
+      <CreateBugModal isOpen={isOpen} onClose={onClose} />
       <Notifications />
     </Box>
   )

@@ -16,7 +16,7 @@ import { useState } from 'react'
 
 export default function BugListFilters(): JSX.Element {
   const { data, loading } = useGetAllWebSitesQuery()
-  const { dispatchSelectedWebsite } = useSearchState()
+  const { dispatchSearchedWebsite } = useSearchState()
   const [selectedWebsite, setSelectedWebsite] = useState<string | null>()
 
   return (
@@ -46,13 +46,13 @@ export default function BugListFilters(): JSX.Element {
             )}
           </MenuButton>
           <MenuList width="100%">
-            <MenuItem onClick={() => dispatchSelectedWebsite('')} width="100%">
+            <MenuItem onClick={() => dispatchSearchedWebsite('')} width="100%">
               All websites
             </MenuItem>
             {data?.websites.map((w) => (
               <MenuItem
                 onClick={() => {
-                  dispatchSelectedWebsite(w.id)
+                  dispatchSearchedWebsite(w.id)
                   setSelectedWebsite(w.name)
                 }}
                 key={w.id}

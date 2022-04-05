@@ -38,7 +38,7 @@ export default function CommentList(): JSX.Element {
         </Text>
       </Flex>
       {data?.comments.map((comment) => (
-        <CommentListItem comment={comment} />
+        <CommentListItem key={comment.id} comment={comment} />
       ))}
     </Flex>
   )

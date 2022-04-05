@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { reset, setSelectedWebsite } from 'src/redux/actions'
+import { reset, setSearchedWebsite } from 'src/redux/actions'
 import { RootState } from 'src/redux/reducers'
 
 const useSearchState = (): {
   website: string
   dispatchResetSearchState: () => { payload: undefined; type: string }
-  dispatchSelectedWebsite: (payload: string) => {
+  dispatchSearchedWebsite: (payload: string) => {
     payload: string
     type: string
   }
@@ -14,12 +14,12 @@ const useSearchState = (): {
 
   const { website } = useSelector((state: RootState) => state.search)
 
-  const dispatchSelectedWebsite = (payload: string) =>
-    dispatch(setSelectedWebsite(payload))
+  const dispatchSearchedWebsite = (payload: string) =>
+    dispatch(setSearchedWebsite(payload))
 
   const dispatchResetSearchState = () => dispatch(reset())
 
-  return { website, dispatchSelectedWebsite, dispatchResetSearchState }
+  return { website, dispatchSearchedWebsite, dispatchResetSearchState }
 }
 
 export default useSearchState

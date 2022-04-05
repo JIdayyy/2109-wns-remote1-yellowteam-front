@@ -1,12 +1,10 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/react'
-import { useNavigate, useParams } from 'react-router-dom'
-
+import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react'
 import FileHeaderIcon from 'src/static/svg/FilesHeaderIcon'
 import FilesList from '../List/FilesList'
+import UploadFileModal from '../Modals/UploadFile.modal'
 
 export default function FilesTable(): JSX.Element {
-  const navigation = useNavigate()
-  const { id } = useParams()
+  const { isOpen, onClose, onOpen } = useDisclosure()
 
   return (
     <Box
@@ -16,6 +14,7 @@ export default function FilesTable(): JSX.Element {
       backgroundColor="white"
       shadow="md"
     >
+      <UploadFileModal isOpen={isOpen} onClose={onClose} />
       <Flex
         borderBottom="1px solid #B8B8B8"
         p={2}
@@ -36,7 +35,7 @@ export default function FilesTable(): JSX.Element {
           rounded={4}
           px={14}
           backgroundColor="#24323F"
-          onClick={() => navigation(`/websites/bug/${id}/uploadfiles`)}
+          onClick={onOpen}
         >
           ADD FILE
         </Button>
