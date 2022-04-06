@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import useAppState from 'src/hooks/useAppState'
 import { useAllNotificationsSubscription } from 'src/generated/graphql'
-import { customClient } from 'src/App'
+import customClient from 'src/services/graphql'
 import UserNavBar from './UserNavBar'
 
 interface IBreadcrumb {
@@ -28,9 +28,8 @@ const NavBar = (): JSX.Element => {
   const navigation = useNavigate()
 
   useAllNotificationsSubscription({
-    onSubscriptionComplete: () => {
-      const Res = customClient.refetchQueries({ include: ['GetAllBugsBy'] })
-      console.log(Res)
+    onSubscriptionComplete: async () => {
+      await customClient.refetchQueries({ include: ['GetAllBugsBy'] })
       toast({
         title: 'You just received a notification',
         status: 'info',

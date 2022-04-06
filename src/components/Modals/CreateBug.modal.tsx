@@ -70,8 +70,6 @@ export default function CreateBugModal({
             <UploadFile setIsUpload={setIsUpload} onClose={onClose} />
           )}
         </ModalBody>
-
-        {/* <ModalFooter></ModalFooter> */}
       </ModalContent>
     </Modal>
   )

@@ -3,7 +3,7 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { GetAllBugsByQuery, GetBugDatasDocument } from 'src/generated/graphql'
-import { customClient } from 'src/App'
+import customClient from 'src/services/graphql'
 
 type Props = {
   bug: GetAllBugsByQuery['bugs'][number]
