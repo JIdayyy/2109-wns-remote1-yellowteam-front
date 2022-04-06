@@ -2,14 +2,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Box, Button, Text, useToast } from '@chakra-ui/react'
+import { Box, Button, Image, Text, useToast } from '@chakra-ui/react'
 import useAppState from 'src/hooks/useAppState'
 import { FileValidated } from '@dropzone-ui/react/build/components/dropzone/components/utils/validation.utils'
 import { useParams } from 'react-router-dom'
-import UploadIcon from 'src/static/svg/UploadIcon'
 import MyDropzone from 'src/components/DropZone'
 import { customClient } from 'src/App'
 import { GetAllFilesByBugDocument } from 'src/generated/graphql'
+import UploadIcon from '../../../static/img/cloudUpload.png'
 import CustomFileItem from './FileItem'
 
 const serverUrl =
@@ -17,9 +17,13 @@ const serverUrl =
 
 interface IProps {
   onClose: () => void
+  setIsUpload?: (value: boolean) => void
 }
 
-export default function UploadFile({ onClose }: IProps): JSX.Element {
+export default function UploadFile({
+  onClose,
+  setIsUpload,
+}: IProps): JSX.Element {
   const [file, setFile] = useState<FileValidated[]>([])
   const { id: bugId } = useParams()
   console.log(bugId)
@@ -100,7 +104,12 @@ export default function UploadFile({ onClose }: IProps): JSX.Element {
   }
 
   useEffect(() => {
-    if (uploadSucces.length === file.length && uploadSucces.length > 0) {
+    if (
+      uploadSucces.length === file.length &&
+      uploadSucces.length > 0 &&
+      setIsUpload
+    ) {
+      setIsUpload(false)
       onClose()
     }
   }, [uploadSucces])
@@ -113,7 +122,16 @@ export default function UploadFile({ onClose }: IProps): JSX.Element {
   }
 
   return (
-    <>
+    <Box
+      width="100%"
+      backgroundColor="white"
+      rounded={5}
+      overflow="hidden"
+      display="flex"
+      justifyContent="center"
+      flexDirection="column"
+      height="100%"
+    >
       <Box
         width="100%"
         backgroundColor="white"
@@ -138,7 +156,9 @@ export default function UploadFile({ onClose }: IProps): JSX.Element {
             alignItems="center"
             position="absolute"
           >
-            <UploadIcon />
+            {/* <UploadIcon /> */}
+
+            <Image src={UploadIcon} width={100} height={100} />
             <Text color="#828282">Drag and Drop file or click to browse</Text>
           </Box>
         </Box>
@@ -151,14 +171,15 @@ export default function UploadFile({ onClose }: IProps): JSX.Element {
           justifyContent="flex-start"
           alignItems="flex-start"
           flexWrap={['wrap', 'wrap', 'wrap']}
-          p={5}
+          overflowY="scroll"
+          maxHeight="500px"
           backgroundColor="#ECECEC"
           css={{
             '&::-webkit-scrollbar': {
-              width: '4px',
+              width: '2px',
             },
             '&::-webkit-scrollbar-track': {
-              width: '6px',
+              width: '2px',
             },
             '&::-webkit-scrollbar-thumb': {
               background: 'gray',
@@ -186,6 +207,6 @@ export default function UploadFile({ onClose }: IProps): JSX.Element {
       >
         Upload
       </Button>
-    </>
+    </Box>
   )
 }
