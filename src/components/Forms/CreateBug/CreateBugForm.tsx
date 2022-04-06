@@ -62,7 +62,6 @@ export default function CreateBugForm({ setIsUpload }: IProps): JSX.Element {
     ],
 
     onCompleted: (data) => {
-      console.log(data)
       toast({
         title: 'Bug sent.',
         description: 'Thanks for this report.',

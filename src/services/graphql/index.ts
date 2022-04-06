@@ -48,7 +48,7 @@ export const client = new ApolloClient({
   link: splitLink,
 })
 
-export default function initializeApollo(): ApolloClient<NormalizedCacheObject> {
+function initializeApollo(): ApolloClient<NormalizedCacheObject> {
   if (typeof window === 'undefined') {
     return client
   }
@@ -59,3 +59,7 @@ export default function initializeApollo(): ApolloClient<NormalizedCacheObject> 
 
   return client
 }
+
+const customClient = initializeApollo()
+
+export default customClient

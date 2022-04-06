@@ -17,7 +17,7 @@ import {
   GetAllNotificationsDocument,
   useAllNotificationsSubscription,
 } from 'src/generated/graphql'
-import { customClient } from 'src/App'
+import customClient from 'src/services/graphql'
 import UserNavBar from './UserNavBar'
 import Notifications from '../Notifications'
 import CreateBugModal from '../Modals/CreateBug.modal'
@@ -37,7 +37,6 @@ export const NavBar = (): JSX.Element => {
 
     shouldResubscribe: true,
     onSubscriptionData: async (r) => {
-      console.log(r)
       await customClient.refetchQueries({
         include: [GetAllBugsByDocument, GetAllNotificationsDocument],
       })
