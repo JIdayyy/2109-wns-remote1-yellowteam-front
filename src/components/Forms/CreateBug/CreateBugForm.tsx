@@ -25,10 +25,10 @@ export const severityOptions = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']
 export const priorityOptions = ['LOW', 'MEDIUM', 'HIGH']
 
 interface IProps {
-  onClose: () => void
+  setIsUpload: (value: boolean) => void
 }
 
-export default function CreateBugForm({ onClose }: IProps): JSX.Element {
+export default function CreateBugForm({ setIsUpload }: IProps): JSX.Element {
   const { control, handleSubmit, register } = useForm()
   const {
     selectedWebsite,
@@ -73,8 +73,8 @@ export default function CreateBugForm({ onClose }: IProps): JSX.Element {
       dispatchSetSelectedBug(data.createBugCustom.id)
       dispatchSelectedCategory('')
       dispatchSelectedWebsite('')
+      setIsUpload(true)
       navigate(`/bugs/${data.createBugCustom.id}`)
-      onClose()
     },
   })
 
