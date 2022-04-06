@@ -9,7 +9,6 @@ import {
   Text,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { customClient } from 'src/App'
 import {
   GetAllNotificationsDocument,
   useGetAllNotificationsQuery,
@@ -17,6 +16,7 @@ import {
   SortOrder,
 } from 'src/generated/graphql'
 import useAppState from 'src/hooks/useAppState'
+import customClient from 'src/services/graphql'
 
 export default function Notifications(): JSX.Element {
   const { user } = useAppState()
@@ -61,7 +61,6 @@ export default function Notifications(): JSX.Element {
   return (
     <Menu onClose={() => console.log('test')}>
       <MenuButton
-        onChange={(e) => console.log(e)}
         px={4}
         py={2}
         transition="all 0.2s"

@@ -7,8 +7,8 @@ import useAppState from 'src/hooks/useAppState'
 import { FileValidated } from '@dropzone-ui/react/build/components/dropzone/components/utils/validation.utils'
 import { useParams } from 'react-router-dom'
 import MyDropzone from 'src/components/DropZone'
-import { customClient } from 'src/App'
 import { GetAllFilesByBugDocument } from 'src/generated/graphql'
+import customClient from 'src/services/graphql'
 import UploadIcon from '../../../static/img/cloudUpload.png'
 import CustomFileItem from './FileItem'
 
@@ -26,7 +26,6 @@ export default function UploadFile({
 }: IProps): JSX.Element {
   const [file, setFile] = useState<FileValidated[]>([])
   const { id: bugId } = useParams()
-  console.log(bugId)
   const { user } = useAppState()
   const toast = useToast()
   const [progress, setProgress] = useState(0)
@@ -68,10 +67,7 @@ export default function UploadFile({
           },
         })
         .then(async (r) => {
-          console.log(r)
           if (r.data.data.uploadFile) {
-            console.log('succes')
-
             toast({
               title: 'Files uploaded successfully.',
               description: 'We got your files !',
@@ -156,8 +152,6 @@ export default function UploadFile({
             alignItems="center"
             position="absolute"
           >
-            {/* <UploadIcon /> */}
-
             <Image src={UploadIcon} width={100} height={100} />
             <Text color="#828282">Drag and Drop file or click to browse</Text>
           </Box>
