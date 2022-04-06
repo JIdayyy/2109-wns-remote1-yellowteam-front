@@ -8,7 +8,9 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react'
+import { useState } from 'react'
 import CreateBugForm from '../Forms/CreateBug/CreateBugForm'
+import UploadFile from '../Forms/UploadFile'
 import CategoriesList from '../List/CategoriesList'
 import WebSiteList from '../List/WebSiteList'
 
@@ -21,6 +23,8 @@ export default function CreateBugModal({
   isOpen,
   onClose,
 }: IProps): JSX.Element {
+  const [isUpload, setIsUpload] = useState<boolean>(false)
+
   return (
     <Modal size="4xl" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -44,22 +48,27 @@ export default function CreateBugModal({
           </Button>
         </ModalHeader>
         <ModalBody>
-          <Box mb={10}>
-            <Text my={5} color="#747474" fontWeight="bold" fontSize={15}>
-              Repport a new Bug 🐛
-            </Text>
-            <Text color="#747474" fontWeight="normal" fontSize={15}>
-              First we would like to thank you for using our tool. We’re now
-              going to need some information.
-            </Text>
-          </Box>
-          <WebSiteList isNew />
-          <Text my={5} color="#747474" fontWeight="bold" fontSize={15}>
-            Now select a category
-          </Text>
-          <CategoriesList />
-
-          <CreateBugForm onClose={onClose} />
+          {!isUpload ? (
+            <>
+              <Box mb={10}>
+                <Text my={5} color="#747474" fontWeight="bold" fontSize={15}>
+                  Repport a new Bug 🐛
+                </Text>
+                <Text color="#747474" fontWeight="normal" fontSize={15}>
+                  First we would like to thank you for using our tool. We’re now
+                  going to need some information.
+                </Text>
+              </Box>
+              <WebSiteList isNew />
+              <Text my={5} color="#747474" fontWeight="bold" fontSize={15}>
+                Now select a category
+              </Text>
+              <CategoriesList />
+              <CreateBugForm setIsUpload={setIsUpload} />
+            </>
+          ) : (
+            <UploadFile setIsUpload={setIsUpload} onClose={onClose} />
+          )}
         </ModalBody>
 
         {/* <ModalFooter></ModalFooter> */}
