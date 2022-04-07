@@ -18,11 +18,14 @@ import {
   useAllNotificationsSubscription,
 } from 'src/generated/graphql'
 import customClient from 'src/services/graphql'
+import useSound from 'use-sound'
+import notificationSound from '../../static/sounds/bell.mp3'
 import UserNavBar from './UserNavBar'
 import Notifications from '../Notifications'
 import CreateBugModal from '../Modals/CreateBug.modal'
 
 export const NavBar = (): JSX.Element => {
+  const [play] = useSound(notificationSound)
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const toast = useToast()
@@ -37,9 +40,11 @@ export const NavBar = (): JSX.Element => {
 
     shouldResubscribe: true,
     onSubscriptionData: async (r) => {
+      play()
       await customClient.refetchQueries({
         include: [GetAllBugsByDocument, GetAllNotificationsDocument],
       })
+
       toast({
         title: `${r.subscriptionData.data?.normalSubscription.message}`,
         status: 'info',
