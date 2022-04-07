@@ -16,7 +16,7 @@ export default function CategoriesList(): JSX.Element {
       flexDir="row"
     >
       {data?.categories.map((category) => (
-        <CategoryCard category={category} />
+        <CategoryCard key={category.id} category={category} />
       ))}
     </Flex>
   )

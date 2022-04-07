@@ -19,6 +19,8 @@ import useAppState from 'src/hooks/useAppState'
 import useCreateBugState from 'src/hooks/useCreateBugState'
 import useUploadFileState from 'src/hooks/useUploadFileState'
 import customScrollBar from 'src/theme/scrollbar'
+import useSound from 'use-sound'
+import sendSound from '../../../static/sounds/send.mp3'
 import RadioGroup from '../RadioGroup'
 
 export const severityOptions = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']
@@ -29,6 +31,7 @@ interface IProps {
 }
 
 export default function CreateBugForm({ setIsUpload }: IProps): JSX.Element {
+  const [play] = useSound(sendSound)
   const { control, handleSubmit, register } = useForm()
   const {
     selectedWebsite,
@@ -62,6 +65,7 @@ export default function CreateBugForm({ setIsUpload }: IProps): JSX.Element {
     ],
 
     onCompleted: (data) => {
+      play()
       toast({
         title: 'Bug sent.',
         description: 'Thanks for this report.',
