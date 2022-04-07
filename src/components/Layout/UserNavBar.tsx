@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import DcTm from 'src/static/svg/DcTm'
 import useAppState from 'src/hooks/useAppState'
 import { useNavigate } from 'react-router-dom'
+import { useLogoutMutation } from 'src/generated/graphql'
 import useOnClickOutside from '../Hook/UseOnClickOutside'
 
 const MotionFLex = motion(Flex)
@@ -40,6 +41,8 @@ const UserNavBar = (): JSX.Element => {
   const navigate = useNavigate()
   const ref = useRef(null)
 
+  const [logout] = useLogoutMutation()
+
   const variants = {
     open: { width: '12%', backgroundColor: '#24323F' },
     closed: { width: '66px', backgroundColor: '#24323F' },
@@ -47,7 +50,12 @@ const UserNavBar = (): JSX.Element => {
 
   const handleClickOutside = () => setIsHover(false)
 
-  const handleClickTogle = () => setIsHover((c) => !c)
+  const handleClickToggle = () => setIsHover((c) => !c)
+
+  const handleLogout = async () => {
+    await logout()
+    dispatchLogout()
+  }
 
   useOnClickOutside(ref, handleClickOutside)
 
@@ -57,7 +65,7 @@ const UserNavBar = (): JSX.Element => {
       fontFamily="Poppins"
       variant="solid"
       whileHover={{ backgroundColor: `${isHover ? '#24323F' : '#30475B'}` }}
-      onClick={handleClickTogle}
+      onClick={handleClickToggle}
       variants={variants}
       animate={isHover ? 'open' : 'closed'}
       closed={isHover ? 'closed' : 'open'}
@@ -149,7 +157,7 @@ const UserNavBar = (): JSX.Element => {
             >
               <Text
                 cursor="pointer"
-                onClick={() => dispatchLogout()}
+                onClick={handleLogout}
                 textAlign="right"
                 flexWrap="nowrap"
                 fontWeight="bold"
