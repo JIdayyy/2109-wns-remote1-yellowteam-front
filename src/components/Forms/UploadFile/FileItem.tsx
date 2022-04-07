@@ -19,7 +19,7 @@ export default function CustomFileItem({
   return (
     <Box position="relative">
       {fileOnUpload === fle.id && !!progress && (
-        <Progress isIndeterminate hasStripe value={progress} />
+        <Progress hasStripe value={progress} />
       )}
       {uploadSucces.find((item) => item === fle.file.name) && (
         <Image
