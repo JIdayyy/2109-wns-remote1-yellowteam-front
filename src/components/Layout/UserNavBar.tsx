@@ -18,21 +18,21 @@ const navLinks = [
     path: '/',
     newTab: false,
   },
-  // {
-  //   name: 'Reports',
-  //   path: '/',
-  //   newTab: false,
-  // },
+  {
+    name: 'API',
+    path: '/api',
+    newTab: false,
+  },
   // {
   //   name: 'Features',
   //   path: '/features',
   //   newTab: false,
   // },
-  // {
-  //   name: 'Documentation',
-  //   path: 'https://my-website-two-chi.vercel.app/docs/intro',
-  //   newTab: true,
-  // },
+  {
+    name: 'Documentation',
+    path: 'https://my-website-two-chi.vercel.app/docs/intro',
+    newTab: true,
+  },
 ]
 
 const UserNavBar = (): JSX.Element => {
