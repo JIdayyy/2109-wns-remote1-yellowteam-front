@@ -17,6 +17,7 @@ import { useState } from 'react'
 export default function BugListFilters(): JSX.Element {
   const { data, loading } = useGetAllWebSitesQuery()
   const { dispatchSearchedWebsite } = useSearchState()
+
   const [selectedWebsite, setSelectedWebsite] = useState<string | null>()
 
   return (
@@ -24,7 +25,7 @@ export default function BugListFilters(): JSX.Element {
       <Stack spacing={4} w="100%">
         <Menu isLazy size="sm">
           <MenuButton
-            loading={loading.toString()}
+            loading={loading}
             backgroundColor="transparent"
             as={Button}
             border="1px solid #24323F"

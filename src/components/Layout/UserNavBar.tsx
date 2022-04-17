@@ -19,7 +19,7 @@ const navLinks = [
     newTab: false,
   },
   {
-    name: 'API',
+    name: 'Seettings',
     path: '/api',
     newTab: false,
   },
@@ -44,7 +44,7 @@ const UserNavBar = (): JSX.Element => {
   const [logout] = useLogoutMutation()
 
   const variants = {
-    open: { width: '12%', backgroundColor: '#24323F' },
+    open: { width: '200px', backgroundColor: '#24323F' },
     closed: { width: '66px', backgroundColor: '#24323F' },
   }
 
@@ -189,7 +189,7 @@ const UserNavBar = (): JSX.Element => {
               px={4}
               transition={{ delay: 0.1 }}
               fontWeight="bold"
-              w="100%"
+              w="full"
               textalign="left"
             >
               DC BUG REPORT

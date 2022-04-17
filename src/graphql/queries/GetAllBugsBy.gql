@@ -1,8 +1,17 @@
 query GetAllBugsBy(
   $orderBy: [BugOrderByWithRelationInput!]
   $where: BugWhereInput!
+  $take: Int
+  $skip: Int
+  $cursor: BugWhereUniqueInput
 ) {
-  bugs(orderBy: $orderBy, where: $where) {
+  bugs(
+    orderBy: $orderBy
+    where: $where
+    skip: $skip
+    take: $take
+    cursor: $cursor
+  ) {
     id
     created_at
     status

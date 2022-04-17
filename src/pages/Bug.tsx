@@ -7,8 +7,10 @@ export default function Bug(): JSX.Element {
     <Flex
       justifyContent="flex-start"
       alignItems="flex-start"
-      direction="column"
-      w="100%"
+      direction="row"
+      w="full"
+      h="full"
+      position="fixed"
     >
       <BugList />
 

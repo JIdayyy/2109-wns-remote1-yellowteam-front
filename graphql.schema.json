@@ -6464,18 +6464,6 @@
             "deprecationReason": null
           },
           {
-            "name": "number",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "IntFieldUpdateOperationsInput",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "priority",
             "description": null,
             "type": {
@@ -6600,18 +6588,6 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "StringFieldUpdateOperationsInput",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "number",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "IntFieldUpdateOperationsInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -7867,18 +7843,6 @@
             "deprecationReason": null
           },
           {
-            "name": "number",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "IntFieldUpdateOperationsInput",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "priority",
             "description": null,
             "type": {
@@ -8046,18 +8010,6 @@
             "deprecationReason": null
           },
           {
-            "name": "number",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "IntFieldUpdateOperationsInput",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "priority",
             "description": null,
             "type": {
@@ -8218,18 +8170,6 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "StringFieldUpdateOperationsInput",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "number",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "IntFieldUpdateOperationsInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -8416,18 +8356,6 @@
             "deprecationReason": null
           },
           {
-            "name": "number",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "IntFieldUpdateOperationsInput",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "priority",
             "description": null,
             "type": {
@@ -8576,18 +8504,6 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "StringFieldUpdateOperationsInput",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "number",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "IntFieldUpdateOperationsInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -9245,6 +9161,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "number",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
               "ofType": null
             },
             "defaultValue": null,

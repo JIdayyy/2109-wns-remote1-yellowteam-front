@@ -1,5 +1,4 @@
 import { Flex, Text } from '@chakra-ui/react'
-import React from 'react'
 import Card from './Card'
 
 const CardList: ICard[] = [
@@ -7,11 +6,13 @@ const CardList: ICard[] = [
     id: '1',
     title: 'Add a new website',
     button: 'ADD WEBSITE',
+    modal: 'AddWebsiteModal',
   },
   {
     id: '2',
     title: 'Redeem your API token',
     button: 'GET SECRET TOKEN',
+    modal: 'RedeemTokenModal',
   },
 ]
 

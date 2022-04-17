@@ -29,6 +29,7 @@ const componentsExtents = {
     Button: {
       // 1. We can update the base styles
       baseStyle: {
+        bg: 'black',
         fontWeight: 'bold', // Normally, it is "semibold"
       },
       // 2. We can add a new button size or extend existing

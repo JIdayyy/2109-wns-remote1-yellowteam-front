@@ -19,12 +19,6 @@ export default function Home(): JSX.Element {
       overflowY="scroll"
     >
       <BugList />
-      {/* <Box pl="400px">
-        <Box rounded={2} m={10} shadow="md" p={10} bgColor="white">
-          <CutomDonutChart />
-        </Box>
-        <LineChart />
-      </Box> */}
     </Box>
   )
 }
