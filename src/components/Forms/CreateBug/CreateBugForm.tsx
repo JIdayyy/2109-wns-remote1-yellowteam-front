@@ -10,17 +10,11 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import update from 'immutability-helper'
-
 import { FieldValues, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import {
-  GetAllBugsByDocument,
-  SortOrder,
-  useCreateCustomBugMutation,
-} from 'src/generated/graphql'
+import { useCreateCustomBugMutation } from 'src/generated/graphql'
 import useAppState from 'src/hooks/useAppState'
 import useCreateBugState from 'src/hooks/useCreateBugState'
-import useSearchState from 'src/hooks/useSearchState'
 import useUploadFileState from 'src/hooks/useUploadFileState'
 import customScrollBar from 'src/theme/scrollbar'
 import useSound from 'use-sound'
@@ -37,7 +31,6 @@ interface IProps {
 export default function CreateBugForm({ setIsUpload }: IProps): JSX.Element {
   const [play] = useSound(sendSound)
   const { control, handleSubmit, register } = useForm()
-  const { website } = useSearchState()
   const {
     selectedWebsite,
     selectedCategory,
@@ -54,29 +47,7 @@ export default function CreateBugForm({ setIsUpload }: IProps): JSX.Element {
     navigate('/login')
   }
 
-  // const queryVariables = {
-  //   orderBy: {
-  //     number: 'desc' as SortOrder,
-  //   },
-  //   where: {
-  //     Website: {
-  //       is: {
-  //         id: {
-  //           equals: website || undefined,
-  //         },
-  //       },
-  //     },
-  //   },
-  // }
-
   const [mutate, { loading }] = useCreateCustomBugMutation({
-    // refetchQueries: [
-    //   {
-    //     query: GetAllBugsByDocument,
-    //     variables: queryVariables,
-    //   },
-    // ],
-
     updateQueries: {
       bugs: (prev, { mutationResult }) => {
         const newBug = mutationResult.data?.createBugCustom

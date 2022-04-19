@@ -33,9 +33,6 @@ export default function BugList(): JSX.Element {
         },
       },
     },
-    onError(error) {
-      console.log(error)
-    },
   })
 
   useEffect(() => {

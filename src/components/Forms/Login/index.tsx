@@ -2,9 +2,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Button, Flex, FormControl, Input, Text } from '@chakra-ui/react'
 import { FieldValues, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { useNavigate } from 'react-router-dom'
 import useAppState from 'src/hooks/useAppState'
 import { useMutateLoginMutation } from '../../../generated/graphql'
+import loginSchema from '../Resolvers/login.resolver.shema'
+import FormError from '../InputError'
 
 export default function LoginForm(): JSX.Element {
   const navigate = useNavigate()
@@ -22,7 +25,11 @@ export default function LoginForm(): JSX.Element {
     },
   })
 
-  const { handleSubmit, register } = useForm()
+  const { handleSubmit, register, formState } = useForm({
+    resolver: yupResolver(loginSchema),
+    criteriaMode: 'all',
+  })
+  console.log(formState.errors)
 
   const onSubmit = async ({ email, password }: FieldValues): Promise<void> => {
     login({
@@ -43,19 +50,30 @@ export default function LoginForm(): JSX.Element {
       </Text>
       <FormControl p={10} w={['90%', '80%', '80%', '80%']}>
         <Input
+          autoComplete="email"
           id="emaillogin"
           placeholder="Email"
           my={1}
           type="text"
           {...register('email')}
         />
+        <FormError name="email" errors={formState.errors} />
+
         <Input
+          autoComplete="password"
+          onKeyPress={(event) => {
+            if (event.key === 'Enter') {
+              event.preventDefault()
+              handleSubmit(onSubmit)()
+            }
+          }}
           id="passwordlogin"
           placeholder="Password"
           my={1}
           type="password"
           {...register('password')}
         />
+        <FormError name="password" errors={formState.errors} />
       </FormControl>
       <Button
         my={3}

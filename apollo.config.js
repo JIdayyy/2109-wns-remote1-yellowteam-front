@@ -1,8 +1,8 @@
 module.exports = {
   client: {
     service: {
-      name: "YTask",
+      name: 'dcbugreport',
       url: process.env.REACT_APP_SERVER_URL,
     },
   },
-};
+}

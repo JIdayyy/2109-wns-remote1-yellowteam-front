@@ -19,7 +19,7 @@ const navLinks = [
     newTab: false,
   },
   {
-    name: 'Seettings',
+    name: 'Settings',
     path: '/api',
     newTab: false,
   },

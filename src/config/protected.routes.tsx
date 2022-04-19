@@ -22,11 +22,11 @@ const routes: RouteObject[] = [
         element: <Bug />,
       },
       { path: '*', element: <NoMatchPage /> },
+      {
+        path: '/api',
+        element: <Api />,
+      },
     ],
-  },
-  {
-    path: '/api',
-    element: <Api />,
   },
   {
     path: '/login',
