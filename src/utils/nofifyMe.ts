@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const img = '/to-do-notifications/img/icon-128.png'
 const text = `HEY! Your task "test" is now overdue.`
 const notificationBody = new Notification('To do list', {
