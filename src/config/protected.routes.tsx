@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Navigate, RouteObject, useRoutes } from 'react-router-dom'
-import CreateFeature from 'src/components/Forms/CreateFeature'
 import Layout from 'src/components/Layout'
-import FeaturesLayout from 'src/components/Layout/FeaturesLayout'
 import WebSiteList from 'src/components/List/WebSiteList'
-import AddFeaturePage from 'src/pages/AddFeaturePage'
+import Api from 'src/pages/Api'
 import Bug from 'src/pages/Bug'
-import Features from 'src/pages/Features'
 import NoMatchPage from 'src/pages/NoMatch'
 import Home from '../pages/Home'
 
@@ -25,16 +22,10 @@ const routes: RouteObject[] = [
         element: <Bug />,
       },
       { path: '*', element: <NoMatchPage /> },
-    ],
-  },
-  {
-    path: '/features',
-    element: <FeaturesLayout />,
-    children: [
-      { element: <Features />, index: true },
-      { element: <AddFeaturePage />, path: '/features/commit' },
-      { element: <CreateFeature />, path: '/features/commit/:id' },
-      { path: '*', element: <NoMatchPage /> },
+      {
+        path: '/api',
+        element: <Api />,
+      },
     ],
   },
   {

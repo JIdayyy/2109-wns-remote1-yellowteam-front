@@ -7,6 +7,7 @@ import colors from './foundations/colors'
 import componentsExtents from './components/index'
 
 import fontSizes from './foundations/fontSizes'
+
 import mainTheme from '../../../theme/mainTheme'
 
 /**
@@ -19,7 +20,7 @@ import mainTheme from '../../../theme/mainTheme'
 const overrides = {
   ...styles,
   ...componentsExtents,
-  componentsExtents,
+  // componentsExtents,
   colors,
   fontSizes,
   ...mainTheme,

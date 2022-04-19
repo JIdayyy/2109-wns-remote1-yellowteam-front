@@ -18,21 +18,21 @@ const navLinks = [
     path: '/',
     newTab: false,
   },
-  // {
-  //   name: 'Reports',
-  //   path: '/',
-  //   newTab: false,
-  // },
+  {
+    name: 'Settings',
+    path: '/api',
+    newTab: false,
+  },
   // {
   //   name: 'Features',
   //   path: '/features',
   //   newTab: false,
   // },
-  // {
-  //   name: 'Documentation',
-  //   path: 'https://my-website-two-chi.vercel.app/docs/intro',
-  //   newTab: true,
-  // },
+  {
+    name: 'Documentation',
+    path: 'https://my-website-two-chi.vercel.app/docs/intro',
+    newTab: true,
+  },
 ]
 
 const UserNavBar = (): JSX.Element => {
@@ -44,7 +44,7 @@ const UserNavBar = (): JSX.Element => {
   const [logout] = useLogoutMutation()
 
   const variants = {
-    open: { width: '12%', backgroundColor: '#24323F' },
+    open: { width: '200px', backgroundColor: '#24323F' },
     closed: { width: '66px', backgroundColor: '#24323F' },
   }
 
@@ -189,7 +189,7 @@ const UserNavBar = (): JSX.Element => {
               px={4}
               transition={{ delay: 0.1 }}
               fontWeight="bold"
-              w="100%"
+              w="full"
               textalign="left"
             >
               DC BUG REPORT

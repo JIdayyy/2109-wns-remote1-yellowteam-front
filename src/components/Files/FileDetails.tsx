@@ -27,20 +27,28 @@ export default function FileDetails({ file, isDetails }: IProps): JSX.Element {
   return (
     <>
       {isDetails === file.id && (
-        <Flex p={5} justifyContent="space-between" alignItems="center" w="100%">
+        <Flex
+          px={2}
+          py={4}
+          justifyContent="space-between"
+          fontSize="xs"
+          alignItems="center"
+          w="100%"
+        >
           <Stack spacing={2}>
             <Flex>
-              <Text color="#24323F">Uploaded by :</Text>
-              <Text>{file.name}</Text>
+              <Text color="#24323F">Uploaded by: </Text>
+              <Text mx={2}>
+                {file.user.first_name} {file.user.last_name}
+              </Text>
             </Flex>
             <Flex>
               <Text color="#24323F">Date :</Text>
-              <Text>{file.created_at}</Text>
+              <Text mx={2}>{file.created_at}</Text>
             </Flex>
           </Stack>
-          <Stack spacing={2}>
+          <Stack spacing={1}>
             <Button
-              mx={1}
               size="sm"
               color="white"
               rounded={4}
