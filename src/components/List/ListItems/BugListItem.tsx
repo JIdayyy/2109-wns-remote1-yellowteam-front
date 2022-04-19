@@ -75,7 +75,9 @@ export default function BugListItem({ bug }: Props): JSX.Element {
             backgroundColor={chipColor()}
           />
         </Box>
-        <Text textStyle="cardBold">#{bug.number}</Text>
+        <Text textStyle="cardBold" fontWeight="normal">
+          #{bug.number}
+        </Text>
       </Flex>
     </Box>
   )

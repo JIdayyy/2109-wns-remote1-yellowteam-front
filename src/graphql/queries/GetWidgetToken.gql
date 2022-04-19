@@ -1,0 +1,5 @@
+query getWidgetToken($where: WebsiteWhereUniqueInput!) {
+  widgetToken(where: $where) {
+    widget_token
+  }
+}

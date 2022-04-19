@@ -2,7 +2,6 @@
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/react'
 import { ApolloProvider } from '@apollo/client'
-import { CookiesProvider } from 'react-cookie'
 
 import theme from './definitions/chakra/theme'
 import RequireAuth from './components/RequireAuth/RequireAuth'
@@ -13,17 +12,15 @@ import customClient from './services/graphql'
 
 function App(): JSX.Element {
   return (
-    <CookiesProvider>
-      <ApolloProvider client={customClient}>
-        <ChakraProvider theme={theme}>
-          <Router>
-            <RequireAuth>
-              <ProtectedRoutes />
-            </RequireAuth>
-          </Router>
-        </ChakraProvider>
-      </ApolloProvider>
-    </CookiesProvider>
+    <ApolloProvider client={customClient}>
+      <ChakraProvider theme={theme}>
+        <Router>
+          <RequireAuth>
+            <ProtectedRoutes />
+          </RequireAuth>
+        </Router>
+      </ChakraProvider>
+    </ApolloProvider>
   )
 }
 

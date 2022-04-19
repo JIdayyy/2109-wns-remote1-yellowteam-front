@@ -5,7 +5,7 @@ import AddComment from './AddComment'
 
 export default function CommentsModule(): JSX.Element {
   return (
-    <Flex direction="column" my={10}>
+    <Flex minH="400px" direction="column" my={10}>
       <AddComment />
       <CommentList />
     </Flex>

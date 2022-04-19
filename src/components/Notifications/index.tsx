@@ -6,6 +6,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Spinner,
   Text,
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
@@ -48,13 +49,7 @@ export default function Notifications(): JSX.Element {
 
   useEffect(() => {
     setSelectedNotification(
-      `NOTIFICATIONS 🔔${
-        loading
-          ? 'Loading...'
-          : `(${
-              data?.notifications.filter((item) => item.isRead === false).length
-            })`
-      }`
+      `🔔${data?.notifications.filter((item) => item.isRead === false).length}`
     )
   }, [loading, data, notificationsMutationResponse])
 
@@ -70,7 +65,7 @@ export default function Notifications(): JSX.Element {
         _expanded={{ bg: 'blue.400' }}
         _focus={{ boxShadow: 'outline' }}
       >
-        {selectedNotification}
+        {loading ? <Spinner /> : selectedNotification}
       </MenuButton>
 
       <MenuList
@@ -123,6 +118,12 @@ export default function Notifications(): JSX.Element {
                       isRead: {
                         set: true,
                       },
+                    },
+                  },
+                  optimisticResponse: {
+                    updateNotification: {
+                      ...notification,
+                      isRead: true,
                     },
                   },
                 })

@@ -1,13 +1,13 @@
-import { Button, Text } from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom'
+import { Button, Text, useDisclosure } from '@chakra-ui/react'
 import AddNewReport from 'src/static/svg/AddNewReport'
+import CreateBugModal from '../Modals/CreateBug.modal'
 
 export default function AddBugButton(): JSX.Element {
-  const navigation = useNavigate()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <Button
-      onClick={() => navigation('/createbug')}
+      onClick={onOpen}
       display="flex"
       justifyContent="flex-start"
       color="white"
@@ -17,6 +17,8 @@ export default function AddBugButton(): JSX.Element {
       px={4}
     >
       <AddNewReport />
+      <CreateBugModal isOpen={isOpen} onClose={onClose} />
+
       <Text mx={4}>Report a new bug</Text>
     </Button>
   )

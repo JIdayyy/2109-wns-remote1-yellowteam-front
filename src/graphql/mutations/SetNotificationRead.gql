@@ -4,5 +4,6 @@ mutation SetNotificationRead(
 ) {
   updateNotification(where: $where, data: $data) {
     id
+    isRead
   }
 }
