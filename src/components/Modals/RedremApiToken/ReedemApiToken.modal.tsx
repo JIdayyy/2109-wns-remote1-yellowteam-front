@@ -8,17 +8,20 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react'
-import AddWebsiteForm from '../Forms/AddWebsite'
+import { useState } from 'react'
+import WebsitesTable from '../../Tables/Websites.table'
+import TokenField from './TokenField'
 
 interface IProps {
   isOpen: boolean
   onClose: () => void
 }
 
-export default function AddWebsiteModal({
+export default function ReedemApiToken({
   isOpen,
   onClose,
 }: IProps): JSX.Element {
+  const [checkedItem, setCheckedItem] = useState<string | undefined>()
   return (
     <Modal size="4xl" isCentered isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -29,7 +32,7 @@ export default function AddWebsiteModal({
           justifyContent="space-between"
           backgroundColor="darkBlueCustom"
         >
-          <Text color="white">Add a website</Text>
+          <Text color="white">Reedem your widget token</Text>
 
           <Button
             backgroundColor="redClose"
@@ -42,7 +45,11 @@ export default function AddWebsiteModal({
           </Button>
         </ModalHeader>
         <ModalBody>
-          <AddWebsiteForm onClose={onClose} />
+          <WebsitesTable
+            checkedItem={checkedItem}
+            setCheckedItem={setCheckedItem}
+          />
+          <TokenField websiteId={checkedItem} />
         </ModalBody>
       </ModalContent>
     </Modal>

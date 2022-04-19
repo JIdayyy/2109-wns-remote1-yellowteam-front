@@ -9,9 +9,9 @@ import {
   Textarea,
   useToast,
 } from '@chakra-ui/react'
-import update from 'immutability-helper'
 import { FieldValues, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import useLocalStorage from 'src/components/Hook/useLocalStorage'
 import { useCreateCustomBugMutation } from 'src/generated/graphql'
 import useAppState from 'src/hooks/useAppState'
 import useCreateBugState from 'src/hooks/useCreateBugState'
@@ -29,7 +29,11 @@ interface IProps {
 }
 
 export default function CreateBugForm({ setIsUpload }: IProps): JSX.Element {
-  const [play] = useSound(sendSound)
+  const [isMute] = useLocalStorage('isMute', false)
+  const [play] = useSound(sendSound, {
+    volume: 0.5,
+    soundEnabled: !isMute,
+  })
   const { control, handleSubmit, register } = useForm()
   const {
     selectedWebsite,
@@ -48,19 +52,6 @@ export default function CreateBugForm({ setIsUpload }: IProps): JSX.Element {
   }
 
   const [mutate, { loading }] = useCreateCustomBugMutation({
-    updateQueries: {
-      bugs: (prev, { mutationResult }) => {
-        const newBug = mutationResult.data?.createBugCustom
-
-        return update(prev, {
-          entry: {
-            bugs: {
-              $unshift: [newBug],
-            },
-          },
-        })
-      },
-    },
     onCompleted: (data) => {
       play()
       toast({
@@ -105,6 +96,38 @@ export default function CreateBugForm({ setIsUpload }: IProps): JSX.Element {
           },
         },
       },
+      // update: (cache) => {
+      //   cache.modify({
+      //     fields: {
+      //       bugs(existingbugs = []) {
+      //         return [
+      //           ...existingbugs,
+      //           {
+      //             ...data,
+      //             Category: {
+      //               connect: {
+      //                 id: selectedCategory,
+      //               },
+      //             },
+      //             description: data.description,
+      //             title: data.title,
+      //             severity: data.severity,
+      //             Website: {
+      //               connect: {
+      //                 id: selectedWebsite,
+      //               },
+      //             },
+      //             user: {
+      //               connect: {
+      //                 id: user.id,
+      //               },
+      //             },
+      //           },
+      //         ]
+      //       },
+      //     },
+      //   })
+      // },
     })
   }
 

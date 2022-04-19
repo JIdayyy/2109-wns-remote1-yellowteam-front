@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom'
 import UserNavBar from './UserNavBar'
 import Header from './Header'
 import NavBar from './NavBar'
+import MuteButtonPortal from '../Assets/MuteButton'
 
 export default function Layout(): JSX.Element {
   return (
@@ -16,6 +17,7 @@ export default function Layout(): JSX.Element {
       zIndex={20}
     >
       <UserNavBar />
+      <MuteButtonPortal />
       <Box pl="60px" zIndex={20} width="full" height="full">
         <Header />
         <NavBar />

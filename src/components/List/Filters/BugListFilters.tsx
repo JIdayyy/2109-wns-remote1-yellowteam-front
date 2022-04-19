@@ -1,6 +1,7 @@
 import {
   Button,
   Flex,
+  Image,
   Menu,
   MenuButton,
   MenuItem,
@@ -35,12 +36,12 @@ export default function BugListFilters(): JSX.Element {
             width="100%"
           >
             {selectedWebsite ? (
-              <Flex justifyContent="flex-start" alignItems="center">
+              <Flex p={5} justifyContent="flex-start" alignItems="center">
                 <WorldIcon />
                 <Text mx={4}>{selectedWebsite}</Text>
               </Flex>
             ) : (
-              <Flex justifyContent="flex-start" alignItems="center">
+              <Flex p={2} justifyContent="flex-start" alignItems="center">
                 <WorldIcon />
                 <Text mx={4}>All websites</Text>
               </Flex>
@@ -52,6 +53,8 @@ export default function BugListFilters(): JSX.Element {
             </MenuItem>
             {data?.websites.map((w) => (
               <MenuItem
+                display="flex"
+                justifyContent="space-between"
                 onClick={() => {
                   dispatchSearchedWebsite(w.id)
                   setSelectedWebsite(w.name)
@@ -60,6 +63,7 @@ export default function BugListFilters(): JSX.Element {
                 width="100%"
               >
                 {w.name}
+                <Image mx={2} w={5} h={5} src={w.logo} />
               </MenuItem>
             ))}
           </MenuList>

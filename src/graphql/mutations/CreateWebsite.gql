@@ -1,0 +1,9 @@
+mutation createWebsite($data: WebsiteCreateInput!) {
+  createWebsite(data: $data) {
+    id
+    name
+    url
+    logo
+    isPreview
+  }
+}

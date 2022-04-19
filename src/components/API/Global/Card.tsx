@@ -1,5 +1,4 @@
 import { Button, Flex, Text, useDisclosure } from '@chakra-ui/react'
-import AddWebsiteModal from 'src/components/Modals/AddWebsite.modal'
 
 interface IProps {
   card: ICard
@@ -22,7 +21,7 @@ export default function Card({ card }: IProps): JSX.Element {
       <Button onClick={onOpen} bg="#24323F" color="white">
         {card.button}
       </Button>
-      <AddWebsiteModal onClose={onClose} isOpen={isOpen} />
+      <card.modal isOpen={isOpen} onClose={onClose} />
     </Flex>
   )
 }

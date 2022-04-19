@@ -9,9 +9,14 @@ import useSound from 'use-sound'
 import CreateBugModal from '../Modals/CreateBug.modal'
 import Notifications from '../Notifications'
 import notificationSound from '../../static/sounds/bell.mp3'
+import useLocalStorage from '../Hook/useLocalStorage'
 
 const NavBar = (): JSX.Element => {
-  const [play] = useSound(notificationSound)
+  const [isMute] = useLocalStorage('isMute', false)
+  const [play] = useSound(notificationSound, {
+    volume: 0.5,
+    soundEnabled: !isMute,
+  })
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const toast = useToast()

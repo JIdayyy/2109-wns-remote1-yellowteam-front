@@ -12,10 +12,8 @@ import { useParams } from 'react-router-dom'
 import { useGetBugDatasQuery } from 'src/generated/graphql'
 import customScrollbar from 'src/theme/customScrollbar'
 import upperCaseFirstLetter from 'src/utils/upperCaseFirstLetter'
-import UserCard from '../Assets/UserCard'
 import CommentsModule from '../Comments'
 import FilesTable from '../Files'
-import CategoryCard from '../List/ListItems/Category.card'
 import BugInfoChip from './BugPriority'
 
 const backgroundColor = (children: string): string => {
@@ -83,8 +81,8 @@ export default function ReportModule(): JSX.Element {
       marginLeft="250px"
       rounded="md"
       backgroundColor="white"
-      px={[5, 10, 20, 40]}
-      py={[5, 10, 10, 20]}
+      px={[20, 20, 20, 20]}
+      py={[10, 10, 10, 20]}
       css={customScrollbar}
       overflowY="auto"
       h="full"
@@ -139,7 +137,7 @@ export default function ReportModule(): JSX.Element {
         my={10}
         width="30%"
         justifyContent="space-between"
-        direction="row"
+        direction={['column', 'column', 'column', 'row']}
         alignItems="center"
       >
         <BugInfoChip name="priority" priority={data.bug.priority} />
