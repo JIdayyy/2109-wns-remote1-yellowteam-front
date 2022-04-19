@@ -25,7 +25,7 @@ export default function BugListFilters(): JSX.Element {
       <Stack spacing={4} w="100%">
         <Menu isLazy size="sm">
           <MenuButton
-            loading={loading}
+            loading={loading.toString()}
             backgroundColor="transparent"
             as={Button}
             border="1px solid #24323F"

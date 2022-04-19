@@ -83,8 +83,8 @@ export default function ReportModule(): JSX.Element {
       marginLeft="250px"
       rounded="md"
       backgroundColor="white"
-      px={40}
-      py={20}
+      px={[5, 10, 20, 40]}
+      py={[5, 10, 10, 20]}
       css={customScrollbar}
       overflowY="auto"
       h="full"
@@ -116,9 +116,9 @@ export default function ReportModule(): JSX.Element {
             />
           </Flex>
         </Stack>
-        <Stack spacing={2}>
-          <Text textStyle="h1" fontWeight="bold">
-            Bug# {data?.bug.number}
+        <Stack spacing={3}>
+          <Text textStyle="h1" fontWeight="normal">
+            Ticket #{data?.bug.number}
           </Text>
           <Box
             display="flex"
@@ -147,15 +147,19 @@ export default function ReportModule(): JSX.Element {
       </Flex>
 
       <Flex width="full" justifyContent="space-between" direction="column">
-        <Flex direction="row" my={5}>
-          <Text>Category :</Text>
+        <Flex w="full" direction="row" alignItems="center" my={5}>
+          <Text textStyle="h1" fontWeight="normal">
+            Category :
+          </Text>
 
           <Text mx={2}>
             {data?.bug.Category ? data?.bug.Category.name : 'no category'}
           </Text>
         </Flex>
         <Flex direction="column" my={5}>
-          <Text>Description</Text>
+          <Text textStyle="h1" fontWeight="normal">
+            Description
+          </Text>
           <Text>{data?.bug.description}</Text>
         </Flex>
       </Flex>

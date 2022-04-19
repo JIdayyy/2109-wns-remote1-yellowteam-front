@@ -57,15 +57,19 @@ export default function UploadFile({
     }
     const data = () =>
       axios
-        .post(`${serverUrl}?userId=${user.id}&bugId=${bugId}`, formData, {
-          ...config,
-          onUploadProgress: (progressEvent) => {
-            const { loaded, total } = progressEvent
-            setFileOnUpload(oneFile.id)
+        .post(
+          `${serverUrl}?userId=${user.id}&bugId=${bugId}&size=${oneFile.file.size}`,
+          formData,
+          {
+            ...config,
+            onUploadProgress: (progressEvent) => {
+              const { loaded, total } = progressEvent
+              setFileOnUpload(oneFile.id)
 
-            setProgress((loaded / total) * 100)
-          },
-        })
+              setProgress((loaded / total) * 100)
+            },
+          }
+        )
         .then(async (r) => {
           if (r.data.data.uploadFile) {
             toast({

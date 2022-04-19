@@ -27,7 +27,13 @@ export default function FileDetails({ file, isDetails }: IProps): JSX.Element {
   return (
     <>
       {isDetails === file.id && (
-        <Flex p={5} justifyContent="space-between" alignItems="center" w="100%">
+        <Flex
+          p={5}
+          justifyContent="space-between"
+          fontSize="xs"
+          alignItems="center"
+          w="100%"
+        >
           <Stack spacing={2}>
             <Flex>
               <Text color="#24323F">Uploaded by :</Text>
