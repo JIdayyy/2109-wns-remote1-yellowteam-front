@@ -27,7 +27,7 @@ export default function CreateBugModal({
   const [checkedItem, setCheckedItem] = useState<string | undefined>()
 
   return (
-    <Modal size="4xl" isOpen={isOpen} onClose={onClose}>
+    <Modal size="4xl" variant="solid" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader

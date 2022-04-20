@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  useColorMode,
-  useDisclosure,
-  useToast,
-} from '@chakra-ui/react'
+import { Box, Button, useDisclosure, useToast } from '@chakra-ui/react'
 import {
   GetAllBugsByDocument,
   GetAllNotificationsDocument,
@@ -18,8 +12,6 @@ import notificationSound from '../../static/sounds/bell.mp3'
 import useLocalStorage from '../Hook/useLocalStorage'
 
 const NavBar = (): JSX.Element => {
-  const { colorMode, toggleColorMode } = useColorMode()
-
   const [isMute] = useLocalStorage('isMute', false)
   const [play] = useSound(notificationSound, {
     volume: 0.5,
@@ -68,9 +60,9 @@ const NavBar = (): JSX.Element => {
       <Button variant="action" mx={2} onClick={onOpen}>
         Report a new Bug 🐛
       </Button>
-      <Button variant="action" onClick={toggleColorMode}>
+      {/* <Button variant="action" onClick={toggleColorMode}>
         Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
-      </Button>
+      </Button> */}
       <CreateBugModal isOpen={isOpen} onClose={onClose} />
       <Notifications />
     </Box>

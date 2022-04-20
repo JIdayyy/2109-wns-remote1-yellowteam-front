@@ -4,7 +4,6 @@ import {
   Flex,
   Image,
   Button,
-  Link,
   SkeletonText,
   Text,
 } from '@chakra-ui/react'
@@ -15,6 +14,7 @@ import { useParams } from 'react-router-dom'
 import { useGetAllFilesByBugQuery } from 'src/generated/graphql'
 import FileDetails from '../Files/FileDetails'
 import Fold from '../../static/img/fold.png'
+import CustomBox from '../UI/CustomBox'
 
 const MotionFlex = motion(Flex)
 
@@ -41,7 +41,7 @@ export default function FilesList(): JSX.Element {
   }
 
   return (
-    <Box
+    <CustomBox
       minH="100px"
       maxH="500px"
       overflowY="scroll"
@@ -64,10 +64,10 @@ export default function FilesList(): JSX.Element {
             <MotionFlex
               p={2}
               whileHover={{ backgroundColor: '#F2F2F2' }}
-              width="100%"
+              // width="full"
               alignItems="center"
             >
-              <Flex width="100%">
+              <Flex flexGrow={2} minW="-moz-max-content" width="full">
                 <Image
                   src={file.path}
                   w={5}
@@ -75,11 +75,11 @@ export default function FilesList(): JSX.Element {
                   rounded="full"
                   fallbackSrc="https://via.placeholder.com/150"
                 />
-                <Link target="_blank" href={file.path} download>
-                  <Text mx={2} noOfLines={1} isTruncated textStyle="body">
-                    {file.name}
-                  </Text>
-                </Link>
+                {/* <Link target="_blank" href={file.path} download> */}
+                <Text flexGrow={1} mx={2} isTruncated textStyle="body">
+                  {file.name}
+                </Text>
+                {/* </Link> */}
               </Flex>
 
               <Text
@@ -130,6 +130,6 @@ export default function FilesList(): JSX.Element {
           <SkeletonText mt="2" noOfLines={1} spacing="4" />
         </Box>
       )}
-    </Box>
+    </CustomBox>
   )
 }

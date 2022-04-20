@@ -14,6 +14,7 @@ import AddBugButton from 'src/components/Report/AddBugButton'
 import WorldIcon from 'src/static/svg/WorldIcon'
 import useSearchState from 'src/hooks/useSearchState'
 import { useState } from 'react'
+import CustomBox from 'src/components/UI/CustomBox'
 
 export default function BugListFilters(): JSX.Element {
   const { data, loading } = useGetAllWebSitesQuery()
@@ -22,7 +23,7 @@ export default function BugListFilters(): JSX.Element {
   const [selectedWebsite, setSelectedWebsite] = useState<string | null>()
 
   return (
-    <Flex h="20%" w="100%" p={7} zIndex={11} backgroundColor="white">
+    <CustomBox h="20%" w="100%" p={7} zIndex={11}>
       <Stack spacing={4} w="100%">
         <Menu isLazy size="sm">
           <MenuButton
@@ -94,6 +95,6 @@ export default function BugListFilters(): JSX.Element {
         </Menu> */}
         <AddBugButton />
       </Stack>
-    </Flex>
+    </CustomBox>
   )
 }

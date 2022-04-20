@@ -19,7 +19,7 @@ export default function UploadFileModal({
   onClose,
 }: IProps): JSX.Element {
   return (
-    <Modal size="4xl" isOpen={isOpen} onClose={onClose}>
+    <Modal variant="solid" size="4xl" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader
