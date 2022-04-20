@@ -9,6 +9,7 @@ import {
   Textarea,
   useToast,
 } from '@chakra-ui/react'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { FieldValues, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import useLocalStorage from 'src/components/Hook/useLocalStorage'
@@ -19,24 +20,32 @@ import useUploadFileState from 'src/hooks/useUploadFileState'
 import customScrollBar from 'src/theme/scrollbar'
 import useSound from 'use-sound'
 import sendSound from '../../../static/sounds/send.mp3'
+import FormError from '../InputError'
 import RadioGroup from '../RadioGroup'
+import createBugSchema from '../Resolvers/createBug.resolver.schema'
 
 export const severityOptions = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']
 export const priorityOptions = ['LOW', 'MEDIUM', 'HIGH']
 
 interface IProps {
   setIsUpload: (value: boolean) => void
+  websiteId: string | undefined
 }
 
-export default function CreateBugForm({ setIsUpload }: IProps): JSX.Element {
+export default function CreateBugForm({
+  setIsUpload,
+  websiteId,
+}: IProps): JSX.Element {
   const [isMute] = useLocalStorage('isMute', false)
   const [play] = useSound(sendSound, {
     volume: 0.5,
     soundEnabled: !isMute,
   })
-  const { control, handleSubmit, register } = useForm()
+  const { control, handleSubmit, register, formState } = useForm({
+    criteriaMode: 'all',
+    resolver: yupResolver(createBugSchema),
+  })
   const {
-    selectedWebsite,
     selectedCategory,
     dispatchSelectedCategory,
     dispatchSelectedWebsite,
@@ -86,7 +95,7 @@ export default function CreateBugForm({ setIsUpload }: IProps): JSX.Element {
           severity: data.severity,
           Website: {
             connect: {
-              id: selectedWebsite,
+              id: websiteId,
             },
           },
           user: {
@@ -96,38 +105,6 @@ export default function CreateBugForm({ setIsUpload }: IProps): JSX.Element {
           },
         },
       },
-      // update: (cache) => {
-      //   cache.modify({
-      //     fields: {
-      //       bugs(existingbugs = []) {
-      //         return [
-      //           ...existingbugs,
-      //           {
-      //             ...data,
-      //             Category: {
-      //               connect: {
-      //                 id: selectedCategory,
-      //               },
-      //             },
-      //             description: data.description,
-      //             title: data.title,
-      //             severity: data.severity,
-      //             Website: {
-      //               connect: {
-      //                 id: selectedWebsite,
-      //               },
-      //             },
-      //             user: {
-      //               connect: {
-      //                 id: user.id,
-      //               },
-      //             },
-      //           },
-      //         ]
-      //       },
-      //     },
-      //   })
-      // },
     })
   }
 
@@ -137,7 +114,7 @@ export default function CreateBugForm({ setIsUpload }: IProps): JSX.Element {
         Please give a title to this bug :
       </FormLabel>
       <Input my={2} color="black" {...register('title')} placeholder="Title" />
-
+      <FormError name="title" errors={formState.errors} />
       <Text color="#747474" fontWeight="normal" fontSize={15}>
         What’s the severity :
       </Text>
@@ -169,10 +146,12 @@ export default function CreateBugForm({ setIsUpload }: IProps): JSX.Element {
         {...register('description')}
         placeholder="Description"
       />
+      <FormError name="description" errors={formState.errors} />
 
       <Button
         variant="solid"
-        backgroundColor="green"
+        w="full"
+        backgroundColor="#24323F"
         color="white"
         isLoading={loading}
         onClick={handleSubmit(onSubmit)}

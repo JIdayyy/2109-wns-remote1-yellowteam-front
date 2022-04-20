@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react'
 
 import { useGetAllWebSitesQuery } from 'src/generated/graphql'
+import customScrollbar from 'src/theme/customScrollbar'
 
 interface IProps {
   checkedItem: string | undefined
@@ -29,7 +30,7 @@ export default function WebsitesTable({
   if (!data) return <Text>No Website found</Text>
 
   return (
-    <TableContainer>
+    <TableContainer maxH="300px" overflowY="auto" sx={customScrollbar}>
       <Table variant="simple">
         <Thead>
           <Tr>

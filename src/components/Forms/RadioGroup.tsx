@@ -40,7 +40,7 @@ const RadioGroup: FC<{
       isInvalid={!!errors[name]}
       mb={6}
     >
-      <HStack {...group}>
+      <HStack {...group} spacing={4}>
         {options.map((value: string) => {
           const radio = getRadioProps({ value })
           return (
