@@ -1,6 +1,13 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
-import { Button, Flex, FormControl, Input, Text } from '@chakra-ui/react'
+import {
+  Button,
+  Flex,
+  FormControl,
+  Input,
+  Spinner,
+  Text,
+} from '@chakra-ui/react'
 import { FieldValues, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useNavigate } from 'react-router-dom'
@@ -14,7 +21,7 @@ export default function LoginForm(): JSX.Element {
 
   const { dispatchLogin } = useAppState()
 
-  const [login] = useMutateLoginMutation({
+  const [login, { loading }] = useMutateLoginMutation({
     onCompleted: (data) => {
       dispatchLogin(data.login)
       navigate('/')
@@ -78,11 +85,10 @@ export default function LoginForm(): JSX.Element {
       <Button
         my={3}
         w={['65%', '55%', '35%', '25%']}
-        backgroundColor="#24323F"
-        color="#ffffff"
+        variant="action"
         onClick={handleSubmit(onSubmit)}
       >
-        SIGN IN
+        {loading ? <Spinner /> : 'Sign In'}
       </Button>
     </Flex>
   )

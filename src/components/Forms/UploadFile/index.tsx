@@ -199,8 +199,7 @@ export default function UploadFile({
       <Button
         my={5}
         zIndex={30}
-        backgroundColor="#2F80EC"
-        color="white"
+        variant="action"
         onClick={() => uploadAllFiles()}
       >
         Upload

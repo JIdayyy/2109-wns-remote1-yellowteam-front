@@ -89,8 +89,7 @@ export default function AddWebsiteForm({ onClose }: IProps): JSX.Element {
         zIndex={30}
         isLoading={loading}
         w="full"
-        backgroundColor="#24323F"
-        color="white"
+        variant="action"
         onClick={handleSubmit(onSubmit)}
       >
         SUBMIT

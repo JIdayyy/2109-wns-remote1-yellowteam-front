@@ -86,6 +86,7 @@ const RadioCard: FC = (props: RadioProps) => {
         <AnimatePresence key="helper-chip">
           {hover && (
             <MotionBox
+              mx={2}
               onClick={() => setHover(false)}
               display="flex"
               justifyContent="flex-start"

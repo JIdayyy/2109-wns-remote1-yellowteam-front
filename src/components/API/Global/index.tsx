@@ -1,20 +1,27 @@
 import { Flex, Text } from '@chakra-ui/react'
 import AddWebsiteModal from 'src/components/Modals/AddWebsite.modal'
+import DeleteWebsiteModal from 'src/components/Modals/DeleteWebsite.modal'
 import ReedemApiToken from 'src/components/Modals/RedremApiToken/ReedemApiToken.modal'
 import Card from './Card'
 
 const CardList: ICard[] = [
   {
     id: '1',
+    title: 'Redeem your API token',
+    button: 'GET SECRET TOKEN',
+    modal: ReedemApiToken,
+  },
+  {
+    id: '2',
     title: 'Add a new website',
     button: 'ADD WEBSITE',
     modal: AddWebsiteModal,
   },
   {
-    id: '2',
-    title: 'Redeem your API token',
-    button: 'GET SECRET TOKEN',
-    modal: ReedemApiToken,
+    id: '3',
+    title: 'Delete Websites',
+    button: 'DELETE',
+    modal: DeleteWebsiteModal,
   },
 ]
 

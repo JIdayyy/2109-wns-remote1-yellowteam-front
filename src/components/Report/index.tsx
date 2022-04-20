@@ -14,6 +14,7 @@ import customScrollbar from 'src/theme/customScrollbar'
 import upperCaseFirstLetter from 'src/utils/upperCaseFirstLetter'
 import CommentsModule from '../Comments'
 import FilesTable from '../Files'
+import CustomBox from '../UI/CustomBox'
 import BugInfoChip from './BugPriority'
 
 const backgroundColor = (children: string): string => {
@@ -75,12 +76,13 @@ export default function ReportModule(): JSX.Element {
   if (!data) return <Center>Error</Center>
 
   return (
-    <Box
+    <CustomBox
+      variant="solid"
       zIndex={1}
       w="full"
       marginLeft="250px"
       rounded="md"
-      backgroundColor="white"
+      // backgroundColor="white"
       px={[20, 20, 20, 20]}
       py={[10, 10, 10, 20]}
       css={customScrollbar}
@@ -163,6 +165,6 @@ export default function ReportModule(): JSX.Element {
       </Flex>
       <FilesTable />
       <CommentsModule />
-    </Box>
+    </CustomBox>
   )
 }

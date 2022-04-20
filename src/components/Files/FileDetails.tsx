@@ -48,14 +48,7 @@ export default function FileDetails({ file, isDetails }: IProps): JSX.Element {
             </Flex>
           </Stack>
           <Stack spacing={1}>
-            <Button
-              size="sm"
-              color="white"
-              rounded={4}
-              px={14}
-              backgroundColor="#24323F"
-              onClick={onOpen}
-            >
+            <Button size="sm" variant="action" px={14} onClick={onOpen}>
               <Text>PREVIEW</Text>
             </Button>
             <Modal size="6xl" isOpen={isOpen} onClose={onClose}>
@@ -74,11 +67,9 @@ export default function FileDetails({ file, isDetails }: IProps): JSX.Element {
                 </ModalBody>
 
                 <ModalFooter>
-                  <Center>
-                    <Button colorScheme="blue" onClick={onClose}>
-                      Close
-                    </Button>
-                  </Center>
+                  <Button variant="action" w="full" onClick={onClose}>
+                    Close
+                  </Button>
                 </ModalFooter>
               </ModalContent>
             </Modal>

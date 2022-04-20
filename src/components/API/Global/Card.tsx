@@ -18,7 +18,13 @@ export default function Card({ card }: IProps): JSX.Element {
       rounded="md"
     >
       <Text textStyle="cardBold">{card.title}</Text>
-      <Button onClick={onOpen} bg="#24323F" color="white">
+      <Button
+        w="52"
+        onClick={onOpen}
+        variant="action"
+        bg={card.button === 'DELETE' ? 'red' : 'darkBlueCustom'}
+        color="white"
+      >
         {card.button}
       </Button>
       <card.modal isOpen={isOpen} onClose={onClose} />
