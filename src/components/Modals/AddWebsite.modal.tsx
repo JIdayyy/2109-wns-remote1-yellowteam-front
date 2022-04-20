@@ -20,7 +20,13 @@ export default function AddWebsiteModal({
   onClose,
 }: IProps): JSX.Element {
   return (
-    <Modal size="4xl" isCentered isOpen={isOpen} onClose={onClose}>
+    <Modal
+      variant="solid"
+      size="4xl"
+      isCentered
+      isOpen={isOpen}
+      onClose={onClose}
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader

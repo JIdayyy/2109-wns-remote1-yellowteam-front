@@ -52,27 +52,12 @@ export default function AddWebsiteForm({ onClose }: IProps): JSX.Element {
       <FormLabel color="#747474" fontWeight="normal">
         Informations
       </FormLabel>
-      <Input
-        my={2}
-        color="black"
-        {...register('name')}
-        placeholder="Website name"
-      />
-      <Input
-        my={2}
-        color="black"
-        {...register('url')}
-        placeholder="Website url"
-      />
+      <Input my={2} {...register('name')} placeholder="Website name" />
+      <Input my={2} {...register('url')} placeholder="Website url" />
       <FormLabel color="#747474" fontWeight="normal">
         Add an url of the website logo or upload it
       </FormLabel>
-      <Input
-        my={2}
-        color="black"
-        {...register('logo')}
-        placeholder="Website logo url"
-      />
+      <Input my={2} {...register('logo')} placeholder="Website logo url" />
       <FormLabel color="#747474" fontWeight="normal">
         This website is in preview / development ?
       </FormLabel>
