@@ -102,8 +102,7 @@ export default function RegisterForm(): JSX.Element {
       <Button
         my={3}
         w={['65%', '55%', '35%', '25%']}
-        backgroundColor="#24323F"
-        color="#ffffff"
+        variant="action"
         onClick={handleSubmit(onSubmit)}
       >
         SIGN IN

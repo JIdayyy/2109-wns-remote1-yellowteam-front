@@ -110,10 +110,6 @@ export default function CreateBugForm({
 
   return (
     <Box width="100%" rounded={5} overflow="scroll" css={customScrollBar}>
-      <FormLabel color="#747474" fontWeight="normal">
-        Please give a title to this bug :
-      </FormLabel>
-      <Input my={2} color="black" {...register('title')} placeholder="Title" />
       <FormError name="title" errors={formState.errors} />
       <Text color="#747474" fontWeight="normal" fontSize={15}>
         What’s the severity :
@@ -139,6 +135,14 @@ export default function CreateBugForm({
         label="priority"
       />
 
+      <FormLabel color="#747474" fontWeight="normal">
+        Please give a title to this bug :
+      </FormLabel>
+      <Input my={2} color="black" {...register('title')} placeholder="Title" />
+
+      <FormLabel color="#747474" fontWeight="normal">
+        Now describe it precisely, in as much detail as possible :
+      </FormLabel>
       <Textarea
         my={2}
         minH={200}
@@ -149,10 +153,8 @@ export default function CreateBugForm({
       <FormError name="description" errors={formState.errors} />
 
       <Button
-        variant="solid"
         w="full"
-        backgroundColor="#24323F"
-        color="white"
+        variant="action"
         isLoading={loading}
         onClick={handleSubmit(onSubmit)}
       >

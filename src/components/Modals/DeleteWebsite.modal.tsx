@@ -8,7 +8,6 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react'
-import { useState } from 'react'
 import DeleteWebsitesTable from '../Tables/DeleteWebsite.table'
 
 interface IProps {

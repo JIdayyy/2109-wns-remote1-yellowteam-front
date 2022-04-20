@@ -10,8 +10,7 @@ export default function AddBugButton(): JSX.Element {
       onClick={onOpen}
       display="flex"
       justifyContent="flex-start"
-      color="white"
-      backgroundColor="#24323F"
+      variant="action"
       rounded="4"
       h={7}
       px={4}

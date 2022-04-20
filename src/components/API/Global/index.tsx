@@ -7,15 +7,15 @@ import Card from './Card'
 const CardList: ICard[] = [
   {
     id: '1',
-    title: 'Add a new website',
-    button: 'ADD WEBSITE',
-    modal: AddWebsiteModal,
-  },
-  {
-    id: '2',
     title: 'Redeem your API token',
     button: 'GET SECRET TOKEN',
     modal: ReedemApiToken,
+  },
+  {
+    id: '2',
+    title: 'Add a new website',
+    button: 'ADD WEBSITE',
+    modal: AddWebsiteModal,
   },
   {
     id: '3',

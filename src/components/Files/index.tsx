@@ -31,10 +31,9 @@ export default function FilesTable(): JSX.Element {
         <Button
           mx={1}
           size="sm"
-          color="white"
+          variant="action"
           rounded={4}
           px={14}
-          backgroundColor="#24323F"
           onClick={onOpen}
         >
           ADD FILE

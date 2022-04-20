@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
-import { Box, SkeletonText, SkeletonCircle } from '@chakra-ui/react'
-import React from 'react'
+import { SkeletonText, SkeletonCircle } from '@chakra-ui/react'
+import CustomBox from '../UI/CustomBox'
 
 export default function SkelettonPlaceholder({
   number,
@@ -11,10 +11,10 @@ export default function SkelettonPlaceholder({
   return (
     <>
       {items.map((_, index) => (
-        <Box key={index} padding="6" boxShadow="lg" bg="white">
+        <CustomBox key={index} padding="6" boxShadow="lg" bg="white">
           <SkeletonCircle mt="2" noOfLines={1} />
           <SkeletonText mt="2" noOfLines={1} spacing="4" />
-        </Box>
+        </CustomBox>
       ))}
     </>
   )

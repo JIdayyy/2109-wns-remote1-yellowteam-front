@@ -96,10 +96,9 @@ export default function AddComment(): JSX.Element {
         mx={1}
         w="200px"
         size="sm"
-        color="white"
+        variant="action"
         rounded={4}
         px={14}
-        backgroundColor="#24323F"
         onClick={handleSubmit(onSubmit)}
       >
         {loading ? <Spinner /> : 'SUBMIT'}
