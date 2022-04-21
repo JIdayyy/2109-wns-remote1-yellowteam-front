@@ -10,7 +10,6 @@ import ProtectedRoutes from './config/protected.routes'
 import '@fontsource/poppins' // Defaults to weight 400.
 import customClient from './services/graphql'
 
-console.log(theme)
 function App(): JSX.Element {
   return (
     <ApolloProvider client={customClient}>

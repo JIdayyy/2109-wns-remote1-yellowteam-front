@@ -37,14 +37,18 @@ export default function BugListFilters(): JSX.Element {
             width="100%"
           >
             {selectedWebsite ? (
-              <Flex p={5} justifyContent="flex-start" alignItems="center">
+              <Flex justifyContent="flex-start" alignItems="center">
                 <WorldIcon />
-                <Text mx={4}>{selectedWebsite}</Text>
+                <Text fontSize="xs" ml={2}>
+                  {selectedWebsite}
+                </Text>
               </Flex>
             ) : (
-              <Flex p={2} justifyContent="flex-start" alignItems="center">
+              <Flex justifyContent="flex-start" alignItems="center">
                 <WorldIcon />
-                <Text mx={4}>All websites</Text>
+                <Text fontSize="xs" ml={2}>
+                  All websites
+                </Text>
               </Flex>
             )}
           </MenuButton>
@@ -69,30 +73,6 @@ export default function BugListFilters(): JSX.Element {
             ))}
           </MenuList>
         </Menu>
-        {/* <Menu isLazy size="sm">
-          <MenuButton
-            loading={loading.toString()}
-            backgroundColor="transparent"
-            as={Button}
-            border="1px solid #24323F"
-            rounded={4}
-            py={1}
-            height={6}
-            width="100%"
-          >
-            <Flex justifyContent="flex-start" alignItems="center">
-              <WorldIcon />
-              <Text mx={4}>Meta Shop</Text>
-            </Flex>
-          </MenuButton>
-          <MenuList width="100%">
-            <MenuItem width="100%">Download</MenuItem>
-            <MenuItem width="100%">Create a Copy</MenuItem>
-            <MenuItem width="100%">Mark as Draft</MenuItem>
-            <MenuItem width="100%">Delete</MenuItem>
-            <MenuItem width="100%">Attend a Workshop</MenuItem>
-          </MenuList>
-        </Menu> */}
         <AddBugButton />
       </Stack>
     </CustomBox>

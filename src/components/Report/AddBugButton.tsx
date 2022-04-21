@@ -18,7 +18,9 @@ export default function AddBugButton(): JSX.Element {
       <AddNewReport />
       <CreateBugModal isOpen={isOpen} onClose={onClose} />
 
-      <Text mx={4}>Report a new bug</Text>
+      <Text fontSize="xs" ml={2}>
+        Report a new bug
+      </Text>
     </Button>
   )
 }

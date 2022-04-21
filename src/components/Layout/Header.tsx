@@ -41,7 +41,7 @@ const Header = (): JSX.Element => {
       height="10%"
     >
       <Flex justifyContent="flex-end" alignContent="center" alignItems="center">
-        <Text fontSize={12}> {user.email} </Text>
+        {/* <Text fontSize={12}> {user.email} </Text>
         <Image
           fit="contain"
           mx={2}
@@ -50,7 +50,7 @@ const Header = (): JSX.Element => {
           src={user.avatar}
           width={50}
           height={50}
-        />
+        /> */}
       </Flex>
     </Box>
   )

@@ -23,11 +23,6 @@ const navLinks = [
     path: '/api',
     newTab: false,
   },
-  // {
-  //   name: 'Features',
-  //   path: '/features',
-  //   newTab: false,
-  // },
   {
     name: 'Documentation',
     path: 'https://my-website-two-chi.vercel.app/docs/intro',
