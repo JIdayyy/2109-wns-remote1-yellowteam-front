@@ -59,11 +59,13 @@ export default function BugListItem({ bug }: Props): JSX.Element {
       <Box
         display="flex"
         justifyContent="space-between"
-        flexDirection="column"
-        alignItems="flex-start"
-        w="80%"
+        flexDirection="row"
+        alignItems="center"
+        w="full"
       >
-        <Text textStyle="cardBold">{bug.Website.name}</Text>
+        <Text fontWeight="bold" fontSize="xs">
+          {bug.Website.name}
+        </Text>
       </Box>
       <Flex w={20} justifyContent="space-between">
         <Box width="10%" height="10%">

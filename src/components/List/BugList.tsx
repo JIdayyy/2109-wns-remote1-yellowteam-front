@@ -13,8 +13,8 @@ const MotionBox = motion(Box)
 export default function BugList(): JSX.Element {
   const { website } = useSearchState()
   const { ref, inView } = useInView()
-
-  const { data, loading, fetchMore } = useGetAllBugsByQuery({
+  console.log(website)
+  const { data, loading, fetchMore, refetch } = useGetAllBugsByQuery({
     // notifyOnNetworkStatusChange: true,
 
     variables: {
@@ -34,6 +34,10 @@ export default function BugList(): JSX.Element {
       },
     },
   })
+
+  useEffect(() => {
+    refetch()
+  }, [website])
 
   useEffect(() => {
     if (inView) {
