@@ -10,7 +10,6 @@ export default function MuteButtonPortal(): JSX.Element {
     <Button
       position="absolute"
       bottom={10}
-      bg="transparent"
       right={10}
       zIndex={100}
       onClick={() => setIsMute((c) => !c)}

@@ -20,9 +20,8 @@ import mainTheme from '../../../theme/mainTheme'
 const overrides = {
   ...styles,
   ...componentsExtents,
-  // componentsExtents,
-  colors,
-  fontSizes,
+  ...colors,
+  ...fontSizes,
   ...mainTheme,
 }
 

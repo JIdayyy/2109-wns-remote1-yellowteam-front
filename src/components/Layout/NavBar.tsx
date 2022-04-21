@@ -57,9 +57,12 @@ const NavBar = (): JSX.Element => {
       px={10}
       backgroundColor="white"
     >
-      <Button backgroundColor="#24323F" color="white" mx={2} onClick={onOpen}>
+      <Button variant="action" mx={2} onClick={onOpen}>
         Report a new Bug 🐛
       </Button>
+      {/* <Button variant="action" onClick={toggleColorMode}>
+        Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
+      </Button> */}
       <CreateBugModal isOpen={isOpen} onClose={onClose} />
       <Notifications />
     </Box>

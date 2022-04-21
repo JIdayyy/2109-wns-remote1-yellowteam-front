@@ -5584,6 +5584,21 @@ export type CreateWebsiteMutation = {
   }
 }
 
+export type DeleteManyWebsitesMutationVariables = Exact<{
+  where: {
+    AND: {
+      id: {
+        in: Array<Scalars['String']>
+      }
+    }
+  }
+}>
+
+export type DeleteManyWebsitesMutation = {
+  __typename?: 'Mutation'
+  deleteManyWebsite: { __typename?: 'AffectedRowsOutput'; count: number }
+}
+
 export type MutateLoginMutationVariables = Exact<{
   data: LoginInput
 }>
@@ -6056,6 +6071,56 @@ export type CreateWebsiteMutationResult =
 export type CreateWebsiteMutationOptions = Apollo.BaseMutationOptions<
   CreateWebsiteMutation,
   CreateWebsiteMutationVariables
+>
+export const DeleteManyWebsitesDocument = gql`
+  mutation deleteManyWebsites($where: WebsiteWhereInput!) {
+    deleteManyWebsite(where: $where) {
+      count
+    }
+  }
+`
+export type DeleteManyWebsitesMutationFn = Apollo.MutationFunction<
+  DeleteManyWebsitesMutation,
+  DeleteManyWebsitesMutationVariables
+>
+
+/**
+ * __useDeleteManyWebsitesMutation__
+ *
+ * To run a mutation, you first call `useDeleteManyWebsitesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteManyWebsitesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteManyWebsitesMutation, { data, loading, error }] = useDeleteManyWebsitesMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useDeleteManyWebsitesMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DeleteManyWebsitesMutation,
+    DeleteManyWebsitesMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<
+    DeleteManyWebsitesMutation,
+    DeleteManyWebsitesMutationVariables
+  >(DeleteManyWebsitesDocument, options)
+}
+export type DeleteManyWebsitesMutationHookResult = ReturnType<
+  typeof useDeleteManyWebsitesMutation
+>
+export type DeleteManyWebsitesMutationResult =
+  Apollo.MutationResult<DeleteManyWebsitesMutation>
+export type DeleteManyWebsitesMutationOptions = Apollo.BaseMutationOptions<
+  DeleteManyWebsitesMutation,
+  DeleteManyWebsitesMutationVariables
 >
 export const MutateLoginDocument = gql`
   mutation MutateLogin($data: LoginInput!) {

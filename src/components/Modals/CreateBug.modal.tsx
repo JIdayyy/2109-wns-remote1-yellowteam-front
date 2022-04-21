@@ -12,7 +12,7 @@ import { useState } from 'react'
 import CreateBugForm from '../Forms/CreateBug/CreateBugForm'
 import UploadFile from '../Forms/UploadFile'
 import CategoriesList from '../List/CategoriesList'
-import WebSiteList from '../List/WebSiteList'
+import WebsitesTable from '../Tables/Websites.table'
 
 interface IProps {
   isOpen: boolean
@@ -24,9 +24,10 @@ export default function CreateBugModal({
   onClose,
 }: IProps): JSX.Element {
   const [isUpload, setIsUpload] = useState<boolean>(false)
+  const [checkedItem, setCheckedItem] = useState<string | undefined>()
 
   return (
-    <Modal size="4xl" isOpen={isOpen} onClose={onClose}>
+    <Modal size="4xl" variant="solid" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader
@@ -59,12 +60,18 @@ export default function CreateBugModal({
                   going to need some information.
                 </Text>
               </Box>
-              <WebSiteList isNew />
+              <WebsitesTable
+                setCheckedItem={setCheckedItem}
+                checkedItem={checkedItem}
+              />
               <Text my={5} color="#747474" fontWeight="bold" fontSize={15}>
                 Now select a category
               </Text>
               <CategoriesList />
-              <CreateBugForm setIsUpload={setIsUpload} />
+              <CreateBugForm
+                websiteId={checkedItem}
+                setIsUpload={setIsUpload}
+              />
             </>
           ) : (
             <UploadFile setIsUpload={setIsUpload} onClose={onClose} />

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { extendTheme } from '@chakra-ui/react'
 
-const mainTheme = extendTheme({
+const mainTheme = {
+  config: { initialColorMode: 'light', useSystemColorMode: false },
   textStyles: {
     fonts: {
       heading: 'Open Sans, sans-serif',
@@ -80,24 +80,6 @@ const mainTheme = extendTheme({
     },
   },
 
-  colors: {
-    orange: '#F69826',
-    textPrimary: '#24323F',
-    mediumGreyText: '#4E4F54',
-    greyText: '#9FA1A5',
-    deactivatedGrey: '#BEBDC0',
-    superLightGrey: '#EBECF0',
-    teal: '#009A96',
-    lightTeal: '#A4DFDC',
-    darkRed: '#B63F46',
-    lightRed: '#FFF0F0',
-    darkGreen: '#1D9446',
-    lightGreen: '#EBF5ED',
-    darkBrown: '#B47539',
-    lightBrown: '#FCECE4',
-    redClose: '#961F2D',
-    darkBlueCustom: '#24323F',
-  },
   section: {
     card: {
       backgroundColor: 'white',
@@ -109,22 +91,7 @@ const mainTheme = extendTheme({
       flexDirection: 'column',
       justifyContent: 'flex-start',
     },
-    userAvatar: {
-      height: '150px',
-      width: '150px',
-      borderRadius: '50%',
-    },
-    userMediumAvatar: {
-      height: '50px',
-      width: '50px',
-      borderRadius: '50%',
-    },
-    userSmallAvatar: {
-      height: '30px',
-      width: '30px',
-      borderRadius: '50%',
-    },
   },
-})
+}
 
 export default mainTheme

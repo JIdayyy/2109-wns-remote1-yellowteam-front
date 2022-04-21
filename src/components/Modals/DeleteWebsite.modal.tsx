@@ -8,14 +8,14 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react'
-import AddWebsiteForm from '../Forms/AddWebsite'
+import DeleteWebsitesTable from '../Tables/DeleteWebsite.table'
 
 interface IProps {
   isOpen: boolean
   onClose: () => void
 }
 
-export default function AddWebsiteModal({
+export default function DeleteWebsiteModal({
   isOpen,
   onClose,
 }: IProps): JSX.Element {
@@ -35,7 +35,7 @@ export default function AddWebsiteModal({
           justifyContent="space-between"
           backgroundColor="darkBlueCustom"
         >
-          <Text color="white">Add a website</Text>
+          <Text color="white">Delete websites</Text>
 
           <Button
             backgroundColor="redClose"
@@ -48,7 +48,7 @@ export default function AddWebsiteModal({
           </Button>
         </ModalHeader>
         <ModalBody>
-          <AddWebsiteForm onClose={onClose} />
+          <DeleteWebsitesTable />
         </ModalBody>
       </ModalContent>
     </Modal>

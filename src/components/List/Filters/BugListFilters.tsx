@@ -14,6 +14,7 @@ import AddBugButton from 'src/components/Report/AddBugButton'
 import WorldIcon from 'src/static/svg/WorldIcon'
 import useSearchState from 'src/hooks/useSearchState'
 import { useState } from 'react'
+import CustomBox from 'src/components/UI/CustomBox'
 
 export default function BugListFilters(): JSX.Element {
   const { data, loading } = useGetAllWebSitesQuery()
@@ -22,7 +23,7 @@ export default function BugListFilters(): JSX.Element {
   const [selectedWebsite, setSelectedWebsite] = useState<string | null>()
 
   return (
-    <Flex h="20%" w="100%" p={7} zIndex={11} backgroundColor="white">
+    <CustomBox h="20%" w="100%" p={7} zIndex={11}>
       <Stack spacing={4} w="100%">
         <Menu isLazy size="sm">
           <MenuButton
@@ -36,14 +37,18 @@ export default function BugListFilters(): JSX.Element {
             width="100%"
           >
             {selectedWebsite ? (
-              <Flex p={5} justifyContent="flex-start" alignItems="center">
+              <Flex justifyContent="flex-start" alignItems="center">
                 <WorldIcon />
-                <Text mx={4}>{selectedWebsite}</Text>
+                <Text fontSize="xs" ml={2}>
+                  {selectedWebsite}
+                </Text>
               </Flex>
             ) : (
-              <Flex p={2} justifyContent="flex-start" alignItems="center">
+              <Flex justifyContent="flex-start" alignItems="center">
                 <WorldIcon />
-                <Text mx={4}>All websites</Text>
+                <Text fontSize="xs" ml={2}>
+                  All websites
+                </Text>
               </Flex>
             )}
           </MenuButton>
@@ -68,32 +73,8 @@ export default function BugListFilters(): JSX.Element {
             ))}
           </MenuList>
         </Menu>
-        {/* <Menu isLazy size="sm">
-          <MenuButton
-            loading={loading.toString()}
-            backgroundColor="transparent"
-            as={Button}
-            border="1px solid #24323F"
-            rounded={4}
-            py={1}
-            height={6}
-            width="100%"
-          >
-            <Flex justifyContent="flex-start" alignItems="center">
-              <WorldIcon />
-              <Text mx={4}>Meta Shop</Text>
-            </Flex>
-          </MenuButton>
-          <MenuList width="100%">
-            <MenuItem width="100%">Download</MenuItem>
-            <MenuItem width="100%">Create a Copy</MenuItem>
-            <MenuItem width="100%">Mark as Draft</MenuItem>
-            <MenuItem width="100%">Delete</MenuItem>
-            <MenuItem width="100%">Attend a Workshop</MenuItem>
-          </MenuList>
-        </Menu> */}
         <AddBugButton />
       </Stack>
-    </Flex>
+    </CustomBox>
   )
 }
