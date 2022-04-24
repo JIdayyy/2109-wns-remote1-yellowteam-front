@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useGetAllBugsByQuery, SortOrder } from 'src/generated/graphql'
 import useSearchState from 'src/hooks/useSearchState'
 import { useInView } from 'react-intersection-observer'
+import customScrollbar from 'src/theme/customScrollbar'
 import SkelettonPlaceholder from '../Assets/SkelettonPLaceholder'
 import BugListFilters from './Filters/BugListFilters'
 import BugListItem from './ListItems/BugListItem'
@@ -13,7 +14,7 @@ const MotionBox = motion(Box)
 export default function BugList(): JSX.Element {
   const { website } = useSearchState()
   const { ref, inView } = useInView()
-  console.log(website)
+
   const { data, loading, fetchMore, refetch } = useGetAllBugsByQuery({
     // notifyOnNetworkStatusChange: true,
 
@@ -78,20 +79,7 @@ export default function BugList(): JSX.Element {
 
       <MotionBox
         overflowY="auto"
-        css={{
-          '&::-webkit-scrollbar': {
-            width: '4px',
-            backgroundColor: 'transparent',
-          },
-          '&::-webkit-scrollbar-track': {
-            width: '6px',
-            backgroundColor: 'transparent',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            background: 'gray',
-            borderRadius: '24px',
-          },
-        }}
+        css={customScrollbar}
         width="full"
         h="80%"
         display="flex"
@@ -102,7 +90,6 @@ export default function BugList(): JSX.Element {
             {data?.bugs.map((bug) => (
               <BugListItem key={bug.id} bug={bug} />
             ))}
-            {/* {loading && <SkelettonPlaceholder number={20} />} */}
             <span
               style={{
                 visibility: 'hidden',
