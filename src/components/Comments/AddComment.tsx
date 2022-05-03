@@ -16,12 +16,8 @@ export default function AddComment(): JSX.Element {
 
   const GetAllCommentsVariables = {
     where: {
-      Bug: {
-        is: {
-          id: {
-            equals: id,
-          },
-        },
+      bugId: {
+        equals: id,
       },
     },
     orderBy: {
