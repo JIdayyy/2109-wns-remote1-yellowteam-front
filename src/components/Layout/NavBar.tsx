@@ -32,6 +32,7 @@ const NavBar = (): JSX.Element => {
     shouldResubscribe: true,
     onSubscriptionData: async (r) => {
       play()
+
       await customClient.refetchQueries({
         include: [GetAllBugsByDocument, GetAllNotificationsDocument],
       })
@@ -60,9 +61,7 @@ const NavBar = (): JSX.Element => {
       <Button variant="action" mx={2} onClick={onOpen}>
         Report a new Bug 🐛
       </Button>
-      {/* <Button variant="action" onClick={toggleColorMode}>
-        Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
-      </Button> */}
+
       <CreateBugModal isOpen={isOpen} onClose={onClose} />
       <Notifications />
     </Box>
