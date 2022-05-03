@@ -64,10 +64,8 @@ export default function DeleteWebsitesTable(): JSX.Element {
     deleteMany({
       variables: {
         where: {
-          AND: {
-            id: {
-              in: Object.values(websitesIds).filter((id: string) => id),
-            },
+          id: {
+            in: Object.values(websitesIds).filter((id: string) => id),
           },
         },
       },

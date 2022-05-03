@@ -10,12 +10,8 @@ export default function CommentList(): JSX.Element {
   const { data } = useGetAllCommentsQuery({
     variables: {
       where: {
-        Bug: {
-          is: {
-            id: {
-              equals: id,
-            },
-          },
+        bugId: {
+          equals: id,
         },
       },
       orderBy: {
@@ -23,6 +19,7 @@ export default function CommentList(): JSX.Element {
       },
     },
   })
+
   return (
     <Flex
       my={5}

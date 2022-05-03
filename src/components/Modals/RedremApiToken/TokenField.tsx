@@ -1,41 +1,41 @@
 import { Flex, Input, Button, useClipboard } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { useGetWidgetTokenQuery } from 'src/generated/graphql'
+// import { useGetWidgetTokenQuery } from 'src/generated/graphql'
 
 type Props = {
   websiteId?: string
 }
 
 export default function TokenField({ websiteId }: Props): JSX.Element {
-  const { data, loading, refetch } = useGetWidgetTokenQuery({
-    notifyOnNetworkStatusChange: true,
-    variables: {
-      where: {
-        id: websiteId,
-      },
-    },
-    skip: !websiteId,
-  })
-  const [type, setType] = useState('password')
-  const { hasCopied, onCopy } = useClipboard(
-    data?.widgetToken.widget_token || ''
-  )
+  // const { data, loading, refetch } = useGetWidgetTokenQuery({
+  //   notifyOnNetworkStatusChange: true,
+  //   variables: {
+  //     where: {
+  //       id: websiteId,
+  //     },
+  //   },
+  //   skip: !websiteId,
+  // })
+  // const [type, setType] = useState('password')
+  // const { hasCopied, onCopy } = useClipboard(
+  //   data?.widgetToken.widget_token || ''
+  // )
 
-  const toggleType = () => {
-    if (type === 'password') {
-      setType('text')
-    } else {
-      setType('password')
-    }
-  }
+  // const toggleType = () => {
+  //   if (type === 'password') {
+  //     setType('text')
+  //   } else {
+  //     setType('password')
+  //   }
+  // }
 
-  useEffect(() => {
-    refetch()
-  }, [websiteId])
+  // useEffect(() => {
+  //   refetch()
+  // }, [websiteId])
 
   return (
     <Flex my={2} direction="row" alignItems="center">
-      <Input
+      {/* <Input
         type={type}
         isReadOnly
         value={loading ? 'Loading ...' : data?.widgetToken.widget_token}
@@ -46,7 +46,7 @@ export default function TokenField({ websiteId }: Props): JSX.Element {
       </Button>
       <Button onClick={toggleType} ml={2}>
         {type === 'password' ? 'Show' : 'Hide'}
-      </Button>
+      </Button> */}
     </Flex>
   )
 }

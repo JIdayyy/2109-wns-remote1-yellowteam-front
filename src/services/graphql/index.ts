@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 import {
   ApolloClient,
   createHttpLink,
+  from,
   InMemoryCache,
   NormalizedCacheObject,
   split,
@@ -9,6 +11,7 @@ import {
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws'
 import { getMainDefinition } from '@apollo/client/utilities'
+import { onError } from '@apollo/client/link/error'
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null
 
@@ -29,17 +32,24 @@ const httpLink = createHttpLink({
   },
 })
 
-const splitLink = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query)
-    return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      )
     )
-  },
-  wsLink,
-  httpLink
-)
+
+  if (networkError) console.log(`[Network error]: ${networkError}`)
+})
+
+const splitLink = split(({ query }) => {
+  const definition = getMainDefinition(query)
+  return (
+    definition.kind === 'OperationDefinition' &&
+    definition.operation === 'subscription'
+  )
+}, wsLink)
 
 export const client = new ApolloClient({
   ssrMode: typeof window === 'undefined',
@@ -49,12 +59,7 @@ export const client = new ApolloClient({
       Query: {
         fields: {
           bugs: {
-            // Don't cache separate results based on
-            // any of this field's arguments.
             keyArgs: false,
-
-            // Concatenate the incoming list items with
-            // the existing list items.
             merge(existing = [], incoming) {
               return [...existing, ...incoming]
             },
@@ -63,7 +68,7 @@ export const client = new ApolloClient({
       },
     },
   }),
-  link: splitLink,
+  link: from([splitLink, errorLink, httpLink]),
 })
 
 function initializeApollo(): ApolloClient<NormalizedCacheObject> {
