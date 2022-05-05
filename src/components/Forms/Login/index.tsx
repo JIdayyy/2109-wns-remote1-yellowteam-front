@@ -2,21 +2,26 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
   Button,
+  Center,
   Flex,
   FormControl,
-  Input,
   Spinner,
   Text,
 } from '@chakra-ui/react'
+import { Dispatch, KeyboardEvent, SetStateAction } from 'react'
 import { FieldValues, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useNavigate } from 'react-router-dom'
 import useAppState from 'src/hooks/useAppState'
 import { useMutateLoginMutation } from '../../../generated/graphql'
 import loginSchema from '../Resolvers/login.resolver.shema'
-import FormError from '../InputError'
+import CustomInput from '../CustomInput'
 
-export default function LoginForm(): JSX.Element {
+interface IProps {
+  setIsLogin: Dispatch<SetStateAction<boolean>>
+}
+
+export default function LoginForm({ setIsLogin }: IProps): JSX.Element {
   const navigate = useNavigate()
 
   const { dispatchLogin } = useAppState()
@@ -36,7 +41,6 @@ export default function LoginForm(): JSX.Element {
     resolver: yupResolver(loginSchema),
     criteriaMode: 'all',
   })
-  console.log(formState.errors)
 
   const onSubmit = async ({ email, password }: FieldValues): Promise<void> => {
     login({
@@ -44,52 +48,70 @@ export default function LoginForm(): JSX.Element {
     })
   }
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      handleSubmit(onSubmit)()
+    }
+  }
+
   return (
     <Flex
       direction="column"
       justifyContent="center"
       alignItems="center"
-      w="full"
-      h="100vh"
+      w={['90%', '80%', '80', '70%', '60%', '50%']}
+      h="50%"
+      shadow="2xl"
+      rounded={8}
+      p={10}
     >
-      <Text fontFamily="Poppins" fontSize={30} fontWeight="bold">
-        Sign In to DC bug report
-      </Text>
-      <FormControl p={10} w={['90%', '80%', '80%', '80%']}>
-        <Input
+      <Text textStyle="titleLogin">Log In to Dc Reports</Text>
+      <Text textStyle="loginText">Enter your email and password below</Text>
+      <FormControl mt={10} w="100%">
+        <CustomInput
+          label="Email"
           autoComplete="email"
-          id="emaillogin"
+          fontSize={14}
+          id="email-login"
           placeholder="Email"
           my={1}
+          register={register}
+          errors={formState.errors}
+          name="email"
           type="text"
-          {...register('email')}
         />
-        <FormError name="email" errors={formState.errors} />
 
-        <Input
+        <CustomInput
+          label="Password"
           autoComplete="password"
-          onKeyPress={(event) => {
-            if (event.key === 'Enter') {
-              event.preventDefault()
-              handleSubmit(onSubmit)()
-            }
-          }}
-          id="passwordlogin"
+          fontSize={14}
+          onKeyPress={handleKeyDown}
+          id="password-login"
           placeholder="Password"
           my={1}
+          register={register}
+          errors={formState.errors}
+          name="password"
           type="password"
-          {...register('password')}
         />
-        <FormError name="password" errors={formState.errors} />
       </FormControl>
-      <Button
-        my={3}
-        w={['65%', '55%', '35%', '25%']}
-        variant="action"
-        onClick={handleSubmit(onSubmit)}
-      >
+      <Button my={5} w="full" variant="action" onClick={handleSubmit(onSubmit)}>
         {loading ? <Spinner /> : 'Sign In'}
       </Button>
+
+      <Center w="full">
+        <Text>Don’t have an account?</Text>
+        <Text
+          _hover={{ textDecoration: 'underline' }}
+          cursor="pointer"
+          onClick={() => setIsLogin((c) => !c)}
+          fontWeight="bold"
+          mx={2}
+        >
+          Sign up
+        </Text>
+      </Center>
     </Flex>
   )
 }

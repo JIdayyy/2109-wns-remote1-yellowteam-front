@@ -14,7 +14,7 @@ const Header = (): JSX.Element => {
         alignContent="center"
         alignItems="center"
         p={10}
-        height="10%"
+        height="15%"
       >
         <SkeletonCircle mt="2" noOfLines={1} />
         <SkeletonText mt="2" noOfLines={3} spacing="4" />

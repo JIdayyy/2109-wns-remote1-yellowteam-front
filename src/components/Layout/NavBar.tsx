@@ -1,4 +1,4 @@
-import { Box, Button, useDisclosure, useToast } from '@chakra-ui/react'
+import { Button, Flex, useDisclosure, useToast } from '@chakra-ui/react'
 import {
   GetAllBugsByDocument,
   GetAllNotificationsDocument,
@@ -45,17 +45,16 @@ const NavBar = (): JSX.Element => {
   })
 
   return (
-    <Box
+    <Flex
       width="full"
       shadow="md"
-      height="10%"
+      h="100px"
       zIndex={100}
-      display="flex"
       justifyContent="flex-end"
       alignContent="center"
       position="relative"
       alignItems="center"
-      px={10}
+      px={5}
       backgroundColor="white"
     >
       <Button variant="action" mx={2} onClick={onOpen}>
@@ -64,7 +63,7 @@ const NavBar = (): JSX.Element => {
 
       <CreateBugModal isOpen={isOpen} onClose={onClose} />
       <Notifications />
-    </Box>
+    </Flex>
   )
 }
 

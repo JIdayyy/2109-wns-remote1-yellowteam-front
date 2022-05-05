@@ -55,21 +55,14 @@ export default function ReportModule(): JSX.Element {
 
   if (loading)
     return (
-      <Box
-        padding="20"
-        marginLeft="250px"
-        w="full"
-        h="full"
-        boxShadow="lg"
-        bg="white"
-      >
-        <SkeletonCircle my="2" noOfLines={1} />
-        <SkeletonText my="2" noOfLines={3} spacing="3" />
-        <SkeletonText my="2" noOfLines={3} spacing="4" />
-        <SkeletonText my="2" noOfLines={2} spacing="3" />
-        <SkeletonText my="2" noOfLines={3} spacing="3" />
-        <SkeletonText my="2" noOfLines={3} spacing="2" />
-        <SkeletonText my="2" noOfLines={3} spacing="1" />
+      <Box padding="20" flexGrow={1} boxShadow="lg" h="full" bg="white">
+        <SkeletonCircle my="3" noOfLines={1} />
+        <SkeletonText my="3" noOfLines={3} spacing="3" />
+        <SkeletonText my="3" noOfLines={3} spacing="4" />
+        <SkeletonText my="3" noOfLines={2} spacing="3" />
+        <SkeletonText my="3" noOfLines={3} spacing="3" />
+        <SkeletonText my="3" noOfLines={3} spacing="2" />
+        <SkeletonText my="3" noOfLines={3} spacing="1" />
       </Box>
     )
 
@@ -79,25 +72,23 @@ export default function ReportModule(): JSX.Element {
     <CustomBox
       variant="solid"
       zIndex={1}
-      w="full"
-      marginLeft="250px"
       rounded="md"
-      // backgroundColor="white"
+      flexGrow={1}
+      h="full"
       px={[20, 20, 20, 20]}
       py={[10, 10, 10, 20]}
       css={customScrollbar}
       overflowY="auto"
-      h="full"
       shadow="md"
       color="#747474"
       fontFamily="Poppins"
     >
       <Flex
-        mb={10}
         direction="row"
         justifyContent="space-between"
         alignItems="flex-start"
         w="full"
+        h="full"
       >
         <Stack>
           <Text my={1} textStyle="h1">

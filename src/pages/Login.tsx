@@ -11,7 +11,7 @@ const AnimatedButton = motion(Button)
 const AnimatedText = motion(Text)
 
 export default function Login(): JSX.Element {
-  const [isLogin, setIsLogin] = useState(true)
+  const [isLogin, setIsLogin] = useState<boolean>(true)
 
   const variants = {
     login: {
@@ -33,6 +33,8 @@ export default function Login(): JSX.Element {
   const variant3 = {
     login: {
       x: isLogin ? -0 : -100,
+
+      opacity: !isLogin ? 0 : 1,
     },
   }
 
@@ -57,91 +59,85 @@ export default function Login(): JSX.Element {
   }
 
   return (
-    <>
-      <Flex direction="row" alignItems="center">
-        <AnimatedPannel
-          variants={variants}
-          transition={{ default: { duration: 0.4 } }}
-          initial="register"
-          animate="login"
-          position="absolute"
-          background="#24323F"
-          w="50%"
-          h="100vh"
-          alignItems="center"
-          zIndex={100}
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-        >
-          {isLogin ? (
-            <AnimatedText
-              variants={textVariant}
-              animate="login"
-              initial="login"
-            >
-              <Text my={10} textAlign="center" fontSize="4xl" color="#ffffff">
-                Welcome Back!
-              </Text>
-              <Text textAlign="center" fontSize="xl" color="#ffffff">
-                to keep connected with us please login with your infos
-              </Text>
-            </AnimatedText>
-          ) : (
-            <AnimatedText
-              variants={textVariant}
-              animate="register"
-              initial="register"
-            >
-              <Text my={10} textAlign="center" fontSize="4xl" color="#ffffff">
-                Hello, Friend!
-              </Text>
-              <Text textAlign="center" fontSize="xl" color="#ffffff">
-                Enter your personnal informations and start your journey with us
-              </Text>
-            </AnimatedText>
-          )}
-          <AnimatedButton
-            variants={buttonVariants}
-            width="20%"
-            animate={isLogin ? 'animate' : 'initial'}
-            initial={isLogin ? 'initial' : 'animate'}
-            transition={{ default: { duration: 0.4 } }}
-            backgroundColor="transparent"
-            color="white"
-            border="1px solid white"
-            rounded={100}
-            my={10}
-            onClick={() => setIsLogin((c) => !c)}
+    <Flex direction="row" alignItems="center" h="100vh">
+      <AnimatedPannel
+        variants={variants}
+        transition={{ default: { duration: 0.4 } }}
+        initial="register"
+        animate="login"
+        position="absolute"
+        background="#24323F"
+        w="50%"
+        h="100vh"
+        alignItems="center"
+        zIndex={100}
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+      >
+        {isLogin ? (
+          <AnimatedText variants={textVariant} animate="login" initial="login">
+            <Text my={10} textAlign="center" fontSize="4xl" color="#ffffff">
+              Welcome Back!
+            </Text>
+            <Text textAlign="center" fontSize="xl" color="#ffffff">
+              to keep connected with us please login with your infos
+            </Text>
+          </AnimatedText>
+        ) : (
+          <AnimatedText
+            variants={textVariant}
+            animate="register"
+            initial="register"
           >
-            {isLogin ? 'Register' : 'Sign In'}
-          </AnimatedButton>
-        </AnimatedPannel>
-        <AnimatedPannel
-          width="50%"
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          variants={variant2}
+            <Text my={10} textAlign="center" fontSize="4xl" color="#ffffff">
+              Hello, Friend!
+            </Text>
+            <Text textAlign="center" fontSize="xl" color="#ffffff">
+              Enter your personnal informations and start your journey with us
+            </Text>
+          </AnimatedText>
+        )}
+        <AnimatedButton
+          variants={buttonVariants}
+          width="20%"
+          animate={isLogin ? 'animate' : 'initial'}
+          initial={isLogin ? 'initial' : 'animate'}
           transition={{ default: { duration: 0.4 } }}
-          animate="login"
+          backgroundColor="transparent"
+          color="white"
+          border="1px solid white"
+          rounded={100}
+          my={10}
+          onClick={() => setIsLogin((c) => !c)}
         >
-          <RegisterForm />
-        </AnimatedPannel>
-        <AnimatedPannel
-          display="flex"
-          width="50%"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          variants={variant3}
-          transition={{ default: { duration: 0.4 } }}
-          animate="login"
-        >
-          <LoginForm />
-        </AnimatedPannel>
-      </Flex>
-    </>
+          {isLogin ? 'Register' : 'Sign In'}
+        </AnimatedButton>
+      </AnimatedPannel>
+      <AnimatedPannel
+        width="50%"
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        variants={variant2}
+        transition={{ default: { duration: 0.4 } }}
+        animate="login"
+      >
+        <RegisterForm setIsLogin={setIsLogin} />
+      </AnimatedPannel>
+      <AnimatedPannel
+        display="flex"
+        width="50%"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        variants={variant3}
+        transition={{ default: { duration: 0.4 } }}
+        animate="login"
+      >
+        <LoginForm setIsLogin={setIsLogin} />
+      </AnimatedPannel>
+    </Flex>
   )
 }

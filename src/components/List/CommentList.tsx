@@ -34,9 +34,17 @@ export default function CommentList(): JSX.Element {
           Comments
         </Text>
       </Flex>
-      {data?.comments.map((comment) => (
-        <CommentListItem key={comment.id} comment={comment} />
-      ))}
+      <Flex
+        direction="column"
+        w="full"
+        h="full"
+        maxH="400px"
+        overflowY="scroll"
+      >
+        {data?.comments.map((comment) => (
+          <CommentListItem key={comment.id} comment={comment} />
+        ))}
+      </Flex>
     </Flex>
   )
 }
