@@ -11,13 +11,13 @@ const mainTheme = {
       fontSize: ['24', '24', '24', '24'],
       fontWeight: '800',
       color: '#252733',
-      fontFamily: 'Avenir',
+      fontFamily: 'Poppins',
     },
     loginText: {
       fontSize: ['14'],
       fontWeight: '400',
       color: '#9FA2B4',
-      fontFamily: 'Avenir',
+      fontFamily: 'Poppins',
     },
     formLabel: {
       fontSize: ['12'],
