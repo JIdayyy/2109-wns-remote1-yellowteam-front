@@ -9,27 +9,6 @@ const componentsExtents: { components: ThemeComponents } = {
     Box,
     Modal,
     Input,
-    // Select: {
-    //   baseStyle: {
-    //     fontWeight: 'bold',
-    //   },
-    //   sizes: {
-    //     xl: {
-    //       h: '56px',
-    //       fontSize: 'lg',
-    //       px: '382px',
-    //     },
-    //   },
-    //   variants: {
-    //     'with-shadow': {
-    //       bg: 'red.400',
-    //       boxShadow: '0 0 2px 2px #efdfde',
-    //     },
-    //     solid: (props) => ({
-    //       bg: props.colorMode === 'dark' ? 'red.300' : 'red.500',
-    //     }),
-    //   },
-    // },
     Button: {
       variants: {
         action: (props) => ({
@@ -42,27 +21,6 @@ const componentsExtents: { components: ThemeComponents } = {
         }),
       },
     },
-    // Menu: {
-    //   baseStyle: {
-    //     fontWeight: 'bold',
-    //   },
-    //   sizes: {
-    //     xl: {
-    //       h: '56px',
-    //       fontSize: 'lg',
-    //       px: '382px',
-    //     },
-    //   },
-    //   variants: {
-    //     'with-shadow': {
-    //       bg: 'red.400',
-    //       boxShadow: '0 0 2px 2px #efdfde',
-    //     },
-    //     solid: (props) => ({
-    //       bg: props.colorMode === 'dark' ? 'red.300' : 'red.500',
-    //     }),
-    //   },
-    // },
   },
 }
 

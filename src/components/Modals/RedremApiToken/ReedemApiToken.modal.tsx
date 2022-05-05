@@ -49,7 +49,7 @@ export default function ReedemApiToken({
             checkedItem={checkedItem}
             setCheckedItem={setCheckedItem}
           />
-          <TokenField websiteId={checkedItem} />
+          <TokenField />
         </ModalBody>
       </ModalContent>
     </Modal>

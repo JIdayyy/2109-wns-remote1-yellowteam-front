@@ -26,10 +26,10 @@ export default function AddComment(): JSX.Element {
   }
 
   const [createComment, { loading }] = useCreateCommentMutation({
-    refetchQueries: [
+    refetchQueries: () => [
       { query: GetAllCommentsDocument, variables: GetAllCommentsVariables },
     ],
-    onCompleted: () => {
+    onCompleted: async () => {
       reset()
       setValue('comment', '')
       toast({

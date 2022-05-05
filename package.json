@@ -23,8 +23,11 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "apexcharts": "^3.33.2",
+    "apollo-link-persisted-queries": "^0.2.5",
     "axios": "^0.26.1",
+    "bcryptjs": "^2.4.3",
     "chart.js": "^3.7.1",
+    "crypto-hash": "^2.0.1",
     "eslint-import-resolver-typescript": "^2.7.1",
     "framer-motion": "^4",
     "graphql": "^16.0.1",
@@ -68,18 +71,11 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "devDependencies": {
     "@graphql-codegen/cli": "^2.3.0",
     "@graphql-codegen/import-types-preset": "^2.1.8",
@@ -87,6 +83,7 @@
     "@graphql-codegen/typescript": "^2.4.1",
     "@graphql-codegen/typescript-operations": "^2.2.1",
     "@graphql-codegen/typescript-react-apollo": "^3.2.2",
+    "@types/bcryptjs": "^2.4.2",
     "@types/enzyme": "^3.10.11",
     "@types/luxon": "^2.3.0",
     "@types/react-datepicker": "^4.3.4",

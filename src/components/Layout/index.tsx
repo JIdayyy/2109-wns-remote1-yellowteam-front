@@ -1,15 +1,14 @@
 /* eslint-disable no-console */
-import { Box } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
+import { Outlet } from 'react-router-dom'
 import {
   SortOrder,
   useGetAllBugsByQuery,
   useGetAllNotificationsQuery,
 } from 'src/generated/graphql'
-import { Outlet } from 'react-router-dom'
 import useAppState from 'src/hooks/useAppState'
 import useSearchState from 'src/hooks/useSearchState'
 import UserNavBar from './UserNavBar'
-import Header from './Header'
 import NavBar from './NavBar'
 import MuteButtonPortal from '../Assets/MuteButton'
 import LoadingScreen from '../Assets/Loading.screen'
@@ -17,7 +16,6 @@ import LoadingScreen from '../Assets/Loading.screen'
 export default function Layout(): JSX.Element {
   const { website } = useSearchState()
   const { user } = useAppState()
-
   const { loading: loadingBugs } = useGetAllBugsByQuery({
     // notifyOnNetworkStatusChange: true,
 
@@ -55,41 +53,21 @@ export default function Layout(): JSX.Element {
   if (loadingBugs || loadingNotifications) return <LoadingScreen />
 
   return (
-    <Box
-      position="fixed"
+    <Flex
       width="100vw"
       height="100vh"
       fontFamily="Poppins"
-      display="flex"
+      direction="row"
       zIndex={20}
     >
       <UserNavBar />
       <MuteButtonPortal />
-      <Box pl="60px" zIndex={20} width="full" height="full">
-        <Header />
+      <Flex direction="column" flexGrow={1} pl="60px" zIndex={20} width="full">
         <NavBar />
-        <Box
-          display="flex"
-          width="full"
-          height="full"
-          css={{
-            '&::-webkit-scrollbar': {
-              width: '4px',
-            },
-            '&::-webkit-scrollbar-track': {
-              marginRight: '4px',
-              width: '6px',
-            },
-            '&::-webkit-scrollbar-thumb': {
-              background: 'gray',
-              borderRadius: '24px',
-            },
-          }}
-          zIndex={1}
-        >
+        <Flex flexGrow={1} h="calc(100vh - 100px)" zIndex={1}>
           <Outlet />
-        </Box>
-      </Box>
-    </Box>
+        </Flex>
+      </Flex>
+    </Flex>
   )
 }

@@ -10,7 +10,6 @@ export default function Bug(): JSX.Element {
       direction="row"
       w="full"
       h="full"
-      position="fixed"
     >
       <BugList />
 
