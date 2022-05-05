@@ -1,12 +1,7 @@
-import { Flex, Input, Button, useClipboard } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import { Flex } from '@chakra-ui/react'
 // import { useGetWidgetTokenQuery } from 'src/generated/graphql'
 
-type Props = {
-  websiteId?: string
-}
-
-export default function TokenField({ websiteId }: Props): JSX.Element {
+export default function TokenField(): JSX.Element {
   // const { data, loading, refetch } = useGetWidgetTokenQuery({
   //   notifyOnNetworkStatusChange: true,
   //   variables: {

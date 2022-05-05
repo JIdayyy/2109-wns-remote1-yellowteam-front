@@ -11,7 +11,9 @@ import {
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws'
 import { getMainDefinition } from '@apollo/client/utilities'
+import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries'
 import { onError } from '@apollo/client/link/error'
+import bcrypt from 'bcryptjs'
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null
 
@@ -29,6 +31,16 @@ const httpLink = createHttpLink({
   credentials: 'include',
   headers: {
     'platform-auth-user-agent': 'web-platform',
+  },
+})
+
+const persistedQueries = createPersistedQueryLink({
+  generateHash: (query) => bcrypt.hashSync(query.toString(), 10),
+  disable: (error) => {
+    if (error) {
+      return true
+    }
+    return false
   },
 })
 
@@ -54,6 +66,17 @@ const splitLink = split(({ query }) => {
 export const client = new ApolloClient({
   ssrMode: typeof window === 'undefined',
   uri: serverUrl,
+  defaultOptions: {
+    watchQuery: {
+      errorPolicy: 'all',
+    },
+    query: {
+      errorPolicy: 'all',
+    },
+    mutate: {
+      errorPolicy: 'all',
+    },
+  },
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
@@ -68,7 +91,7 @@ export const client = new ApolloClient({
       },
     },
   }),
-  link: from([splitLink, errorLink, httpLink]),
+  link: from([splitLink, errorLink, persistedQueries, httpLink]),
 })
 
 function initializeApollo(): ApolloClient<NormalizedCacheObject> {

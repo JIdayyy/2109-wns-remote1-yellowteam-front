@@ -1,7 +1,11 @@
-import { Box } from '@chakra-ui/react'
-import { useEffect } from 'react'
+import { Box, Flex } from '@chakra-ui/react'
+import { useCallback, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useGetAllBugsByQuery, SortOrder } from 'src/generated/graphql'
+import {
+  useGetAllBugsByQuery,
+  SortOrder,
+  GetAllBugsByQuery,
+} from 'src/generated/graphql'
 import useSearchState from 'src/hooks/useSearchState'
 import { useInView } from 'react-intersection-observer'
 import customScrollbar from 'src/theme/customScrollbar'
@@ -15,15 +19,15 @@ export default function BugList(): JSX.Element {
   const { website } = useSearchState()
   const { ref, inView } = useInView()
 
-  const { data, loading, fetchMore, refetch } = useGetAllBugsByQuery({
+  const { data, loading, fetchMore } = useGetAllBugsByQuery({
     // notifyOnNetworkStatusChange: true,
-
     variables: {
       orderBy: {
         number: 'desc' as SortOrder,
       },
       skip: 0,
       take: 20,
+
       where: {
         Website: {
           is: {
@@ -35,10 +39,6 @@ export default function BugList(): JSX.Element {
       },
     },
   })
-
-  useEffect(() => {
-    refetch()
-  }, [website])
 
   useEffect(() => {
     if (inView) {
@@ -66,14 +66,27 @@ export default function BugList(): JSX.Element {
     }
   }, [inView])
 
+  const websiteFilter = useCallback(
+    (bug: GetAllBugsByQuery['bugs'][number]) => {
+      if (website) {
+        return bug.Website.id === website
+      }
+      return true
+    },
+    [website]
+  )
+
   return (
-    <MotionBox
+    <Flex
+      direction="column"
       shadow="lg"
-      h="80%"
-      position="fixed"
+      flexGrow={1}
       backgroundColor="#FFFFFF"
       zIndex={20}
       w="300px"
+      maxW="300px"
+      minW="300px"
+      h="full"
     >
       <BugListFilters />
 
@@ -81,13 +94,14 @@ export default function BugList(): JSX.Element {
         overflowY="auto"
         css={customScrollbar}
         width="full"
-        h="80%"
+        h="full"
+        flexGrow={1}
         display="flex"
         flexDirection="column"
       >
         {!loading ? (
           <>
-            {data?.bugs.map((bug) => (
+            {data?.bugs.filter(websiteFilter).map((bug) => (
               <BugListItem key={bug.id} bug={bug} />
             ))}
             <span
@@ -103,6 +117,6 @@ export default function BugList(): JSX.Element {
           <SkelettonPlaceholder number={20} />
         )}
       </MotionBox>
-    </MotionBox>
+    </Flex>
   )
 }

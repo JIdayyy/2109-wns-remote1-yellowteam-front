@@ -18,6 +18,7 @@ query GetAllBugsBy(
     number
     Website {
       name
+      id
     }
   }
 }

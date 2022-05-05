@@ -71,7 +71,7 @@ const UserNavBar = (): JSX.Element => {
       py="20px"
       px="10px"
       width="60px"
-      height="100%"
+      height="full"
       flexDirection="column"
       alignItems="flex-end"
       rounded={0}
@@ -84,11 +84,11 @@ const UserNavBar = (): JSX.Element => {
           <MotionFLex
             animate={{ opacity: 1 }}
             initial={{ opacity: 0 }}
-            width="100%"
+            width="full"
             exit={{ x: -200 }}
             transition={{ default: { duration: 0.4, delay: 0 } }}
             key="navlinks"
-            height="100%"
+            height="full"
             flexDirection="column"
             alignItems="flex-start"
             color="white"
@@ -118,7 +118,7 @@ const UserNavBar = (): JSX.Element => {
                       : navigate(link.path)
                   }}
                   key={link.name}
-                  width="100%"
+                  width="full"
                   px={2}
                   rounded={2}
                   py={1}
@@ -144,7 +144,7 @@ const UserNavBar = (): JSX.Element => {
               ))}
             </AnimatePresence>
             <MotionFLex
-              width="100%"
+              width="full"
               px={2}
               rounded={2}
               py={1}
@@ -172,7 +172,7 @@ const UserNavBar = (): JSX.Element => {
           justifyContent="center"
           color="white"
           flexDirection="row"
-          width="100%"
+          width="full"
           exit={{ opacity: 0 }}
         >
           {!isHover ? (

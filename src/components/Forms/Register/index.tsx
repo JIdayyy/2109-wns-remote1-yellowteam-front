@@ -1,15 +1,23 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
-import { Button, Flex, FormControl, Input, Text } from '@chakra-ui/react'
+import { Button, Center, Flex, FormControl, Text } from '@chakra-ui/react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Dispatch, KeyboardEvent, SetStateAction } from 'react'
 import { FieldValues, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import useAppState from 'src/hooks/useAppState'
 import { useRegisterMutation } from '../../../generated/graphql'
+import CustomInput from '../CustomInput'
+import registerSchema from '../Resolvers/register.resolver.schema'
 
-export default function RegisterForm(): JSX.Element {
+interface IProps {
+  setIsLogin: Dispatch<SetStateAction<boolean>>
+}
+
+export default function RegisterForm({ setIsLogin }: IProps): JSX.Element {
   const navigate = useNavigate()
   const { dispatchLogin } = useAppState()
-  const [registerNewUser] = useRegisterMutation({
+  const [registerNewUser, { loading }] = useRegisterMutation({
     onCompleted: (data) => {
       dispatchLogin(data.register)
       navigate('/')
@@ -20,7 +28,10 @@ export default function RegisterForm(): JSX.Element {
     },
   })
 
-  const { handleSubmit, register } = useForm()
+  const { handleSubmit, register, formState } = useForm({
+    criteriaMode: 'all',
+    resolver: yupResolver(registerSchema),
+  })
 
   const onSubmit = async ({
     email,
@@ -36,77 +47,130 @@ export default function RegisterForm(): JSX.Element {
     })
   }
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      handleSubmit(onSubmit)()
+    }
+  }
+
   return (
     <Flex
       direction="column"
       justifyContent="center"
       alignItems="center"
-      w="full"
-      h="100vh"
+      w={['90%', '80%', '80', '70%', '70%', '70%']}
+      shadow="2xl"
+      rounded={8}
+      p={10}
+      h="50%"
     >
-      <Text fontFamily="Poppins" fontSize={30} fontWeight="bold">
-        Register to Dc bug report
-      </Text>
-      <form>
-        <FormControl p={10} w={['90%', '80%', '80%', '80%']}>
-          <Input
-            autoComplete="email"
-            id="email"
-            placeholder="Email"
-            my={1}
-            type="text"
-            {...register('email')}
-          />
-          <Input
-            id="first_name"
-            placeholder="First Name"
-            my={1}
-            type="text"
-            {...register('first_name')}
-            autoComplete="first_name"
-          />
-          <Input
-            autoComplete="last_name"
-            id="last_name"
-            placeholder="Last Name"
-            my={1}
-            type="text"
-            {...register('last_name')}
-          />
-          <Input
-            autoComplete="password"
-            id="password"
-            placeholder="Password"
-            my={1}
-            type="password"
-            {...register('password')}
-          />
-          <Input
-            autoComplete="confirmPassword"
-            id="confirmPassword"
-            placeholder="Confirm password"
-            my={1}
-            type="password"
-            {...register('confirmPassword')}
-          />
-          <Input
-            autoComplete="secret_key"
-            id="accesKey"
-            placeholder="Acces key"
-            my={1}
-            type="password"
-            {...register('secret_key')}
-          />
-        </FormControl>
-      </form>
+      <Text textStyle="titleLogin">Register to Dc Reports</Text>
+      <Text textStyle="loginText">We need some informations</Text>
+
+      <FormControl mt={10} w="100%">
+        <CustomInput
+          autoComplete="email"
+          label="Email"
+          fontSize={14}
+          id="email-register"
+          placeholder="Email"
+          my={1}
+          register={register}
+          errors={formState.errors}
+          name="email"
+          type="text"
+        />
+
+        <CustomInput
+          autoComplete="given-name"
+          label="First Name"
+          fontSize={14}
+          id="first_name"
+          placeholder="First Name"
+          my={1}
+          register={register}
+          errors={formState.errors}
+          name="first_name"
+          type="text"
+        />
+
+        <CustomInput
+          autoComplete="family-name"
+          label="Last Name"
+          fontSize={14}
+          id="last-name"
+          placeholder="First Name"
+          my={1}
+          register={register}
+          errors={formState.errors}
+          name="last_name"
+          type="text"
+        />
+
+        <CustomInput
+          label="Password"
+          autoComplete="password"
+          fontSize={14}
+          onKeyPress={handleKeyDown}
+          id="password-login"
+          placeholder="Password"
+          my={1}
+          register={register}
+          errors={formState.errors}
+          name="password"
+          type="password"
+        />
+
+        <CustomInput
+          label="Password"
+          fontSize={14}
+          onKeyPress={handleKeyDown}
+          id="confirm-password-login"
+          placeholder="Confirm Password"
+          my={1}
+          register={register}
+          errors={formState.errors}
+          name="confirmPassword"
+          type="password"
+        />
+
+        <CustomInput
+          type="text"
+          label="Acces Key"
+          fontSize={14}
+          onKeyPress={handleKeyDown}
+          id="acces-key"
+          placeholder="Acces key"
+          my={1}
+          register={register}
+          errors={formState.errors}
+          name="secret_key"
+        />
+      </FormControl>
+
       <Button
-        my={3}
-        w={['65%', '55%', '35%', '25%']}
+        my={5}
+        isLoading={loading}
+        w="full"
         variant="action"
         onClick={handleSubmit(onSubmit)}
       >
         SIGN IN
       </Button>
+
+      <Center w="full">
+        <Text>Don’t have an account?</Text>
+        <Text
+          _hover={{ textDecoration: 'underline' }}
+          cursor="pointer"
+          onClick={() => setIsLogin((c) => !c)}
+          fontWeight="bold"
+          mx={2}
+        >
+          Sign up
+        </Text>
+      </Center>
     </Flex>
   )
 }
