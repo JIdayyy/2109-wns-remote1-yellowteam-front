@@ -13,7 +13,10 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { FieldValues, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import useLocalStorage from 'src/components/Hook/useLocalStorage'
-import { useCreateCustomBugMutation } from 'src/generated/graphql'
+import {
+  GetAllBugsByDocument,
+  useCreateCustomBugMutation,
+} from 'src/generated/graphql'
 import useAppState from 'src/hooks/useAppState'
 import useCreateBugState from 'src/hooks/useCreateBugState'
 import useUploadFileState from 'src/hooks/useUploadFileState'
@@ -76,6 +79,7 @@ export default function CreateBugForm({
       setIsUpload(true)
       navigate(`/bugs/${data.createBugCustom.id}`)
     },
+    refetchQueries: () => [GetAllBugsByDocument],
   })
 
   if (!user) return <div>You must be logged in to create a bug</div>

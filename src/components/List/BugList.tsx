@@ -1,15 +1,10 @@
 import { Box, Flex } from '@chakra-ui/react'
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
-import {
-  useGetAllBugsByQuery,
-  SortOrder,
-  GetAllBugsByQuery,
-} from 'src/generated/graphql'
+import { useGetAllBugsByQuery, SortOrder } from 'src/generated/graphql'
 import useSearchState from 'src/hooks/useSearchState'
 import { useInView } from 'react-intersection-observer'
 import customScrollbar from 'src/theme/customScrollbar'
-import SkelettonPlaceholder from '../Assets/SkelettonPLaceholder'
 import BugListFilters from './Filters/BugListFilters'
 import BugListItem from './ListItems/BugListItem'
 
@@ -19,8 +14,8 @@ export default function BugList(): JSX.Element {
   const { website } = useSearchState()
   const { ref, inView } = useInView()
 
-  const { data, loading, fetchMore } = useGetAllBugsByQuery({
-    // notifyOnNetworkStatusChange: true,
+  const { data, fetchMore, refetch } = useGetAllBugsByQuery({
+    notifyOnNetworkStatusChange: true,
     variables: {
       orderBy: {
         number: 'desc' as SortOrder,
@@ -66,15 +61,9 @@ export default function BugList(): JSX.Element {
     }
   }, [inView])
 
-  const websiteFilter = useCallback(
-    (bug: GetAllBugsByQuery['bugs'][number]) => {
-      if (website) {
-        return bug.Website.id === website
-      }
-      return true
-    },
-    [website]
-  )
+  useEffect(() => {
+    refetch()
+  }, [website])
 
   return (
     <Flex
@@ -99,23 +88,20 @@ export default function BugList(): JSX.Element {
         display="flex"
         flexDirection="column"
       >
-        {!loading ? (
-          <>
-            {data?.bugs.filter(websiteFilter).map((bug) => (
-              <BugListItem key={bug.id} bug={bug} />
-            ))}
-            <span
-              style={{
-                visibility: 'hidden',
-              }}
-              ref={ref}
-            >
-              intersection observer marker
-            </span>
-          </>
-        ) : (
-          <SkelettonPlaceholder number={20} />
-        )}
+        <>
+          {data?.bugs.map((bug) => (
+            <BugListItem key={bug.id} bug={bug} />
+          ))}
+          <span
+            style={{
+              visibility: 'hidden',
+            }}
+            ref={ref}
+          >
+            intersection observer marker
+          </span>
+        </>
+        )
       </MotionBox>
     </Flex>
   )
